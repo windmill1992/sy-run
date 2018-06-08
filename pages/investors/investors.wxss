@@ -1,0 +1,202 @@
+/* pages/investors/investors.wxss */
+
+.pageContainer {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 54px;
+  box-sizing: border-box;
+}
+
+.i-collection .head {
+  position: relative;
+  background-image: url(http://mat1.gtimg.com/gongyi/act/yxj/handredGrop/city.jpg);
+  background-size: cover;
+  background-position: 0 0 !important;
+}
+
+.supporter {
+  display: flex;
+  align-items: center;
+  padding: 25px 0 10px;
+  position: relative;
+  text-align: center;
+  color: #fff;
+}
+
+.supporter .item-logo {
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 36rpx;
+  box-sizing: border-box;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 100%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  margin-left: 20px;
+}
+
+.supporter .item-logo .s-logo {
+  width: 80%;
+  margin: 10%;
+  height: 80%;
+}
+
+.i-collection .head:before, .supporter::after {
+  opacity: 0;
+}
+
+.supporter:after, .summary::after {
+  content: " ";
+  position: absolute;
+  left: 40rpx;
+  right: 40rpx;
+  bottom: 0;
+  width: auto;
+  height: 1px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
+  transform-origin: 0 100%;
+  transform: scaleY(0.5);
+}
+
+.summary {
+  position: relative;
+  margin: 0 20px;
+  color: #fff;
+  opacity: 0.9;
+  font-size: 12px;
+  line-height: 25px;
+  padding-bottom: 10px;
+}
+
+.summary .viewall {
+  display: inline;
+  font-weight: 600;
+}
+
+.summary .viewall::after {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  transform: rotate(45deg);
+  position: relative;
+  left: 5px;
+  top: -2px;
+}
+
+.statistics, .proj-list-item {
+  display: flex;
+}
+
+.statistics {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 26rpx 0 20rpx;
+  text-align: center;
+}
+
+.statistics .d-block {
+  position: relative;
+  flex: 1;
+  color: #fff;
+  line-height: 1.1em;
+}
+
+.statistics .d-block:not(:last-child)::after {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  height: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
+  transform-origin: 100% 0;
+  transform: scaleX(0.5);
+}
+
+.statistics .d-block .data {
+  padding-top: 12rpx;
+}
+
+.statistics .d-block .num {
+  font-size: 40rpx;
+  color: #ff6810;
+}
+
+.proj-title {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 16px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.proj-list .proj-list-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 40rpx;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.proj-list img {
+  background: url(http://www.17xs.org/res/images/h5/images/donateStep/activity_default.png) no-repeat;
+  background-size: 100%;
+}
+
+.proj-list .proj-list-item .item-cover {
+  position: relative;
+  width: 240rpx;
+  height: 180rpx;
+  margin-right: 30rpx;
+}
+
+.proj-list .proj-list-item .item-cover image {
+  width: 100%;
+  height: 100%;
+}
+
+.proj-list .proj-list-item .item-inf {
+  flex: 1;
+  line-height: 20px;
+  padding-top: 2%;
+  overflow: hidden;
+}
+
+.proj-list .proj-list-item .item-name, .proj-list .proj-list-item .item-support {
+  width: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  overflow: hidden;
+}
+
+.proj-list .proj-list-item .item-name {
+  color: #333;
+  font-weight: 700;
+}
+
+.proj-list .proj-list-item .item-p {
+  color: #666;
+}
+
+.proj-list .proj-list-item .num, .tab-hd .current text {
+  color: #ff6810;
+}
+
+.noCOM {
+  height: 40px;
+  line-height: 40px;
+  color: #333;
+  font-size: 30rpx;
+  margin-top: 200rpx;
+}

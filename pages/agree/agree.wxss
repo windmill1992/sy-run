@@ -1,0 +1,44 @@
+/* pages/agree/agree.wxss */
+
+.pageContainer {
+  background: #eee;
+}
+
+.topNav {
+  height: 100rpx;
+  line-height: 100rpx;
+  background-color: #ff6811;
+  position: relative;
+}
+
+.topNav .h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 36rpx;
+}
+
+.agreement {
+  padding: 40rpx 30rpx;
+  color: #666;
+  font-size: 28rpx;
+  line-height: 1.5em;
+}
+
+.agreement>view {
+  margin-bottom: 40rpx;
+}
+
+.agreement .b {
+  margin-bottom: 30rpx;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.agreement .text-indent {
+  text-indent: 2em;
+}
+
+.agreement .ul view {
+  margin-bottom: 30rpx;
+  text-indent: 2em;
+}

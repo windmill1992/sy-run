@@ -1,0 +1,264 @@
+<!--index.wxml	捐步首页-->
+<view class="pageContainer">
+  <view class="ds-hd flex flexcol">
+    <view class="hd-title">
+      <text class="p">{{projectTitle}}</text>
+      <button id="changeProj" bindtap='getRandomProjectInfo'>换一换</button>
+    </view>
+    <view class="hd-pic flex1" style='background-image:{{bgUrl}}' bindtap='toProjectDetail'>
+      <text class="hd-pic-link red" wx:if="{{!donateState}}">我要捐款</text>
+      <text class="hd-pic-link" wx:else>项目详情</text>
+    </view>
+    <button class="hd-page-prompt" bindtap='openDialog' data-dialog='intro'></button>
+    <view class="hd-content">
+      <view id="ds_status">
+        <block wx:if="{{!donateState && randomCompany.donateAmount>0}}">
+          <view class="intro-wrap flex flexcol">
+            <view class="cont-projName txtC mb10">
+              <text class="c999">企业可兑换公益基金还剩 {{randomCompany.donateAmount}}万元</text>
+            </view>
+            <view class="intro-block flex">
+              <view class="intro-block-left flex1">
+                <text class="c333 mb10 h2">{{randomCompany.companyName}}</text>
+                <text class="c999 f14 p">{{randomCompany.slogan}}</text>
+              </view>
+              <view class="cont-avatar">
+                <navigator url="/pages/investors/investors?companyId={{randomCompany.companyId}}" class="avatar-a">
+                  <image src="{{randomCompany.companyImgUrl}}"></image>
+                </navigator>
+              </view>
+            </view>
+          </view>
+          <view>
+            <button class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
+          </view>
+          <text class="p mt10 f13 c999 txtC">满{{endStep}}步即可捐出步数</text>
+        </block>
+        <block wx:elif="{{!donateState && randomCompany.donateAmount<=0}}">
+          <view class="intro-wrap flex flexcol" style="height: 240rpx;">
+            <view class="cont-projName txtC mb10">
+              <text class="c999">企业公益基金已兑换完</text>
+            </view>
+            <view class="intro-block flex">
+              <view class="intro-block-left flex1">
+                <view class="c333 mb10">{{randomCompany.companyName}}</view>
+                <view class="c999 f14">{{randomCompany.slogan}}</view>
+              </view>
+              <view class="cont-avatar">
+                <navigator url="/pages/investors/investors?companyId={{randomCompany.companyId}}">
+                  <image src="{{randomCompany.companyImgUrl}}"></image>
+                </navigator>
+              </view>
+            </view>
+          </view>
+          <view class="end-cont2">
+            <view class="cont-p c999">你还可以选择你感兴趣的公益项目随手捐\n让更多人得到帮助</view>
+          </view>
+          <view>
+            <navigator class="btn" url="/pages/projectIndex/projectIndex">查看更多捐款项目</navigator>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="done-cont1">
+            <view class="cont-projName">
+              <text class="c999">{{lastDonated.userName}}</text>
+            </view>
+            <view class="c333 done-cont1-t">您今日已捐步
+              <text class="cff6">{{lastDonated.steps}}</text>
+              <text class="cff9">步</text>
+            </view>
+            <view class="">
+              <navigator url='/pages/projectDetail/projectDetail?projectId={{lastDonated.projId}}'>支持了
+                <text class="cff6">{{lastDonated.projTitle}}</text>
+              </navigator>
+            </view>
+          </view>
+          <view class="done-cont2">
+            <view class="done-block">
+              <view class="cont-avatar">
+                <navigator url="/pages/investors/investors?companyId={{lastDonated.companyId}}" class="avatar-a">
+                  <image src="{{lastDonated.cLogo}}"></image>
+                </navigator>
+              </view>
+              <view class="done-block-m">
+                <view class="cont-p c999">
+                  携手
+                  <text class="c333">{{lastDonated.cName}}</text> 捐出 {{lastDonated.amount}} 元
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="cont-p c999 mt10">每天只能捐一次，明日继续哦！</view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="ds-bd">
+    <view class="bd-result" id="resultList">
+      <view class="title flex">
+        <text>成果榜单</text>
+      </view>
+      <view class="result-data">
+        <text decode="true">截止到 &nbsp;{{year}}&nbsp;年&nbsp;{{month}}&nbsp;月&nbsp;{{day}}&nbsp;日共有</text>
+        <view class="scroll-num">
+          <view class="num scrollNum1">
+            <text wx:key='scrollNumtext1{{index}}' wx:for="{{billboardInit[0].num}}">{{item}}</text>
+          </view>
+          <text>{{billboardInit[0].unit}}位爱心人士参与</text>
+        </view>
+        <view class="scroll-num">
+          <view class="num scrollNum2">
+            <text wx:key='scrollNumtext2{{index}}' wx:for="{{billboardInit[1].num}}">{{item}}</text>
+          </view>
+          <text>{{billboardInit[1].unit}}家企业携手捐出</text>
+        </view>
+        <view class="scroll-num">
+          <view class="num scrollNum3">
+            <text wx:key='scrollNumtext3{{index}}' wx:for="{{billboardInit[2].num}}">{{item}}</text>
+          </view>
+          <text>{{billboardInit[2].unit}}元</text>
+        </view>
+      </view>
+    </view>
+    <view class="bd-effect">
+      <view class="title flex">
+        <text>爱心企业捐步排行</text>
+      </view>
+      <view class="effect-list" id="effectList" wx:if="{{hasData}}">
+        <navigator url="/pages/investors/investors?companyId={{item.companyId}}" class="effect-item" wx:for="{{effectLists}}" wx:key="effect{{index}}">
+          <view class="item-rank">
+            <view class="rank-num">
+              <text>{{index+1}}</text>
+            </view>
+          </view>
+          <view class="item-logo">
+            <image src="{{item.companyImgUrl}}"></image>
+          </view>
+          <view class="item-info">
+            <view class="item-name">{{item.companyName}}</view>
+            <view class="item-p" decode="true">携手
+              <text class="num">{{item.donateNum}}</text> 位慈善家
+            </view>
+            <view class="item-p" decode="true">捐出
+              <text class="num">{{item.donateAmount}}</text> 元
+            </view>
+          </view>
+        </navigator>
+      </view>
+      <view class="loadmore" bindtap='loadmore'>
+        <block wx:if="{{hasMore==2}}">
+          <view class="arr-bot"></view>
+          <text>更多排行</text>
+        </block>
+        <view wx:elif="{{hasMore==1}}">暂无数据</view>
+        <view wx:else>没有更多数据了</view>
+      </view>
+    </view>
+    <view class="bd-recordLink mt10 mb10 txtC">
+      <navigator url="/pages/record/record" class="c666">查看我的行善记录 ></navigator>
+    </view>
+    <view class="foot-logo txtC">
+      <view class="wx">
+        <view class="gy">善园公益</view>
+        <view class="wxyd">微信运动</view>
+      </view>
+    </view>
+  </view>
+  <view class="dialog notEnoughDialog {{notEnoughShow?'show':''}} {{notEnoughHide?'hide':''}}">
+    <view class="mask"></view>
+    <view class="dialog_inner run_dialog_inner">
+      <view class='h2'>{{endStep}}步即可参加公益捐步</view>
+      <view class="viceTitle stepIntro" bindtap='openDialog' data-dialog='stepIntro'>为什么是{{endStep}}步?</view>
+      <view class="run_area notEnoughRunArea">
+        <view class="run_progress_area">
+          <view class="run_pic_progress_area">
+            <view class="run_pic_progress_in">
+              <view class="run_pic_progress" style="transform: rotate(180deg);" animation="{{progressAni}}"></view>
+            </view>
+            <view class="run_pic_people" style="transform: rotate(0deg);" animation="{{peopleAni}}">
+              <text class='b'></text>
+            </view>
+          </view>
+          <view class="run_num_area">
+            <view class="run_num">
+              <text class="run_num_inner">{{stepFmt}}</text>
+            </view>
+            <view class="run_desc">今日运动步数</view>
+          </view>
+          <view class="run_start_num run_text_num">0</view>
+          <view class="run_end_num run_text_num">{{endStep}}</view>
+        </view>
+        <view class="run_text_area">
+          <view style="white-space: normal;">{{word}}</view>
+        </view>
+      </view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="notEnough">
+        <view class="close"></view>
+      </view>
+      <navigator url="/pages/projectIndex/projectIndex" class="knowBtn">查看更多公益项目</navigator>
+    </view>
+  </view>
+  <view class="dialog dialog-confirm enoughDialog {{enoughShow?'show':''}} {{enoughHide?'hide':''}}">
+    <view class="mask"></view>
+    <view class="dialog_inner">
+      <view class='h2'>您将为该项目捐出</view>
+      <view class="mySteps">
+        <span class="mySteps-num">{{stepFmt}}</span>步
+      </view>
+      <view class="match-enterprise">
+        <view>
+          <navigator url="/pages/investors/investors?companyId={{randomCompany.companyId}}">
+            <image class="match-enterprise-logo" src="{{randomCompany.companyImgUrl}}"></image>
+          </navigator>
+        </view>
+        <view class="match-enterprise-info">{{randomCompany.companyName}}将为您出资捐赠</view>
+      </view>
+      <view class="knowBtn" bindtap='toDonate'>马上捐出</view>
+      <view class="mt10 c999">您所捐出的公益步数不会影响微信运动数据</view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="enough">
+        <view class="close"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="dialog dialog-stepsIntro stepIntroDialog {{stepIntroShow?'show':''}} {{stepIntroHide?'hide':''}}">
+    <view class="mask" catchtouchmove='stopmove'></view>
+    <view class="dialog_inner">
+      <view class='h2'>日行一{{endStepCn}}步，健康做公益！</view>
+      <view class="stepsIntro-bd">
+        <view>你知道么？ 一个成年人日均摄入热量
+          <text class="highlt">2000千卡</text>, 日行
+          <text class="highlt">1{{endStepCn}}</text>步, 相当于消耗维持人体正常生活所需以外的
+          <text class="highlt">{{3*endStep/100}}千卡</text>多余热量，帮助我们保持健康体格；日行
+          <text class="highlt">1{{endStepCn}}</text>步，相当于完成
+          <text class="highlt">{{7*endStep/10000}}公里</text>的绿色出行， 日均减少
+          <text class="highlt">{{18*endStep/100000}}千克</text>碳排放，帮我们保护大气环境。
+        </view>
+      </view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="stepIntro">
+        <view class="close"></view>
+      </view>
+      <navigator url="" class="knowBtn">查看更多公益项目</navigator>
+    </view>
+  </view>
+
+  <view class="dialog introDialog {{introShow?'show':''}} {{introHide?'hide':''}}">
+    <view class="mask"></view>
+    <view class="dialog_inner">
+      <view class='h2'>善园运动说明</view>
+      <view class="rulesList">
+        <view class='li'>1.善园运动是一款用运动数据兑换公益基金捐助公益项目的产品。</view>
+        <view class='li'>2.公益步数从微信运动取得，只要您昨天或今天的步数超过{{endStep}}步即可捐赠。</view>
+        <view class='li'>3.公益基金为随机兑换，兑完即止。</view>
+        <view class='li'>4.您捐出的公益步数不会影响您的运动数据。</view>
+        <view class='li'>5.善园运动产品欢迎爱心企业为公益助力。\n\n咨询邮箱：kf@17xs.org
+        </view>
+      </view>
+      <view class="knowBtn closeDialog" bindtap='closeDialog' data-dialog='intro'>我知道了</view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="intro">
+        <view class="close"></view>
+      </view>
+    </view>
+  </view>
+</view>

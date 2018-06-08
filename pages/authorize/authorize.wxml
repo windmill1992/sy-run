@@ -1,0 +1,8 @@
+<!--pages/authorize/authorize.wxml	授权-->
+<view class='pageContainer'>
+  <view class='pic'>
+    <image src='http://www.17xs.org/res/images/h5/images/userCenter/gift3.png'></image>
+  </view>
+  <view class='pp'>需要您的授权才能使用哦！</view>
+  <view class='btn' bindtap='toAuthorize'>立即授权</view>
+</view>

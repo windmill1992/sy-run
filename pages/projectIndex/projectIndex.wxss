@@ -1,0 +1,149 @@
+/* pages/projectIndex/projectIndex.wxss */
+
+.project-list {
+  padding-bottom: 20rpx;
+}
+
+.filter {
+  width: 100%;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.filter .hd {
+  padding: 24rpx 0;
+  line-height: 32rpx;
+  background: #fff;
+  border-bottom: 1px solid #e3e3e4;
+  height: 80rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter .hd view {
+  font-size: 30rpx;
+  text-align: center;
+  border-right: 1px solid #ccc;
+  width: 33.33%;
+  box-sizing: border-box;
+  color: #333;
+  display: inline-block;
+}
+
+.filter .hd view:last-child {
+  border-right: none;
+}
+
+.project-list .filter .hd view.on {
+  color: #ff6810;
+}
+
+.filter .bd {
+  position: absolute;
+  top: 80rpx;
+  z-index: 99;
+  background: #fff;
+  margin-top: 1px;
+  width: 100%;
+  display: none;
+}
+
+.filter .bd.show {
+  display: block;
+}
+
+.filter .bd view {
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #666;
+  text-align: center;
+  border-bottom: 1px solid #dadada;
+}
+
+.filter .bd view.cur {
+  color: #ff6810;
+}
+
+.listWrapper {
+  margin-top: 82rpx;
+}
+
+.listWrapper navigator {
+  width: 100%;
+}
+
+.listWrapper .item {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid #ebebeb;
+  padding: 20rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.listWrapper .item .pic {
+  width: 25%;
+  height: 120rpx;
+  overflow: hidden;
+  border-radius: 10rpx;
+  margin-right: 3%;
+  position: relative;
+}
+
+.listWrapper .item .pic image {
+  width: 100%;
+  height: 100%;
+}
+
+.listWrapper .item .pic .corner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.listWrapper .item .pic .corner image {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.listWrapper .item .content {
+  width: 72%;
+}
+
+.listWrapper .item .content .title {
+  font-size: 32rpx;
+  color: #333;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 64rpx;
+  line-height: 64rpx;
+  text-overflow: ellipsis;
+  margin-bottom: 16rpx;
+}
+
+.listWrapper .item .content .info {
+  display: flex;
+  color: #999;
+  letter-spacing: 1rpx;
+}
+
+.listWrapper .item .content .info .need {
+  font-size: 28rpx;
+  margin-right: 60rpx;
+}
+
+.listWrapper .item .content .info .progress {
+  font-size: 28rpx;
+}
+
+.loadmore {
+  text-align: center;
+  line-height: 4em;
+}

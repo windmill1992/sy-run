@@ -1,0 +1,58 @@
+<!--pages/record/record.wxml	捐步记录-->
+<view class="pageContainer">
+  <view class="charityWalker">
+    <view class="content">
+      <view class="yx-hd">
+        <view class='h4'>您累计已捐出
+          <text>{{totalStep}}</text> 步,合计
+          <text>{{totalMoney}}</text> 元
+        </view>
+      </view>
+      <view class="yx-bd">
+        <view class="record-list">
+          <view class='ul'>
+            <block wx:if="{{hasDonateInfo}}">
+              <navigator url="/pages/projectDetail/projectDetail?projectId={{item.projectId}}" wx:for="{{recordList}}" wx:key="record{{index}}">
+                <view>
+                  <view class='li'>
+                    <view class="date h4">
+                      <text class="leftIcon"></text>{{item.donateTime}}</view>
+                    <view class="title">完成捐步</view>
+                    <view class="listContentWrapper clearFix">
+                      <view class="item-pic">
+                        <image src="{{item.projectCoverImageUrl}}"></image>
+                      </view>
+                      <view class="item-info">
+                        <view class='pp'>
+                          捐出
+                          <text class="num">{{item.donateStep}}</text> 步 已兑换
+                          <text class="num">{{item.donateAmount}}</text> 元
+                        </view>
+                        <view class='pp'>帮助
+                          <text class='cff6'>{{item.projectTitle}}</text>
+                        </view>
+                        <text class="rightArr"></text>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </navigator>
+            </block>
+            <block wx:else>
+              <view style="text-align: center;padding: 20px;">您还未有捐步信息</view>
+            </block>
+          </view>
+          <view wx:if="{{state == 2}}" class='loadmore' bindtap='loadmoreTap'>点击加载更多</view>
+          <view wx:elif="{{state == 1}}" class='loadmore'>没有更多数据了</view>
+          <view wx:else style='display:none'></view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="foot-logo txtC">
+    <view class="wx">
+      <view class="gy">善园公益</view>
+      <view class="wxyd">微信运动</view>
+    </view>
+  </view>
+</view>

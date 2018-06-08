@@ -1,0 +1,101 @@
+/* pages/signIn/signIn.wxss */
+
+.head {
+  height: 160rpx;
+  border-bottom: 1px solid #dadada;
+  overflow: hidden;
+}
+
+.head .btn {
+  margin-top: 44rpx;
+  width: 200rpx;
+  height: 72rpx;
+  text-align: center;
+  line-height: 72rpx;
+  color: #fff;
+  background-color: #ff6810;
+}
+
+.head .btn.signed {
+  background-color: #ccc;
+}
+
+.other {
+  text-align: center;
+  height: 160rpx;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pp {
+  line-height: 2em;
+  color: #333;
+  font-size: 32rpx;
+  margin: 20rpx;
+}
+
+.item {
+  margin: 20rpx;
+  border-bottom: 1px solid #dadada;
+  display: flex;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 20rpx;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  line-height: 1.8em;
+  margin-top: 20rpx;
+}
+
+.info .title {
+  font-size: 32rpx;
+}
+
+.info .sign-state {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.no-data {
+  line-height: 1.5em;
+  text-align: center;
+  padding: 30rpx 30rpx;
+  font-size: 36rpx;
+  color: #333;
+}
+
+.lookmore, .nomore {
+  display: block;
+  text-align: center;
+  line-height: 3em;
+  font-size: 28rpx;
+  color: #ff6810;
+}
+
+.nomore {
+  color: #999;
+}
+
+.lookmore::after {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-bottom: 1px solid #ff6811;
+  border-right: 1px solid #ff6811;
+  content: '';
+  transform: translateY(-3px) rotate(45deg);
+  margin-left: 6rpx;
+}

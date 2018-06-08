@@ -1,0 +1,38 @@
+<!--pages/projectIndex/projectIndex.wxml	项目列表-->
+<view class='pageContainer'>
+  <view class='project-list'>
+    <view class='filter'>
+      <view class='hd'>
+        <view class='{{tab[0]}}' bindtap='switchTab' data-idx="0">{{allKinds}}</view>
+        <view class='{{tab[1]}}' bindtap='switchTab' data-idx="1">{{newPublish}}</view>
+        <view class='{{tab[2]}}' bindtap='switchTab' data-idx="2">{{allState}}</view>
+      </view>
+    </view>
+    <view class='listWrapper'>
+      <navigator url="/pages/projectDetail/projectDetail?projectId={{item.projectId}}" wx:for="{{projectLists}}" wx:key="pro{{index}}">
+        <view class='item'>
+          <view class='pic'>
+            <image src="{{item.projectLogo}}" lazy-load></image>
+            <view class='corner' wx:if="{{item.corner}}">
+              <image src="{{item.cornerImg}}"></image>
+            </view>
+          </view>
+          <view class='content'>
+            <view class='title'>{{item.projectTitle}}</view>
+            <view class='info'>
+              <view class='need'>目标
+                <text class='cff6'>{{item.cryMoney}}</text>
+              </view>
+              <view class='progress'>已完成
+                <text class='cff6'>{{item.process}}%</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </navigator>
+    </view>
+    <view class='loadmore c999' wx:if="{{hasMore==0}}">暂无数据</view>
+    <view class='loadmore c999' wx:elif="{{hasMore==1}}">没有更多数据了</view>
+    <view class='loadmore cff6' bindtap='loadMore' wx:elif="{{hasMore==2}}">下拉加载更多</view>
+  </view>
+</view>

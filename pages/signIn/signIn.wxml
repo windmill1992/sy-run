@@ -1,0 +1,37 @@
+<!--pages/signIn/signIn.wxml	签到-->
+<view class='pageContainer'>
+  <block wx:if="{{!showSign}}">
+    <view class='no-data'></view>
+  </block>
+  <block wx:else>
+    <view class='head'>
+      <view class='btn' bindtap='toSignIn' wx:if="{{isSignIn==1}}">签到</view>
+      <view class='btn signed' wx:elif="{{isSignIn==2}}">已签到</view>
+      <view class='c999 other' wx:elif="{{isSignIn==4}}">您还不是志愿者，请先报名或注册</view>
+      <view class='c999 other' wx:elif="{{isSignIn==6}}">您是活动发起方，无需签到</view>
+    </view>
+    <view class='body'>
+      <view class='pp' wx:if="{{hasMore>0}}">今日已签到用户：</view>
+      <view class='sign-list'>
+        <view class='item' wx:for="{{signInRecords}}" wx:key="sign{{index}}">
+          <view class='avatar'>
+            <image src="{{item.headImg?item.headImg:'http://www.17xs.org/res/images/detail/people_avatar.jpg'}}"></image>
+          </view>
+          <view class='info'>
+            <view class='title'>{{item.realName}}</view>
+            <view class='sign-state'>
+              <text>{{item.signTime}} 签到</text>
+              <text wx:if="{{item.signOutTime}}">，{{item.signOutTime}} 签出</text>
+              <text wx:else>，未签出</text>
+              <text wx:if="{{item.timeNum}}">；服务时长{{item.timeNum}}小时</text>
+            </view>
+          </view>
+        </view>
+        <view class='lookmore' bindtap='loadMore' wx:if="{{hasMore == 2}}">点击加载更多</view>
+        <view class='nomore' wx:elif="{{hasMore == 1}}">没有更多数据了</view>
+        <view class='nomore' wx:elif="{{hasMore == 0}}">今日暂无人签到</view>
+        <view wx:else></view>
+      </view>
+    </view>
+  </block>
+</view>

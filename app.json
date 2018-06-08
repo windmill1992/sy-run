@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/projectDetail/projectDetail",
+    "pages/donateSuccess/donateSuccess",
+    "pages/projectIndex/projectIndex",
+    "pages/investors/investors",
+    "pages/record/record",
+    "pages/logs/logs",
+    "pages/agree/agree",
+    "pages/authorize/authorize",
+    "pages/signIn/signIn"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "善园公益",
+    "navigationBarTextStyle": "black"
+  }
+}

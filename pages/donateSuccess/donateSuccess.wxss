@@ -1,0 +1,126 @@
+/* pages/donateSuccess/donateSuccess.wxss */
+
+.pageContainer {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 54px;
+  box-sizing: border-box;
+}
+
+.suc-hd {
+  height: 400rpx;
+  background: #ff6811;
+  text-align: center;
+  overflow: hidden;
+}
+
+.suc-hd .avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border: 2px solid #fff;
+  border-radius: 100%;
+  margin: 50rpx auto;
+  overflow: hidden;
+}
+
+.suc-hd .avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.suc-hd .thanks {
+  text-align: center;
+  color: #fff;
+  font-size: 30rpx;
+  line-height: 1.5em;
+  letter-spacing: 2rpx;
+}
+
+.suc-hd .thanks .projTitle .sup {
+  display: inline-block;
+  width: 6rpx;
+  height: 16rpx;
+  border-top: 1px solid #fff;
+  border-left: 2px solid #fff;
+  position: relative;
+  top: -6rpx;
+  margin-right: 6rpx;
+}
+
+.suc-hd .thanks .projTitle .sub {
+  display: inline-block;
+  width: 6rpx;
+  height: 16rpx;
+  border-bottom: 1px solid #fff;
+  border-right: 2px solid #fff;
+  position: relative;
+  bottom: -6rpx;
+  margin-left: 6rpx;
+}
+
+.suc-hd .thanks .projTitle .link {
+  text-decoration: underline;
+  color: #fff;
+}
+
+.suc-bd {
+  overflow: hidden;
+  margin-top: 40rpx;
+}
+
+.suc-bd .txt, .suc-bd .donatedSteps {
+  color: #999;
+  font-size: 26rpx;
+  text-align: center;
+}
+
+.suc-bd .donatedSteps .stepNum {
+  color: #ff6810;
+  font-size: 56rpx;
+}
+
+.suc-bd .donatedMoney {
+  margin-top: 20rpx;
+}
+
+.suc-bd .donatedMoney .pic {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 100%;
+  overflow: hidden;
+  margin: 0 auto 40rpx;
+}
+
+.suc-bd .donatedMoney .pic image {
+  width: 100%;
+  height: 100%;
+}
+
+.suc-bd .donatedMoney .h3 {
+  font-weight: 400;
+  font-size: 26rpx;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.suc-bd .donatedMoney .h3 text {
+  color: #ff6810;
+  font-weight: 400;
+}
+
+.suc-bd .moreProject {
+  margin-top: 50rpx;
+  text-align: center;
+}
+
+.suc-bd .moreProject navigator {
+  display: inline-block;
+  width: 50%;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 30rpx;
+  color: #ff6810;
+  border: 1px solid #ff6811;
+  border-radius: 36rpx;
+  margin-bottom: 20rpx;
+}

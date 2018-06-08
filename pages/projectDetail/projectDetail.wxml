@@ -1,0 +1,207 @@
+<!--projectDetail.wxml	项目详情-->
+<view class='pageContainer'>
+  <view class='pd-hd'>
+    <view class='swipe-wrap'>
+      <view class='pic'>
+        <image src="{{projectLogo}}" class='img'></image>
+      </view>
+    </view>
+    <view class='pro-title'>{{projectTitle}}</view>
+    <view class='progress'>
+      <view class='progress_bar'>
+        <!--<progress percent='20' show-info stroke-width='8' activeColor='#ffa470' 
+        backgroundColor='#dadada' active></progress>-->
+        <view class='track'>
+          <view class='fill' style="width:{{donatePercent}}%"></view>
+        </view>
+        <label>{{donatePercent}}%</label>
+      </view>
+    </view>
+    <view class='profile'>
+      <view class='li'>
+        <view class='top'>目标金额/元</view>
+        <view class='num'>{{totalMoney}}</view>
+      </view>
+      <view class='li'>
+        <view class='top'>已筹金额/元</view>
+        <view class='num'>{{donatAmount}}</view>
+      </view>
+      <view class='li'>
+        <view class='top'>捐款人次/次</view>
+        <view class='num'>{{donationNum}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='pd-bd'>
+    <view class='swiper-tab'>
+      <view class="item {{curTab==0?'on':''}}" data-cur="0" bindtap='switchTab'>详情</view>
+      <view class="item {{curTab==1?'on':''}}" data-cur="1" bindtap='switchTab'>发起人</view>
+      <view class="item {{curTab==2?'on':''}}" data-cur="2" bindtap='switchTab'>捐助记录</view>
+      <view class="item {{curTab==3?'on':''}}" data-cur="3" bindtap='switchTab'>反馈</view>
+    </view>
+    <swiper current="{{curTab}}" class='swiper-box' duration='300' bindchange='changeTab' style="height:{{itemHeight[curTab]}}">
+      <swiper-item>
+        <view class='list' id='list0'>
+          <view class='content'>
+            <import src="/wxParse/wxParse.wxml"></import>
+            <template is="wxParse" data="{{wxParseData:projectCon.nodes}}"></template>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class='list' id='list1'>
+          <view class='publisher'>
+            <view class='pub-item'>
+              <view class='avatar'>
+                <image src="{{fqr.avatar}}" lazy-load></image>
+              </view>
+              <view class='info'>
+                <view class='f17'>{{fqr.name}}</view>
+                <view>联系人：{{fqr.relation}}</view>
+                <view>电话：{{fqr.tel}}</view>
+                <view>地址：{{fqr.addr}}</view>
+                <view>善款接收：{{fqr.accept}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class='list' id='list2'>
+          <view class='list-box'>
+            <view class='r-item' wx:for="{{recordList}}" wx:key="r{{index}}">
+              <view class='avatar'>
+                <image src="{{item.avatar}}" lazy-load></image>
+              </view>
+              <view class='donateInfo'>
+                <view class='name'>
+                  <view class='name-p1'>{{item.userName}}</view>
+                  <view class='name-p2'>捐
+                    <text>￥{{item.dMoney}}</text>
+                  </view>
+                </view>
+                <view class='other'>
+                  <view class='other-p1'>{{item.leaveWord}}</view>
+                  <view class='timeMsg'>
+                    <view class='time'>{{item.showTime}}</view>
+                    <view class='msg'>
+                      <!--<view class='message' bindtap='donateLeaveWord' data-id="{{item.id}}" data-index="{{index}}"></view>-->
+                    </view>
+                  </view>
+                  <!--<view class='msg-board' style="background:{{mboard[index]?'#f3f3f3':'none'}}">
+                    <view class='board-text flex' wx:for="{{item.boardList}}" wx:for-item="bd" wx:for-index="idx" wx:key="bd{{index}}{{idx}}">
+                      <view bindtap='donateReply' class='flex' data-userId="{{bd.userId}}" data-projDonateId="{{bd.projDonateId}}" data-index="{{index}}" data-idx="{{idx}}">
+                        <block wx:if="{{bd.reply}}">{{bd.leavewordName}}
+                          <view class='hf'>回复</view>{{bd.replyName}}：</block>
+                        <block wx:else>{{bd.leavewordName}}：</block>
+                      </view>
+                      <view>{{bd.content}}</view>
+                    </view>
+                    <view class='donateMore' bindtap='donateLoadMore' data-total="1" data-id="111" data-index="0" wx:if="{{!isMore20[index]}}">查看更多</view>
+                  </view>-->
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class='loadmore' wx:if="{{showLoad}}">
+            <view bindtap='loadmore' wx:if="{{hasMoreDonation}}">点击加载更多</view>
+            <view wx:else>没有更多数据了</view>
+          </view>
+        </view>
+      </swiper-item>
+      <swiper-item>
+        <view class="list {{status?'status':''}}" id='list3'>
+          <view class='fb-item' wx:for="{{hostList}}" wx:key="hos{{index}}">
+            <view class='avatar'>
+              <image src="{{item.userImgUrl}}" lazy-load></image>
+            </view>
+            <view class='detail'>
+              <view class='title'>
+                <view class='name'>{{item.uName}}</view>
+                <view class='time'>{{item.cTime}}</view>
+              </view>
+              <view class='info'>
+                <view class="{{item.imgs[index]?'info-text':''}} pp">{{item.content}}</view>
+                <view class='pics flex wrap'>
+                  <view class='pp' bindtap='preview' wx:for="{{item.imgList}}" wx:for-item="img" wx:for-index="idx" data-idx="{{idx}}" data-index="{{index}}" wx:key="img{{index}}{{idx}}">
+                    <image src="{{img}}" lazy-load></image>
+                  </view>
+                </view>
+
+              </view>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class='footer'>
+    <view class='logo'>
+      <navigator url='/pages/projectIndex/projectIndex'>
+        <image src='http://www.17xs.org/res/images/h5/images/min-logo.jpg' lazy-load></image>
+      </navigator>
+    </view>
+    <view class='banquan'>
+      <text>©宁波市善园公益基金会 版权所有</text>
+    </view>
+  </view>
+  <view class='donateBtn'>
+    <view class='btn' bindtap='donateTap'>
+      <image src='http://mat1.gtimg.com/gongyi/m/wx/btn_icon1.png' lazy-load></image>
+      <text>我要捐款</text>
+    </view>
+  </view>
+  <view class="pay {{payShow?'show':''}} {{payHide?'hide':''}}" catchtouchmove='stopmove'>
+    <view class='d-hd'>
+      <text>请输入捐款金额</text>
+      <view class='close' bindtap='closeDialog' data-name='pay'>
+        <image src='http://www.17xs.org/res/images/h5/images/icon_close.png'></image>
+      </view>
+    </view>
+    <view class='d-bd'>
+      <view class='money'>
+        <view class='ul'>
+          <view class="li {{selected==index?'on':''}}" bindtap="switchMoney" data-index="{{index}}" data-num="{{item}}" wx:for="{{moneyList}}" wx:key="m{{index}}">
+            <text>{{item}}</text>{{item!='自定义'?'元':''}}
+          </view>
+        </view>
+        <view class='diyMoney' wx:if="{{diy}}">
+          <input type='digit' focus="{{diy}}" bindblur='getDiyMoney' cursor-spacing='20'></input>
+        </view>
+      </view>
+      <form bindsubmit='donateMoney'>
+        <view class='otherInfo'>
+          <view class='mb10'>其他信息(非必填)</view>
+          <input type='text' placeholder='您的姓名' value="{{realName}}" placeholder-style="color:#a9a9a9" name='realName'></input>
+          <input type='text' placeholder='您的电话' value='{{mobileNum}}' placeholder-style="color:#a9a9a9" name='mobile' focus='{{telFocus}}'></input>
+          <input type='text' placeholder='{{leaveWord}}' placeholder-style="color:#a9a9a9" name='donateWord' maxlength=''></input>
+        </view>
+        <view class='toPay'>
+          <button class='btn' form-type='submit'>立即捐赠</button>
+        </view>
+      </form>
+      <view class='prop'>
+        <checkbox-group bindchange="checkprop">
+          <label>
+            <checkbox checked='true' value='agree'></checkbox>我已阅读并同意
+          </label>
+          <navigator url='/pages/agree/agree'>《捐赠协议》</navigator>
+        </checkbox-group>
+      </view>
+    </view>
+  </view>
+  <view class="dialog wordDialog {{wordShow?'show':''}} {{wordHide?'hide':''}}" catchtouchmove='stopmove'>
+    <view class='mask2' catchtouchmove='stopmove'></view>
+    <view class='dialog_inner'>
+      <view class='lw-hd c666'>发表评论：</view>
+      <form bindsubmit='sureWord'>
+        <textarea class='lw-bd' maxlength='100' auto-height focus='{{isToleaveWord}}' name="wordArea" cursor-spacing='70' fixed='true' value='{{wordValue}}'></textarea>
+        <view class='lw-ft flex just'>
+          <view class='btn' bindtap='cancelWord'>取消</view>
+          <button class='btn' form-type='submit'>确定</button>
+        </view>
+      </form>
+    </view>
+  </view>
+  <view class="mask {{maskShow?'show':''}}" catchtouchmove='stopmove'></view>
+</view>

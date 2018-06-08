@@ -1,0 +1,218 @@
+/**app.wxss**/
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+  font-family: '微软雅黑';
+}
+
+page, button, view, input, text, navigator, image, scroll-view {
+  margin: 0;
+  padding: 0;
+}
+
+page {
+  width: 750rpx;
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  font-family: '微软雅黑';
+  font-weight: 400;
+  background: #f8f8f8;
+}
+
+page::-webkit-scrollbar {
+  display: none;
+}
+
+button {
+  font-size: 28rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+}
+
+button::after {
+  border: 0;
+}
+
+navigator {
+  display: inline-block;
+}
+
+@font-face {
+  font-family: dinc;
+  src: url(http://www.17xs.org/res/fonts/DINCond-Bold.otf);
+}
+
+.inline {
+  display: inline;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.clear {
+  clear: both;
+}
+
+.clearFix:after {
+  display: inline-block;
+  content: '';
+  clear: both;
+}
+
+.flex {
+  display: flex;
+}
+
+.flexcol {
+  flex-direction: column;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.flex2 {
+  flex: 2;
+}
+
+.just {
+  justify-content: space-between;
+}
+
+.around {
+  justify-content: space-around;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.p {
+  display: block;
+  line-height: 44rpx;
+  text-align: left;
+  font-size: 28rpx;
+  margin: 22rpx 0;
+}
+
+.b {
+  display: inline-block;
+  font-weight: 600;
+}
+
+.c999 {
+  color: #999;
+}
+
+.c333 {
+  color: #333;
+}
+
+.c666 {
+  color: #666;
+}
+
+.c999 {
+  color: #999;
+}
+
+.cff9 {
+  color: #ff9001;
+}
+
+.cff6 {
+  color: #ff6810;
+}
+
+.f13 {
+  font-size: 26rpx;
+}
+
+.f14 {
+  font-size: 28rpx;
+}
+
+.f17 {
+  font-size: 34rpx;
+}
+
+.txtC {
+  text-align: center;
+}
+
+.mt10 {
+  margin-top: 20rpx;
+}
+
+.mb10 {
+  margin-bottom: 20rpx;
+}
+
+.btn {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #fff;
+  font-weight: 500;
+  font-size: 32rpx;
+  background: #ff6811;
+  border-radius: 8rpx;
+  text-align: center;
+}
+
+.cont-p {
+  line-height: 1.5em;
+  font-size: 28rpx;
+}
+
+.pageContainer {
+  margin: 0 auto;
+}
+
+.foot-logo {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.foot-logo .wx view {
+  display: inline-block;
+  width: 80px;
+  height: 20px;
+  margin: 10px 0;
+  vertical-align: bottom;
+  overflow: hidden;
+  font-size: 24rpx;
+  color: #999;
+  background-size: 20px 18px;
+  background-repeat: no-repeat;
+  background-position: left top;
+  padding-left: 10px;
+}
+
+.foot-logo .wx view.gy {
+  background-image: url(http://www.17xs.org/res/images/logo-img.png);
+  background-size: 18px 18px;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.foot-logo .wx view.wxyd {
+  background-image: url(http://www.17xs.org/res/images/h5/images/donateStep/wx-icon.png);
+  margin-left: 10px;
+}

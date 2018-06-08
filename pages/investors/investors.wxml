@@ -1,0 +1,63 @@
+<!--pages/investors/investors.wxml	支持捐步企业-->
+<view class='pageContainer'>
+  <view class="i-collection" wx:if="{{hasCom}}">
+    <view class="head">
+      <view class="supporter">
+        <view class="item-logo">
+          <image class="s-logo" src="{{companyImgUrl}}"></image>
+        </view>
+        <view class="item-inf">
+          <view class="item-name">{{companyName}}</view>
+        </view>
+      </view>
+      <view class="summary">
+        <view>简介：{{summary}}
+          <view wx:if="{{showMore}}" class='inline'>...
+            <view class='viewall inline' bindtap='viewAllTxt'>全部</view>
+          </view>
+        </view>
+      </view>
+      <view class="statistics">
+        <view class="d-block">
+          <text>善园慈善项目</text>
+          <view class="data">
+            <text class="num">{{projectCount}}</text> 个
+          </view>
+        </view>
+        <view class="d-block">
+          <text>与爱心网友携手捐出</text>
+          <view class="data">
+            <text class="num">{{donateAmount}}</text> 元</view>
+        </view>
+      </view>
+    </view>
+    <view class="proj-title">善园慈善项目</view>
+    <view class="proj-list" id="projList">
+      <navigator url="/pages/projectDetail/projectDetail?projectId={{item.projectId}}" class="proj-list-item" wx:for="{{projects}}" wx:key="proj{{index}}">
+        <view class="item-cover">
+          <image src="{{item.projectImgUrl}}"></image>
+        </view>
+        <view class="item-inf">
+          <view class="item-name">{{item.projectTitle}}</view>
+          <view class="item-p">携手
+            <text class="num">{{item.totalUser}}</text> 位慈善家</view>
+          <view class="item-p">捐出
+            <text class="num">{{item.totalStep}}</text>
+            <text> {{item.unit}}</text>步</view>
+          <view class="item-p">兑换捐出
+            <text class="num">{{item.totalAmount}}</text> 元</view>
+        </view>
+      </navigator>
+
+    </view>
+  </view>
+  <view wx:else>
+    <view class='noCOM'>暂无企业信息!</view>
+  </view>
+  <view class="foot-logo txtC">
+    <view class="wx">
+      <view class="gy">善园公益</view>
+      <view class="wxyd">微信运动</view>
+    </view>
+  </view>
+</view>

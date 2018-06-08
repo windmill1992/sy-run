@@ -1,0 +1,43 @@
+<!--pages/donateSuccess/donateSuccess.wxml	捐步成功-->
+<view class='pageContainer'>
+  <view class="suc-hd">
+    <view class="avatar">
+      <image src="{{userImgUrl}}"></image>
+    </view>
+    <view class="thanks">
+      <view>感谢您帮助</view>
+      <view class="projTitle">
+        <view class='sup'></view>
+        <navigator url="/pages/projectDetail/projectDetail?projectId={{projectId}}" class='link'>{{projectTitle}}</navigator>
+        <view class='sub'></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="suc-bd">
+    <view class="donatedSteps">
+      <view class="txt">本次捐步</view>
+      <view class="stepNum">{{donateSteps}}</view>
+    </view>
+    <view class="donatedMoney">
+      <view class="pic">
+        <image src="{{companyImgUrl}}"></image>
+      </view>
+      <view class='h3'>{{companyName}}为您的爱心随机捐出
+        <text class="money">{{randomMoney}}</text> 元
+      </view>
+    </view>
+    <view class="txt">点击右上角，邀请朋友一起来捐步。</view>
+
+    <view class="moreProject">
+      <navigator open-type='redirect' url='/pages/index/index'>返回</navigator>
+      <navigator url="/pages/projectIndex/projectIndex">查看更多公益项目</navigator>
+    </view>
+  </view>
+  <view class="foot-logo txtC">
+    <view class="wx">
+      <view class="gy">善园公益</view>
+      <view class="wxyd">微信运动</view>
+    </view>
+  </view>
+</view>
