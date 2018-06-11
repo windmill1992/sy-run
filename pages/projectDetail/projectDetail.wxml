@@ -84,21 +84,7 @@
                   <view class='other-p1'>{{item.leaveWord}}</view>
                   <view class='timeMsg'>
                     <view class='time'>{{item.showTime}}</view>
-                    <view class='msg'>
-                      <!--<view class='message' bindtap='donateLeaveWord' data-id="{{item.id}}" data-index="{{index}}"></view>-->
-                    </view>
                   </view>
-                  <!--<view class='msg-board' style="background:{{mboard[index]?'#f3f3f3':'none'}}">
-                    <view class='board-text flex' wx:for="{{item.boardList}}" wx:for-item="bd" wx:for-index="idx" wx:key="bd{{index}}{{idx}}">
-                      <view bindtap='donateReply' class='flex' data-userId="{{bd.userId}}" data-projDonateId="{{bd.projDonateId}}" data-index="{{index}}" data-idx="{{idx}}">
-                        <block wx:if="{{bd.reply}}">{{bd.leavewordName}}
-                          <view class='hf'>回复</view>{{bd.replyName}}：</block>
-                        <block wx:else>{{bd.leavewordName}}：</block>
-                      </view>
-                      <view>{{bd.content}}</view>
-                    </view>
-                    <view class='donateMore' bindtap='donateLoadMore' data-total="1" data-id="111" data-index="0" wx:if="{{!isMore20[index]}}">查看更多</view>
-                  </view>-->
                 </view>
               </view>
             </view>
@@ -127,7 +113,6 @@
                     <image src="{{img}}" lazy-load></image>
                   </view>
                 </view>
-
               </view>
             </view>
           </view>
@@ -146,10 +131,14 @@
     </view>
   </view>
   <view class='donateBtn'>
-    <view class='btn' bindtap='donateTap'>
+    <view class='btn' bindtap='donateTap' wx:if='{{isLogin}}'>
       <image src='http://mat1.gtimg.com/gongyi/m/wx/btn_icon1.png' lazy-load></image>
       <text>我要捐款</text>
     </view>
+		<button class='btn' open-type='getUserInfo' bindgetuserinfo='getUserInfo' wx:else>
+			<image src='http://mat1.gtimg.com/gongyi/m/wx/btn_icon1.png' lazy-load></image>
+      <text>我要捐款</text>
+		</button>
   </view>
   <view class="pay {{payShow?'show':''}} {{payHide?'hide':''}}" catchtouchmove='stopmove'>
     <view class='d-hd'>

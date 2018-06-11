@@ -1,18 +1,18 @@
 
 //时间戳格式化
 const formatTime = (date, c, f) => {
-	const year = date.getFullYear();
-	const month = date.getMonth() + 1;
-	const day = date.getDate();
-	const hour = date.getHours();
-	const minute = date.getMinutes();
+	let year = date.getFullYear();
+	let month = date.getMonth() + 1;
+	let day = date.getDate();
+	let hour = date.getHours();
+	let minute = date.getMinutes();
 	if (c && !f) {
-		const second = date.getSeconds();
+		let second = date.getSeconds();
 		return [year, month, day].map(formatNumber).join(c) + ' ' + [hour, minute, second].map(formatNumber).join(':');
 	} else if (c && f) {
 		return [year, month, day].map(formatNumber).join(c) + ' ' + [hour, minute].map(formatNumber).join(':');
 	} else {
-		const second = date.getSeconds();
+		let second = date.getSeconds();
 		return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':');
 	}
 }
@@ -24,7 +24,7 @@ const formatNumber = n => {
 
 //手机号格式验证
 const telValidate = tel => {
-	const reg = /^(13[0-9]|14[579]|15[0-3,5-9]|17[0135678]|18[0-9])\d{8}$/;
+	const reg = /^(13[0-9]|14[579]|15[0-3,5-9]|166|17[0135678]|18[0-9]|19[89])\d{8}$/;
 	if (!reg.test(tel)) {
 		return false;
 	} else {
@@ -34,16 +34,16 @@ const telValidate = tel => {
 
 //数字逗号间隔
 const numFmt = value => {
-	var newValue = '';
-	var count = 0;
-	var v = value.toString().split('.');	//取小数部分
-	var r = '';
+	let newValue = '';
+	let count = 0;
+	let v = value.toString().split('.');	//取小数部分
+	let r = '';
 	if (v[1]) {
 		r = '.' + v[1].substr(0, 2);
 	} else { }
 	if (value > 999) {
 		value = v[0];
-		for (var i = value.length - 1; i >= 0; i--) {
+		for (let i = value.length - 1; i >= 0; i--) {
 			count++;
 			if (count % 3 == 0 && i > 0) {
 				newValue += value[i] + ',';
