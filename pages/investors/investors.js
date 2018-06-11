@@ -1,8 +1,7 @@
 // pages/investors/investors.js
-
-var base = 'https://www.17xs.org/';
-var dataUrl = {
-	getCompanyDetail: base + 'donateStep/getCompanyDetail.do'		//企业详情
+const app = getApp().globalData;
+var api = {
+	getCompanyDetail: app.base + 'donateStep/getCompanyDetail.do'		//企业详情
 };
 Page({
 	data: {
@@ -11,33 +10,32 @@ Page({
 	viewAllTxt: function () {
 		this.setData({ summary: this.data.introduction, showMore: false });
 	},
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
 	onLoad: function (options) {
-		var that = this;
+		const that = this;
 		if (options.companyId) {
 			that.setData({ hasCom: true });
+			wx.showLoading({
+				title: '加载中...'
+			})
 			wx.request({
-				url: dataUrl.getCompanyDetail,
+				url: api.getCompanyDetail,
 				method: 'GET',
 				data: { companyId: options.companyId },
-				success: function (res) {
+				success: res => {
 					if (res.data.code == 1) {
-						var result = res.data.result;
+						let r = res.data.result;
 						that.setData({
-							companyImgUrl: result.companyImageUrl,
-							companyName: result.name,
-							projectCount: result.projectCount,
-							donateAmount: result.donateAmount,
-							projects: result.project
+							companyImgUrl: r.companyImageUrl,
+							companyName: r.name,
+							projectCount: r.projectCount,
+							donateAmount: r.donateAmount,
+							projects: r.project
 						});
-						var obj = {}, str = '';
-						for (var i = 0; i < result.project.length; i++) {
-							if (result.project[i].totalStep > 9999999) {
+						let obj = {}, str = '';
+						for (let i = 0; i < r.project.length; i++) {
+							if (r.project[i].totalStep > 9999999) {
 								str = 'projects[' + i + '].totalStep';
-								obj[str] = result.project[i].totalStep.toString().substring(0, -4);
+								obj[str] = r.project[i].totalStep.toString().substring(0, -4);
 								str = 'projects[' + i + '].unit';
 								obj[str] = '万';
 								that.setData(obj);
@@ -49,9 +47,12 @@ Page({
 								obj = {};
 							}
 						}
-						var txt = result.introduction;
+						let txt = r.introduction;
+						if(!txt || txt == ''){
+							txt = '无';
+						}
 						if (txt.length > 60) {
-							var sTxt = txt.substr(0, 61);
+							let sTxt = txt.substr(0, 61);
 							that.setData({ summary: sTxt, showMore: true, introduction: txt });
 						} else {
 							that.setData({ summary: txt });
@@ -64,6 +65,9 @@ Page({
 							duration: 2000
 						});
 					}
+				},
+				complete: () => {
+					wx.hideLoading()
 				}
 			});
 		} else {

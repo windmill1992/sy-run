@@ -1,9 +1,8 @@
 // pages/projectIndex/projectIndex.js
-
-var base = 'https://www.17xs.org/';
-var dataUrl = {
-	projectList: base + '/project/list_h5.do',										//项目列表
-	latestdonationlist: base + '/project/latestdonationlist.do'		//最新
+const app = getApp().globalData;
+const api = {
+	projectList: app.base + 'project/list_h5.do',										//项目列表
+	latestdonationlist: app.base + 'project/latestdonationlist.do'		//最新
 };
 var page = 1;
 Page({
@@ -29,22 +28,22 @@ Page({
 		hasMore: -1
 	},
 	onLoad: function () {
-		var dd = this.data;
-		var a = { 'typeName': dd.kindData, 'sortType': dd.sortData, 'status': dd.statusData };
+		let dd = this.data;
+		let a = { 'typeName': dd.kindData, 'sortType': dd.sortData, 'status': dd.statusData };
 		this.getProjectList(1, 10, a);
 	},
 	switchTab: function (e) {
-		var that = this;
-		var dd = that.data;
-		var i = Number(e.currentTarget.dataset.idx);
-		var obj = {}, str = '';
+		const that = this;
+		let dd = that.data;
+		let i = Number(e.currentTarget.dataset.idx);
+		let obj = {}, str = '';
 		wx.showActionSheet({
 			itemList: dd.itemLists[i],
 			itemColor: '#333',
-			success: function (res) {
+			success: res => {
 				if (!res.cancel) {
 					that.setData({ projectLists: [] });
-					for (var j = 0; j < dd.tab.length; j++) {
+					for (let j = 0; j < dd.tab.length; j++) {
 						if (dd.tab[j] == 'on') {
 							str = 'tab[' + j + ']';
 							obj[str] = '';
@@ -56,8 +55,8 @@ Page({
 					str = 'tab[' + i + ']';
 					obj[str] = 'on';
 					that.setData(obj);
-					var x = res.tapIndex;
-					var a = {};
+					let x = res.tapIndex;
+					let a = {};
 					switch (i) {
 						case 0:
 							that.setData({ allKinds: dd.itemLists[0][x], kindData: dd.itemData[0][x] });
@@ -83,40 +82,40 @@ Page({
 		});
 	},
 	loadMore: function () {
-		var dd = this.data;
-		var a = { 'typeName': dd.kindData, 'sortType': dd.sortData, 'status': dd.statusData };
+		let dd = this.data;
+		let a = { 'typeName': dd.kindData, 'sortType': dd.sortData, 'status': dd.statusData };
 		this.getProjectList(++page, 10, a);
 	},
 	getProjectList: function (pageNum, pageSize, args) {
 		wx.showLoading({
 			title: '加载中...'
 		});
-		var that = this;
-		var dd = that.data;
+		const that = this;
+		let dd = that.data;
 		wx.request({
-			url: dataUrl.projectList,
+			url: api.projectList,
 			method: 'GET',
 			data: {
 				typeName: args.typeName, sortType: args.sortType, status: args.status, page: pageNum, len: pageSize, t: new Date().getTime()
 			},
-			success: function (res) {
-				var num = pageNum * pageSize;
+			success: res => {
+				let num = pageNum * pageSize;
 				if (res.data.result != 1 && res.data.result != 2) {
-					var dt = res.data.items, datas = dt;
-					var o = {}, arr = [];
-					for (var i = 0; i < dt.length; i++) {
+					let dt = res.data.items, datas = dt;
+					let o = {}, arr = [];
+					for (let i = 0; i < dt.length; i++) {
 						o['projectId'] = dt[i].itemId;
 						if (dt[i].imageurl == null) {
-							o['projectLogo'] = 'http://www.17xs.org/res/images/logo-def.jpg';
+							o['projectLogo'] = 'https://www.17xs.org/res/images/logo-def.jpg';
 						} else {
 							o['projectLogo'] = dt[i].imageurl;
 						}
 						if (dt[i].donaAmount >= dt[i].cryMoney) {
 							o['corner'] = true;
-							o['cornerImg'] = 'http://www.17xs.org/res/images/h5/images/corner_success.png';
+							o['cornerImg'] = 'https://www.17xs.org/res/images/h5/images/corner_success.png';
 						} else if (dt[i].state == 260) {
 							o['corner'] = true;
-							o['cornerImg'] = 'http://www.17xs.org/res/images/h5/images/corner_finish.png';
+							o['cornerImg'] = 'https://www.17xs.org/res/images/h5/images/corner_finish.png';
 						} else {
 							o['corner'] = false;
 						}
@@ -129,7 +128,7 @@ Page({
 					if (dd.projectLists.length > 0) {
 						arr = dd.projectLists.concat(arr);
 					}
-					that.setData({ projectLists: arr }, function () {
+					that.setData({ projectLists: arr }, () => {
 						wx.hideLoading();
 					});
 					if (num >= res.data.total) {
@@ -140,25 +139,24 @@ Page({
 				} else {
 					that.setData({ hasMore: 0 });
 				}
-
 			}
 		});
 	},
 	onPullDownRefresh: function () {
-		var that = this;
+		const that = this;
 		wx.stopPullDownRefresh();
 		wx.showToast({
 			title: '加载中...',
 			icon: 'loading',
 			duration: 2000
 		});
-		setTimeout(function () {
+		setTimeout( () => {
 			that.onLoad();
 		}, 2000);
 	},
 	onReachBottom: function () {
-		var dd = this.data;
-		var a = { 'typeName': dd.kindData, 'sortType': dd.sortData, 'status': dd.statusData };
+		let dd = this.data;
+		let a = { 'typeName': dd.kindData, 'sortType': dd.sortData, 'status': dd.statusData };
 		this.getProjectList(++page, 10, a);
 	}
 })

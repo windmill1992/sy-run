@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.0.9",
 	"appid": "wxcb81ce7549d08030",
-	"projectname": "small",
+	"projectname": "syrun",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -54,8 +54,14 @@
 					"id": 3,
 					"name": "sign",
 					"pathName": "pages/signIn/signIn",
-					"query": "activityId=19",
+					"query": "activityId=27",
 					"scene": "1047"
+				},
+				{
+					"id": -1,
+					"name": "investor",
+					"pathName": "pages/investors/investors",
+					"query": "companyId=4029"
 				}
 			]
 		}

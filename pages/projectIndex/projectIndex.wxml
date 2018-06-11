@@ -33,6 +33,6 @@
     </view>
     <view class='loadmore c999' wx:if="{{hasMore==0}}">暂无数据</view>
     <view class='loadmore c999' wx:elif="{{hasMore==1}}">没有更多数据了</view>
-    <view class='loadmore cff6' bindtap='loadMore' wx:elif="{{hasMore==2}}">下拉加载更多</view>
+    <view class='loadmore cff6' bindtap='loadMore' wx:elif="{{hasMore==2}}">上拉加载更多</view>
   </view>
 </view>

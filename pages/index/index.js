@@ -22,7 +22,8 @@ Page({
 		endStep: 1000,
 		endStepCn: '千',
 		flag: [false, false, false],
-		hasMore: 2
+		hasMore: 2,
+		isLogin: false
 	},
 	//随机企业和项目,已捐获取捐赠时的企业和项目
 	getRandomCompany: function () {

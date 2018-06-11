@@ -1,14 +1,13 @@
 // pages/signIn/signIn.js
-var base = 'https://www.17xs.org/';
-var dataUrl = {
-	signIn: base + 'activity/sign.do',																	//签到
-	getCompanySign: base + 'activity/getCompanySign.do',								//查看签到记录
-	getSessionKey: base + 'wx/getSessionKey.do',												//获取openid
-	login: base + 'wx/login.do',																				//获取userId
-	getUserSignIn: base + 'activity/getUserIsOrNotTodaySign.do',				//判断用户今天是否签到
-	isActivityVolunteer: base + 'activity/isOrNotActivityVolunteer.do'	//判断用户是否已经成为此活动的志愿者
+const app = getApp().globalData;
+const api = {
+	signIn: app.base + 'activity/sign.do',																	//签到
+	getCompanySign: app.base + 'activity/getCompanySign.do',								//查看签到记录
+	getSessionKey: app.base + 'wx/getSessionKey.do',												//获取openid
+	login: app.base + 'wx/login.do',																				//获取userId
+	getUserSignIn: app.base + 'activity/getUserIsOrNotTodaySign.do',				//判断用户今天是否签到
+	isActivityVolunteer: app.base + 'activity/isOrNotActivityVolunteer.do'	//判断用户是否已经成为此活动的志愿者
 };
-var app = getApp();
 var page = 1;
 Page({
 	data: {
@@ -18,7 +17,7 @@ Page({
 		signInRecords: []
 	},
 	onLoad: function (options) {
-		var scene = wx.getStorageSync('scene');
+		let scene = wx.getStorageSync('scene');
 		if (scene != '1011' && scene != '1047') {
 			this.showError('请扫码进入！');
 			this.setData({ showSign: false });
@@ -33,26 +32,26 @@ Page({
 		this.login();
 	},
 	login: function () {
-		var that = this;
+		const that = this;
 		wx.login({
-			success: function (result) {
-				if (result.code) {
+			success: res => {
+				if (res.code) {
 					wx.request({
-						url: dataUrl.getSessionKey,
+						url: api.getSessionKey,
 						method: 'GET',
-						data: { js_code: result.code },
-						success: function (result2) {
-							var r = result2.data.result;
+						data: { js_code: res.code },
+						success: res2 => {
+							let r = res2.data.result;
 							wx.request({
-								url: dataUrl.login,
+								url: api.login,
 								method: 'GET',
 								data: {
 									openId: r.openId,
 									unionId: r.unionId
 								},
-								success: function (res) {
-									if (res.data.code == 1) {
-										var uid = res.data.result.userId;
+								success: res3 => {
+									if (res3.data.code == 1) {
+										let uid = res3.data.result.userId;
 										that.isActivityVolunteer(uid);
 										that.getCompanySign(page, 20, uid);
 										that.setData({ userId: uid });
@@ -72,13 +71,13 @@ Page({
 		});
 	},
 	isActivityVolunteer: function (userId) {
-		var that = this;
-		var dd = that.data;
+		const that = this;
+		let dd = that.data;
 		wx.request({
-			url: dataUrl.isActivityVolunteer,
+			url: api.isActivityVolunteer,
 			method: 'GET',
 			data: { userIdWx: userId, activityId: dd.aid },
-			success: function (res) {
+			success: res => {
 				if (res.data.code == 1) {
 					that.getUserSignIn(userId);
 				} else if (res.data.code == 4) {
@@ -92,12 +91,12 @@ Page({
 		});
 	},
 	getUserSignIn: function (userId) {
-		var that = this;
+		const that = this;
 		wx.request({
-			url: dataUrl.getUserSignIn,
+			url: api.getUserSignIn,
 			method: 'GET',
 			data: { userId: userId, activityId: that.data.aid },
-			success: function (res) {
+			success: res => {
 				if (res.data.code == 1) {
 					that.setData({ isSignIn: 1 });
 				} else if (res.data.code == 3) {
@@ -109,23 +108,23 @@ Page({
 		});
 	},
 	getCompanySign: function (pageNum, pageSize, userId) {
-		var that = this;
-		var dd = that.data;
-		var day = new Date();
-		var y = day.getFullYear();
-		var m = day.getMonth() + 1;
-		var d = day.getDate();
+		const that = this;
+		let dd = that.data;
+		let day = new Date();
+		let y = day.getFullYear();
+		let m = day.getMonth() + 1;
+		let d = day.getDate();
 		m = m < 10 ? ('0' + m) : m;
 		d = d < 10 ? ('0' + d) : d;
-		var time = y + '-' + m + '-' + d;
+		let time = y + '-' + m + '-' + d;
 		wx.request({
-			url: dataUrl.getCompanySign,
+			url: api.getCompanySign,
 			method: 'GET',
 			data: { activityId: dd.aid, time: time, pageNum: pageNum, pageSize: pageSize, userIdWx: userId },
-			success: function (res) {
+			success: res => {
 				wx.hideLoading();
 				if (res.data.code == 1) {
-					var r = res.data.result;
+					let r = res.data.result;
 					if (r.count == 0) {
 						that.setData({ hasMore: 0 });
 					} else if (r.count <= pageNum * pageSize) {
@@ -137,8 +136,8 @@ Page({
 					} else {
 						that.setData({ hasMore: 2 });
 					}
-					var arr = dd.signInRecords.concat(r.data);
-					for (var i = 0; i < arr.length; i++) {
+					let arr = dd.signInRecords.concat(r.data);
+					for (let i = 0; i < arr.length; i++) {
 						arr[i].signTime = arr[i].signTime.substr(0, 5);
 						arr[i].signOutTime = arr[i].signOutTime.substr(0, 5);
 					}
@@ -150,26 +149,23 @@ Page({
 		});
 	},
 	toSignIn: function () {
-		var that = this;
-		var dd = that.data;
-		app.getUserInfo(function (userinfo) {
-			that.setData({ userinfo: userinfo });
-			wx.request({
-				url: dataUrl.signIn,
-				method: 'GET',
-				data: { activityId: dd.aid, userId: dd.userId },
-				success: function (res) {
-					if (res.data.code == 1) {
-						that.setData({ isSignIn: 2 });
-						wx.showToast({
-							title: '签到成功'
-						});
-						that.getCompanySign(1, 20, dd.userId);
-					} else {
-						that.showError(res.data.msg);
-					}
+		const that = this;
+		let dd = that.data;
+		wx.request({
+			url: api.signIn,
+			method: 'GET',
+			data: { activityId: dd.aid, userId: dd.userId },
+			success: res => {
+				if (res.data.code == 1) {
+					that.setData({ isSignIn: 2 });
+					wx.showToast({
+						title: '签到成功'
+					});
+					that.getCompanySign(1, 20, dd.userId);
+				} else {
+					that.showError(res.data.msg);
 				}
-			});
+			}
 		});
 	},
 	showError: function (txt) {
@@ -183,13 +179,13 @@ Page({
 		this.getCompanySign(++page, 10);
 	},
 	onPullDownRefresh: function () {
-		var that = this;
+		const that = this;
 		wx.stopPullDownRefresh();
 		wx.showLoading({
 			title: '正在刷新...'
 		});
 		this.setData({ signInRecords: [] });
-		setTimeout(function () {
+		setTimeout( () => {
 			that.getCompanySign(1, 20, that.data.userId);
 		}, 500);
 	}
