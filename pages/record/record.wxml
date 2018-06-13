@@ -11,7 +11,7 @@
       <view class="yx-bd">
         <view class="record-list">
           <view class='ul'>
-            <block wx:if="{{hasDonateInfo}}">
+            <block wx:if="{{state > 0}}">
               <navigator url="/pages/projectDetail/projectDetail?projectId={{item.projectId}}" wx:for="{{recordList}}" wx:key="record{{index}}">
                 <view>
                   <view class='li'>
@@ -42,9 +42,8 @@
               <view style="text-align: center;padding: 20px;">您还未有捐步信息</view>
             </block>
           </view>
-          <view wx:if="{{state == 2}}" class='loadmore' bindtap='loadmoreTap'>点击加载更多</view>
-          <view wx:elif="{{state == 1}}" class='loadmore'>没有更多数据了</view>
-          <view wx:else style='display:none'></view>
+          <view wx:if="{{state == 2}}" class='loadmore'>上拉加载更多</view>
+          <view wx:elif="{{state == 1}}" class='loadmore no'>没有更多数据了</view>
         </view>
       </view>
     </view>

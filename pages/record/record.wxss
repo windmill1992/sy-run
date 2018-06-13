@@ -55,6 +55,10 @@
   text-align: left;
 }
 
+.yx-bd .record-list navigator {
+  display: block;
+}
+
 .yx-bd .record-list .li {
   position: relative;
   margin-bottom: 54rpx;
@@ -194,4 +198,8 @@
   text-align: center;
   color: #ff6810;
   font-size: 28rpx;
+}
+
+.loadmore.no {
+  color: #999;
 }

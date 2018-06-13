@@ -7,12 +7,21 @@ const api = {
 };
 var currentPage = 1;
 Page({
-	data: {},
+	data: {
+		totalStep: 0,
+		totalMoney: 0,
+		state: -1,
+		recordList: []
+	},
 	getUserDonateStepRecord: function (pageNum, pageSize) {
 		const that = this;
+		let dd = that.data;
 		wx.getStorage({
 			key: 'userId',
 			success: res => {
+				wx.showLoading({
+					title: '加载中...'
+				})
 				wx.request({
 					url: api.getUserDonateStepRecord,
 					method: 'GET',
@@ -20,25 +29,29 @@ Page({
 					success: res1 => {
 						let r = res1.data.result;
 						if (r.length > 0) {
-							that.setData({ recordList: r, hasDonateInfo: true });
-							for (let i = 0; i < r.length; i++) {
-								let obj = {};
-								let str = "recordList[" + i + "].donateTime";
-								obj[str] = util.formatTime(new Date(r[i].donateTime));
-								that.setData(obj);
+							let more = 0;
+							if(res1.data.state == 0){
+								more = 1;
+							}else{
+								more = 2;
 							}
-						} else {
-							that.setData({ hasDonateInfo: false });
-						}
-						if (res1.data.state) {
-							that.setData({ state: 2 });
-						} else if (currentPage > 1) {
-							that.setData({ state: 1 });
+							for (let i = 0; i < r.length; i++) {
+								r[i].donateTime = util.formatTime(new Date(r[i].donateTime));
+							}
+							let arr = dd.recordList.concat(r);
+							that.setData({ recordList: arr, state: more });
 						} else {
 							that.setData({ state: 0 });
 						}
+					},
+					complete: () => {
+						that.setData({ loading: false });
+						wx.hideLoading();
 					}
 				});
+			},
+			fail: () => {
+				wx.navigateBack();
 			}
 		});
 	},
@@ -66,8 +79,11 @@ Page({
 			}
 		})
 	},
-	loadmoreTap: function () {
-		this.getUserDonateStepRecord(++currentPage, 10);
+	onReachBottom: function () {
+		if(this.data.state == 2 && !this.data.loading){
+			this.setData({ loading: true });
+			this.getUserDonateStepRecord(++currentPage, 10);
+		}
 	},
 	onLoad: function () {
 		this.getUserStatistics();
@@ -77,6 +93,8 @@ Page({
 		const that = this;
 		setTimeout( () => {
 			wx.stopPullDownRefresh();
+			currentPage = 1;
+			that.setData({ recordList: [] });
 			that.onLoad();
 		}, 1000);
 	},

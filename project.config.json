@@ -33,9 +33,9 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "4232",
+					"name": "4574",
 					"pathName": "pages/projectDetail/projectDetail",
-					"query": "projectId=4232",
+					"query": "projectId=4574",
 					"scene": "1001"
 				},
 				{
@@ -62,6 +62,13 @@
 					"name": "investor",
 					"pathName": "pages/investors/investors",
 					"query": "companyId=4029"
+				},
+				{
+					"id": -1,
+					"name": "record",
+					"pathName": "pages/record/record",
+					"query": "",
+					"scene": "1001"
 				}
 			]
 		}

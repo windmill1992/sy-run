@@ -38,7 +38,7 @@ Page({
 				openId: that.data.openId,
 				unionId: that.data.unionId
 			},
-			success: function (res) {
+			success: res => {
 				if (res.data.code == 1) {
 					let userId = res.data.result.userId;
 					that.setData({ userId: userId });
@@ -46,52 +46,57 @@ Page({
 						key: 'userId',
 						data: userId
 					});
-					wx.request({
-						url: api.getRandomCompanyInfo,
-						data: { userId: userId },
-						success: res1 => {
-							wx.hideLoading();
-							if (res1.data.code == 1) {
-								let r = res1.data.result;
-								that.setData({
-									projectId: r.project.projectId,
-									projectTitle: r.project.projectTitle,
-									projectLogo: r.project.projectImgUrl,
-									bgUrl: 'url(' + r.project.projectImgUrl + ')',
-									donateState: false,
-									randomCompany: {
-										donateAmount: parseFloat(r.donateAmount / 10000).toFixed(2),
-										companyName: r.name,
-										slogan: r.slogan,
-										companyId: r.companyId,
-										companyImgUrl: r.companyImgUrl
-									}
-								});
-							} else if (res1.data.code == 2) {
-								let r = res1.data.result;
-								that.setData({
-									projectId: r.project.projectId,
-									projectTitle: r.project.projectTitle,
-									projectLogo: r.project.projectImgUrl,
-									bgUrl: 'url(' + r.project.projectImgUrl + ')',
-									donateState: true,
-									lastDonated: {
-										userName: r.nickName,
-										companyId: r.companyId,
-										cLogo: r.companyImgUrl,
-										cName: r.name,
-										amount: r.userDonatAmount,
-										projTitle: r.project.projectTitle,
-										projId: r.project.projectId,
-										steps: r.stepCount
-									}
-								});
-							}
-						}
-					});
+					that.getRandomCompanyInfo(userId);
 				} else {
 					that.showError('获取用户信息失败！');
 					return;
+				}
+			}
+		});
+	},
+	getRandomCompanyInfo: function(userId){
+		const that = this;
+		userId = !userId ? -1 : userId;
+		wx.request({
+			url: api.getRandomCompanyInfo,
+			data: { userId: userId },
+			success: res1 => {
+				wx.hideLoading();
+				if (res1.data.code == 1) {
+					let r = res1.data.result;
+					that.setData({
+						projectId: r.project.projectId,
+						projectTitle: r.project.projectTitle,
+						projectLogo: r.project.projectImgUrl,
+						bgUrl: 'url(' + r.project.projectImgUrl + ')',
+						donateState: false,
+						randomCompany: {
+							donateAmount: parseFloat(r.donateAmount / 10000).toFixed(2),
+							companyName: r.name,
+							slogan: r.slogan,
+							companyId: r.companyId,
+							companyImgUrl: r.companyImgUrl
+						}
+					});
+				} else if (res1.data.code == 2) {
+					let r = res1.data.result;
+					that.setData({
+						projectId: r.project.projectId,
+						projectTitle: r.project.projectTitle,
+						projectLogo: r.project.projectImgUrl,
+						bgUrl: 'url(' + r.project.projectImgUrl + ')',
+						donateState: true,
+						lastDonated: {
+							userName: r.nickName,
+							companyId: r.companyId,
+							cLogo: r.companyImgUrl,
+							cName: r.name,
+							amount: r.userDonatAmount,
+							projTitle: r.project.projectTitle,
+							projId: r.project.projectId,
+							steps: r.stepCount
+						}
+					});
 				}
 			}
 		});
@@ -491,7 +496,7 @@ Page({
 			title: '加载中...',
 			mask: true
 		});
-		that.setData({ flag: [false, false, false] });
+		that.setData({ flag: [false, false, false], rejectAuth: false });
 		wx.login({
 			success: res => {
 				if (res.code) {
@@ -512,26 +517,35 @@ Page({
 										that.setData({ encryptedData: wRunEncryptedData, iv: res2.iv });
 										that.get3rdSession();
 									},
-									fail: function () {
+									fail: () => {
+										that.setData({ rejectAuth: true });
+										that.getRandomCompanyInfo();
 										wx.hideLoading();
 									}
 								});
 							} else {
-								wx.openSetting({
-									success: res2 => {
-										if (res2 && res2.authSetting['scope.werun'] === true) {
-											wx.getWeRunData({
-												success: function (res3) {
-													const wRunEncryptedData = res3.encryptedData;
-													that.setData({ encryptedData: wRunEncryptedData, iv: res3.iv });
-													that.get3rdSession();
-												}
-											});
-										} else {
-											wx.hideLoading();
+								that.getRandomCompanyInfo();
+								let arr = wx.getSystemInfoSync().SDKVersion.split('.');
+								if((arr[0] >= 2 && arr[1] >= 1) || (arr[0] >= 2 && arr[1] == 0 && arr[2] >= 7)){
+									that.setData({ rejectAuth: true });
+									wx.hideLoading();
+								}else{
+									wx.openSetting({
+										success: res2 => {
+											if (res2 && res2.authSetting['scope.werun'] === true) {
+												wx.getWeRunData({
+													success: function (res3) {
+														const wRunEncryptedData = res3.encryptedData;
+														that.setData({ encryptedData: wRunEncryptedData, iv: res3.iv });
+														that.get3rdSession();
+													}
+												});
+											} else {
+												wx.hideLoading();
+											}
 										}
-									}
-								});
+									});
+								}
 							}
 						}
 					});
@@ -540,6 +554,14 @@ Page({
 				}
 			}
 		});
+	},
+	openSetting: function(e){
+		console.log(e);
+		if(e.detail.authSetting['scope.werun']){
+			this.onLoad();
+		}else{
+			this.showError('授权失败');
+		}
 	},
 	onPageScroll: function (e) {
 		const that = this;

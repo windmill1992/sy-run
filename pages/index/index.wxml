@@ -30,7 +30,8 @@
             </view>
           </view>
           <view>
-            <button class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
+            <button wx:if='{{!rejectAuth}}' class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
+						<button wx:else open-type='openSetting' bindopensetting="openSetting" class='btn'>拼手气捐步</button>
           </view>
           <text class="p mt10 f13 c999 txtC">满{{endStep}}步即可捐出步数</text>
         </block>
@@ -82,8 +83,7 @@
               </view>
               <view class="done-block-m">
                 <view class="cont-p c999">
-                  携手
-                  <text class="c333">{{lastDonated.cName}}</text> 捐出 {{lastDonated.amount}} 元
+                  携手<text class="c333">{{lastDonated.cName}}</text> 捐出 {{lastDonated.amount}} 元
                 </view>
               </view>
             </view>
@@ -156,7 +156,7 @@
       </view>
     </view>
     <view class="bd-recordLink mt10 mb10 txtC">
-      <navigator url="/pages/record/record" class="c666">查看我的行善记录 ></navigator>
+      <navigator url="/pages/record/record" class="c666" hover-class='none'>查看我的行善记录 ></navigator>
     </view>
     <view class="foot-logo txtC">
       <view class="wx">
