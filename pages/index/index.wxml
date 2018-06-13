@@ -30,7 +30,7 @@
             </view>
           </view>
           <view>
-            <button wx:if='{{!rejectAuth}}' class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
+            <button wx:if='{{!rejectAuth || !canIUse}}' class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
 						<button wx:else open-type='openSetting' bindopensetting="openSetting" class='btn'>拼手气捐步</button>
           </view>
           <text class="p mt10 f13 c999 txtC">满{{endStep}}步即可捐出步数</text>

@@ -204,47 +204,60 @@ Page({
 	donateStep: function () {
 		const that = this;
 		let dt = that.data;
-		if (dt.step < dt.endStep) {
-			that.setData({ notEnoughShow: true });
-			let word = [
-				'帅的人已日均万步，丑的人还原地踏步，你选哪个？',
-				'一整天都没有运动，别等沙发上的土豆都发了芽',
-				'今天运动量还没达标哦~宝宝坚持再走几步吧',
-				'还差一点就达标啦，宝宝加油~',
-				'就差一点点了哦，再走几步吧~'
-			];
-			let deg = Math.ceil(parseFloat(dt.step / dt.endStep * 180).toFixed(1));
-			if (deg < 18) {
-				that.setData({ word: word[0] });
-			} else if (deg < 36) {
-				that.setData({ word: word[1] });
-			} else if (deg < 126) {
-				that.setData({ word: word[2] });
-			} else if (deg < 162) {
-				that.setData({ word: word[3] });
-			} else {
-				that.setData({ word: word[4] });
-			}
-			setTimeout(() => {
-				that.runProgress(1000, 500, deg);
-			}, 100);
-		} else {
-			wx.request({
-				url: api.getUserUpdateRunData,
-				method: 'GET',
-				data: { userId: dt.userId },
-				success: res => {
-					if (res.data.code == 1) {
-						let r = res.data.result;
-						that.setData({ amount: r.amount });
-						that.setData({ enoughShow: true });
+		if(dt.rejectAuth){
+			wx.openSetting({
+				success: res2 => {
+					if (res2 && res2.authSetting['scope.werun'] === true) {
+						that.onLoad();
 					} else {
-						that.setData({ amount: 0 });
-						that.showError('服务器错误，请稍后再试！');
-						return;
+						that.showError('授权失败');
+						wx.hideLoading();
 					}
 				}
 			});
+		}else{
+			if (dt.step < dt.endStep) {
+				that.setData({ notEnoughShow: true });
+				let word = [
+					'帅的人已日均万步，丑的人还原地踏步，你选哪个？',
+					'一整天都没有运动，别等沙发上的土豆都发了芽',
+					'今天运动量还没达标哦~宝宝坚持再走几步吧',
+					'还差一点就达标啦，宝宝加油~',
+					'就差一点点了哦，再走几步吧~'
+				];
+				let deg = Math.ceil(parseFloat(dt.step / dt.endStep * 180).toFixed(1));
+				if (deg < 18) {
+					that.setData({ word: word[0] });
+				} else if (deg < 36) {
+					that.setData({ word: word[1] });
+				} else if (deg < 126) {
+					that.setData({ word: word[2] });
+				} else if (deg < 162) {
+					that.setData({ word: word[3] });
+				} else {
+					that.setData({ word: word[4] });
+				}
+				setTimeout(() => {
+					that.runProgress(1000, 500, deg);
+				}, 100);
+			} else {
+				wx.request({
+					url: api.getUserUpdateRunData,
+					method: 'GET',
+					data: { userId: dt.userId },
+					success: res => {
+						if (res.data.code == 1) {
+							let r = res.data.result;
+							that.setData({ amount: r.amount });
+							that.setData({ enoughShow: true });
+						} else {
+							that.setData({ amount: 0 });
+							that.showError('服务器错误，请稍后再试！');
+							return;
+						}
+					}
+				});
+			}
 		}
 	},
 	toDonate: function () {
@@ -524,27 +537,13 @@ Page({
 									}
 								});
 							} else {
+								wx.hideLoading();
 								that.getRandomCompanyInfo();
 								let arr = wx.getSystemInfoSync().SDKVersion.split('.');
 								if((arr[0] >= 2 && arr[1] >= 1) || (arr[0] >= 2 && arr[1] == 0 && arr[2] >= 7)){
-									that.setData({ rejectAuth: true });
-									wx.hideLoading();
+									that.setData({ rejectAuth: true, canIUse: true });
 								}else{
-									wx.openSetting({
-										success: res2 => {
-											if (res2 && res2.authSetting['scope.werun'] === true) {
-												wx.getWeRunData({
-													success: function (res3) {
-														const wRunEncryptedData = res3.encryptedData;
-														that.setData({ encryptedData: wRunEncryptedData, iv: res3.iv });
-														that.get3rdSession();
-													}
-												});
-											} else {
-												wx.hideLoading();
-											}
-										}
-									});
+									that.setData({ rejectAuth: true });
 								}
 							}
 						}
