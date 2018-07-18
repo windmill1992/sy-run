@@ -3,7 +3,7 @@
   <view class="ds-hd flex flexcol">
     <view class="hd-title">
       <text class="p">{{projectTitle}}</text>
-      <button id="changeProj" bindtap='getRandomProjectInfo'>换一换</button>
+      <button id="changeProj" bindtap='getRandomProjectInfo' wx:if='{{state == 1}}'>换一换</button>
     </view>
     <view class="hd-pic flex1" style='background-image:{{bgUrl}}' bindtap='toProjectDetail'>
       <text class="hd-pic-link red" wx:if="{{!donateState}}">我要捐款</text>
@@ -29,10 +29,13 @@
               </view>
             </view>
           </view>
-          <view>
+          <view wx:if='{{userInfo.nickName}}'>
             <button wx:if='{{!rejectAuth || !canIUse}}' class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
 						<button wx:else open-type='openSetting' bindopensetting="openSetting" class='btn'>拼手气捐步</button>
           </view>
+					<view wx:else>
+						<button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='btn'>拼手气捐步</button>
+					</view>
           <text class="p mt10 f13 c999 txtC">满{{endStep}}步即可捐出步数</text>
         </block>
         <block wx:elif="{{!donateState && randomCompany.donateAmount<=0}}">

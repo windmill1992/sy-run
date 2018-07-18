@@ -359,7 +359,6 @@ Page({
 		});
 	},
 	getUserInfo: function(e) {
-		console.log(e);
 		if(e.detail.userInfo){
 			let user = e.detail.userInfo;
 			let obj = {

@@ -23,7 +23,9 @@ Page({
 		endStepCn: '千',
 		flag: [false, false, false],
 		hasMore: 2,
-		isLogin: false
+		isLogin: false,
+		cid: 0,
+		pid: 0,
 	},
 	//随机企业和项目,已捐获取捐赠时的企业和项目
 	getRandomCompany: function () {
@@ -36,12 +38,13 @@ Page({
 				nickName: user.nickName,
 				coverImgUrl: user.avatarUrl,
 				openId: that.data.openId,
-				unionId: that.data.unionId
+				unionId: that.data.unionId,
 			},
 			success: res => {
 				if (res.data.code == 1) {
-					let userId = res.data.result.userId;
-					that.setData({ userId: userId });
+					const r = res.data.result;
+					let userId = r.userId;
+					that.setData({ userId: userId, state: r.state });
 					wx.setStorage({
 						key: 'userId',
 						data: userId
@@ -59,7 +62,12 @@ Page({
 		userId = !userId ? -1 : userId;
 		wx.request({
 			url: api.getRandomCompanyInfo,
-			data: { userId: userId },
+			method: 'GET',
+			data: { 
+				userId: userId,
+				companyId: that.data.cid,
+				projectId: that.data.pid,
+			},
 			success: res1 => {
 				wx.hideLoading();
 				if (res1.data.code == 1) {
@@ -503,8 +511,11 @@ Page({
 			}
 		});
 	},
-	onLoad: function () {
+	onLoad: function (options) {
 		const that = this;
+		if(options.cid){
+			this.setData({ cid: options.cid, pid: options.pid, options: options });
+		}
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
@@ -553,13 +564,22 @@ Page({
 				}
 			}
 		});
+		if(wx.getStorageSync('user')){
+			this.setData({ userInfo: wx.getStorageSync('user') });
+		}
 	},
 	openSetting: function(e){
-		console.log(e);
 		if(e.detail.authSetting['scope.werun']){
 			this.onLoad();
 		}else{
 			this.showError('授权失败');
+		}
+	},
+	getUserInfo: function(e) {
+		if(e.detail.userInfo){
+			this.setData({ userInfo: e.detail.userInfo });
+			this.donateStep();
+			wx.setStorageSync('user', e.detail.userInfo);
 		}
 	},
 	onPageScroll: function (e) {
@@ -576,14 +596,13 @@ Page({
 		} else { }
 	},
 	onPullDownRefresh: function () {
-		const that = this;
 		wx.stopPullDownRefresh();
 		wx.showToast({
 			title: '加载中...',
 			icon: 'loading',
 			duration: 2000
 		});
-		that.onLoad();
+		this.onLoad(this.data.options);
 	},
 	stopmove: function () { },
 	showError: function (txt) {

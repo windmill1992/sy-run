@@ -406,10 +406,11 @@
 }
 
 .ds-bd .bd-effect .effect-list .effect-item .item-logo image {
-  width: 80%;
-  height: 80%;
-  margin: 10%;
+  width: 90%;
+  height: 90%;
+  margin: 5%;
   vertical-align: top;
+	border-radius: 100%;
 }
 
 .ds-bd .bd-effect .effect-list .effect-item .item-info {

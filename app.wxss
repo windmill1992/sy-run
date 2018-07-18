@@ -47,7 +47,7 @@ navigator {
 
 @font-face {
   font-family: dinc;
-  src: url(http://www.17xs.org/res/fonts/DINCond-Bold.otf);
+  src: url(https://www.17xs.org/res/fonts/DINCond-Bold.otf);
 }
 
 .inline {
