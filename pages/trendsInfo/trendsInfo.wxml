@@ -1,0 +1,161 @@
+<!--pages/trendsInfo/trendsInfo.wxml-->
+<scroll-view class='pageContainer' scroll-y bindscroll='handleScroll'>
+	<view class='ti-hd'>
+		<view class='hd-title'>童步益行关爱少年</view>
+		<view class='hd-from'>由 鸿金鹏集团 发起</view>
+	</view>
+	<view class='ti-navbox {{fixed ? "fixed" : ""}}' id='navBox'>
+		<view class='navs flex fcen'>
+			<view class='nav-item {{nav == 0 ? "on" : ""}}' bindtap='changeNav' data-nav='0'>捐步TOP100</view>
+			<view class='nav-item {{nav == 1 ? "on" : ""}}' bindtap='changeNav' data-nav='1'>捐步动态</view>
+		</view>
+	</view>
+	<view class='ti-bd'>
+		<view class='bd-item {{nav == 0 ? "show" : ""}}'>
+			<view class='bd-list'>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank1'>
+							<text class='num'>1</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='hd-rank'>
+						<view class='ranks rank2'>
+							<text class='num'>2</text>
+						</view>
+					</view>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='nick'>何西岗</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+			</view>
+			<view class='more' bindtap='loadmore'>展开更多</view>
+		</view>
+		<view class='bd-item {{nav == 1 ? "show" : ""}}'>
+			<view class='bd-list'>
+				<view class='item flex fcen'>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='flex spb fcen'>
+							<view class='nick'>何西岗</view>
+							<view class='time'>8个小时前</view>
+						</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+				<view class='item flex fcen'>
+					<view class='avatar'>
+						<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+					</view>
+					<view class='info flex1'>
+						<view class='flex spb fcen'>
+							<view class='nick'>何西岗</view>
+							<view class='time'>8个小时前</view>
+						</view>
+						<view class='txt'>捐出922970步，兑换捐款69.83元</view>
+					</view>
+				</view>
+			</view>
+			<view class='more' bindtap='loadmore'>展开更多</view>
+		</view>
+	</view>
+</scroll-view>

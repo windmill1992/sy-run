@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 10,
 			"list": [
 				{
 					"id": 0,
@@ -92,6 +92,12 @@
 					"id": 9,
 					"name": "teamCreate",
 					"pathName": "pages/teamCreate/teamCreate",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "trends",
+					"pathName": "pages/trendsInfo/trendsInfo",
 					"query": ""
 				}
 			]

@@ -13,7 +13,8 @@
     "pages/signIn/signIn",
     "pages/teamDetail/teamDetail",
     "pages/teams/teams",
-    "pages/teamCreate/teamCreate"
+    "pages/teamCreate/teamCreate",
+    "pages/trendsInfo/trendsInfo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

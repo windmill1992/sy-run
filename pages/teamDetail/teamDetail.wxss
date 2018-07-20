@@ -275,12 +275,20 @@
 	flex-shrink: 0;
 }
 
+.bd-list .item .avatar image{
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+}
+
 .bd-list .item .info{
 	overflow: hidden;
 }
 
 .bd-list .item .nick{
 	font-size: 32rpx;
+	font-weight: 500;
+	color: #222a3f;
 	width: auto;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -305,11 +313,13 @@
 
 .td-ft .btn1 {
   width: 100%;
-  height: 100%;
+  height: 112rpx;
+	line-height: 112rpx;
   background: #ff6811;
   text-align: center;
   color: #fff;
   font-size: 28rpx;
+	border-radius: 0;
 }
 
 .notEnoughDialog .title {
