@@ -1,0 +1,367 @@
+/* pages/teamDetail/teamDetail.wxss */
+@import './dialog.wxss';
+
+.pageContainer {
+  height: 100%;
+  color: #687684;
+  line-height: 1.5;
+  font-family: PingFang SC, tahoma, arial, helvetica neue, hiragino sans gb, microsoft yahei, sans-serif;
+}
+
+.td-hd {
+  background: #fff;
+  box-shadow: 0 4rpx 16rpx 0 rgba(34, 42, 63, 0.1);
+}
+
+.hd-pic {
+  position: relative;
+  height: 0;
+  padding-top: 50%;
+  background-color: #687684;
+}
+
+.hd-pic image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.hd-main {
+  position: relative;
+  padding: 0 32rpx 32rpx;
+}
+
+.hd-rank .ranks {
+  width: 92rpx;
+  height: 92rpx;
+  margin: -46rpx auto 0;
+}
+
+.hd-rank .ranks.rank1, .hd-rank .ranks.rank2, .hd-rank .ranks.rank3 {
+  position: relative;
+  width: 92rpx;
+  height: 112rpx;
+  margin: -62rpx auto 0;
+  background-color: transparent;
+}
+
+.hd-rank .ranks.rank1::before, .hd-rank .ranks.rank2::before,
+.hd-rank .ranks.rank3::before, .hd-rank .ranks.rank1::after,
+.hd-rank .ranks.rank2::after, .hd-rank .ranks.rank3::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hd-rank .ranks.rank1::before, .hd-rank .ranks.rank2::before,
+.hd-rank .ranks.rank3::before {
+  width: 60rpx;
+  height: 60rpx;
+  background-image: linear-gradient(90deg, #ff4d21, #ff4d21 33%, #ff7c6e 0, #ff7c6e 66%, #ff4d21 67%, #ff4d21);
+}
+
+.hd-rank .ranks.rank1::after, .hd-rank .ranks.rank2::after,
+.hd-rank .ranks.rank3::after {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12rpx 30rpx;
+  border-color: transparent transparent #fff;
+  transform: translateX(-50%) scale(1.5);
+}
+
+.hd-rank .ranks .num {
+  display: block;
+  position: relative;
+  width: 92rpx;
+  height: 92rpx;
+  text-align: center;
+  line-height: 92rpx;
+  font-size: 60rpx;
+  font-weight: 700;
+  color: #fff;
+  background-color: #687684;
+  border-radius: 100%;
+  font-family: dinc;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.hd-rank .ranks.rank1 .num {
+  background: #ffd800;
+}
+
+.hd-rank .ranks.rank2 .num {
+  background: #cad1da;
+}
+
+.hd-rank .ranks.rank3 .num {
+  background: #df9d67;
+}
+
+.hd-title {
+  color: #222a3f;
+  font-weight: 500;
+  font-size: 56rpx;
+  text-align: center;
+  margin-top: 20rpx;
+}
+
+.hd-from {
+  white-space: nowrap;
+  max-width: 100%;
+  text-align: center;
+}
+
+.hd-from .from-name {
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}
+
+.hd-slogan {
+  margin-top: 30rpx;
+  text-align: center;
+}
+
+.hd-slogan .slogan-txt {
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100%;
+  text-align: left;
+  color: #222a3f;
+}
+
+.hd-data {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 56rpx;
+}
+
+.hd-data .item {
+  width: 200rpx;
+  position: relative;
+}
+
+.hd-data .item .num {
+  font-size: 32rpx;
+  font-family: dinc;
+	color: #222a3f;
+}
+
+.hd-data .item.first::after {
+  content: " ";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  height: auto;
+  border-right: 1px solid #dee4e8;
+  color: #dee4e8;
+  transform-origin: 100% 0;
+  transform: scaleX(0.5);
+}
+
+.hd-septitle {
+  height: 1px;
+  margin: 60rpx 0;
+}
+
+.hd-septitle::before, .hd-septitle::after {
+  content: " ";
+  flex: 1;
+  display: block;
+  height: 1px;
+  background-color: #dee4e8;
+  transform: scaleY(0.5);
+}
+
+.hd-septitle .sep-txt {
+  padding: 0 16rpx;
+  font-size: 24rpx;
+}
+
+.hd-pro {
+  padding: 32rpx;
+  align-items: flex-start;
+}
+
+.hd-pro .pic {
+  width: 200rpx;
+  height: 150rpx;
+  background: #eee;
+  overflow: hidden;
+  background-image: url(http://p.qpic.cn/gongyi/3e28f14aa0516842c79e20f73d7ce10685f6dd6a723c46178f69e960e90241ef33d4eb71fda41c904133c92148c681e935f8422b4ed02999/0);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-right: 30rpx;
+}
+
+.hd-pro .con {
+  overflow: hidden;
+}
+
+.hd-pro .con .p-title {
+  line-height: 1.4;
+  font-size: 32rpx;
+  color: #222a3f;
+  font-weight: 500;
+}
+
+.hd-pro .con .txts {
+  margin-top: 6rpx;
+}
+
+.no-step {
+  height: 132rpx;
+  padding: 0 32rpx;
+  color: rgb(34, 42, 63);
+}
+
+.td-bd{
+	margin-top: 32rpx;
+	padding: 32rpx 0;
+	background-color: #fff;
+	box-shadow: 0 4rpx 16rpx 0 rgba(34,42,63,.1);
+	margin-bottom: 130rpx;
+}
+
+.bd-title{
+	height: 132rpx;
+	padding: 0 32rpx;
+}
+
+.bd-title .txt{
+	font-size: 48rpx;
+	color: #222a3f;
+	font-weight: 500;
+}
+
+.bd-title .link{
+	font-size: 24rpx;
+	color: #ff6810;
+	padding: 10rpx;
+}
+
+.bd-title .link::after{
+	content: '';
+	display: inline-block;
+	width: 12rpx;
+	height: 12rpx;
+	border-top: 1px solid #ff6811;
+	border-right: 1px solid #ff6811;
+	transform: rotate(45deg) translateY(5rpx);
+	margin-left: 6rpx;
+}
+
+.bd-list .item{
+	padding: 32rpx;
+}
+
+.bd-list .item .avatar{
+	margin-right: 30rpx;
+	width: 80rpx;
+	height: 80rpx;
+	overflow: hidden;
+	border-radius: 100%;
+	background: #eee;
+	flex-shrink: 0;
+}
+
+.bd-list .item .info{
+	overflow: hidden;
+}
+
+.bd-list .item .nick{
+	font-size: 32rpx;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+
+.bd-list .item .txt{
+	margin-top: 6rpx;
+}
+
+.td-ft {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 112rpx;
+  line-height: 112rpx;
+  transition: 0.3s ease;
+  box-shadow: 0 -4rpx 16rpx 0 rgba(34, 42, 63, 0.1);
+}
+
+.td-ft .btn1 {
+  width: 100%;
+  height: 100%;
+  background: #ff6811;
+  text-align: center;
+  color: #fff;
+  font-size: 28rpx;
+}
+
+.notEnoughDialog .title {
+  display: block;
+  margin-top: 8rpx;
+  line-height: 1.2;
+  color: #222a3f;
+  text-align: center;
+  font-size: 40rpx;
+}
+
+.notEnoughDialog .h2 {
+  margin-top: 40rpx;
+  font-size: 32rpx;
+  color: #687684;
+}
+
+.run_area .run_num_area .run_desc {
+  color: #222a3f;
+}
+
+.notEnoughDialog .run_text_area {
+  font-size: 32rpx;
+  color: #222a3f;
+}
+
+.notEnoughDialog .run_dialog_inner {
+  padding-bottom: 150rpx;
+}
+
+.notEnoughDialog .close-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 96rpx;
+  line-height: 96rpx;
+  background: #fff;
+  text-align: center;
+  color: #222a3f;
+}
+
+.notEnoughDialog .close-btn::before {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  width: auto;
+  height: 1px;
+  border-top: 1px solid #dee4e8;
+  color: #dee4e8;
+  transform-origin: 0 0;
+  transform: scaleY(0.5);
+}

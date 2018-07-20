@@ -1,0 +1,131 @@
+<!--pages/teamDetail/teamDetail.wxml-->
+<view class='pageContainer'>
+	<view class='td-hd'>
+		<view class='hd-pic'>
+			<image src='http://imgcdn.gongyi.qq.com/wx_gy/0/1199719137_1528687814047756/0' mode='widthFix'></image>
+		</view>
+		<view class='hd-main'>
+			<view class='hd-rank'>
+				<view class='ranks rank1'>
+					<text class='num'>200</text>
+				</view>
+			</view>
+			<view class='hd-title'>杭州智善</view>
+			<view class='hd-from flex spc'>
+				创建人：<text class='from-name'>胡璐</text>
+			</view>
+			<view class='hd-slogan'>
+				<text class='slogan-txt'>“一起加油”</text>
+			</view>
+			<view class='hd-data flex spc fcen'>
+				<view class='item first'>
+					<view class='f12'>捐步</view>
+					<view class='num'>0</view>
+				</view>
+				<view class='item txtR'>
+					<view class='f12'>配捐总额/元</view>
+					<view class='num'>0</view>
+				</view>
+			</view>
+			<view class='hd-septitle flex fcen'>
+				<text class='sep-txt'>帮助公益项目</text>
+			</view>
+		</view>
+		<navigator url='/pages/projectDetail/projectDetail?projectId=' class='hd-pro flex' hover-class='none'>
+			<view class='pic'></view>
+			<view class='con flex1'>
+				<view class='p-title'>给乡村娃一双运动鞋</view>
+				<view class='txts'>童步益行，送一双运动鞋，让乡村少年在阳光下快乐奔跑。</view>
+			</view>
+		</navigator>
+	</view>
+	<view class='no-step flex fcen spb' wx:if='{{stepList}}'>还没有人捐步哦，快成为第一个吧</view>
+	<view class='td-bd' wx:else>
+		<view class='bd-title flex fcen spb'>
+			<view class='txt'>558位爱心人士参与</view>
+			<view class='link flex fcen'>
+				<navigator url='' class='nav'>捐步动态</navigator>
+			</view>
+		</view>
+		<view class='bd-list'>
+			<view class='item flex fcen'>
+				<view class='avatar'>
+					<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+				</view>
+				<view class='info flex1'>
+					<view class='nick'>何西岗</view>
+					<view class='txt'>捐出896328步，兑换捐款66.33元</view>
+				</view>
+			</view>
+			<view class='item flex fcen'>
+				<view class='avatar'>
+					<image src='http://imgcdn.gongyi.qq.com/gy_headimg/0/DD8DBBE18128A3CFD6344279ED1134D1/96'></image>
+				</view>
+				<view class='info flex1'>
+					<view class='nick'>何西岗</view>
+					<view class='txt'>捐出896328步，兑换捐款66.33元</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class='td-ft'>
+		<view class='btn1' bindtap='donateStep'>马上捐步</view>
+	</view>
+
+	<view class="dialog notEnoughDialog {{notEnoughShow?'show':''}} {{notEnoughHide?'hide':''}}">
+    <view class="mask"></view>
+    <view class="dialog_inner run_dialog_inner">
+			<view class='title'>捐步提示</view>
+      <view class='h2'>{{endStep}}步即可参加公益捐步</view>
+      <view class="run_area notEnoughRunArea">
+        <view class="run_progress_area">
+          <view class="run_pic_progress_area">
+            <view class="run_pic_progress_in">
+              <view class="run_pic_progress" style="transform: rotate(180deg);" animation="{{progressAni}}"></view>
+            </view>
+            <view class="run_pic_people" style="transform: rotate(0deg);" animation="{{peopleAni}}">
+              <text class='b'></text>
+            </view>
+          </view>
+          <view class="run_num_area">
+            <view class="run_num">
+              <text class="run_num_inner">{{stepFmt}}</text>
+            </view>
+            <view class="run_desc">今日运动步数</view>
+          </view>
+          <view class="run_start_num run_text_num">0</view>
+          <view class="run_end_num run_text_num">{{endStep}}</view>
+        </view>
+        <view class="run_text_area">
+          <view style="white-space: normal;">{{word}}</view>
+        </view>
+      </view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="notEnough">
+        <view class="close"></view>
+      </view>
+      <view class='close-btn' bindtap='closeDialog' data-dialog="notEnough">知道了</view>
+    </view>
+  </view>
+  <view class="dialog dialog-confirm enoughDialog {{enoughShow?'show':''}} {{enoughHide?'hide':''}}">
+    <view class="mask"></view>
+    <view class="dialog_inner">
+      <view class='h2'>您将为该项目捐出</view>
+      <view class="mySteps">
+        <span class="mySteps-num">{{stepFmt}}</span>步
+      </view>
+      <view class="match-enterprise">
+        <view>
+          <navigator url="/pages/investors/investors?companyId={{randomCompany.companyId}}">
+            <image class="match-enterprise-logo" src="{{randomCompany.companyImgUrl}}"></image>
+          </navigator>
+        </view>
+        <view class="match-enterprise-info">{{randomCompany.companyName}}将为您出资捐赠</view>
+      </view>
+      <view class="knowBtn" bindtap='toDonate'>马上捐出</view>
+      <view class="mt10 c999">您所捐出的公益步数不会影响微信运动数据</view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="enough">
+        <view class="close"></view>
+      </view>
+    </view>
+  </view>
+</view>

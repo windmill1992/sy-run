@@ -1,0 +1,26 @@
+<!--pages/teamCreate/teamCreate.wxml-->
+<view class='pageContainer'>
+	<view class='tc-hd'>
+		<view class='hd-pic'>
+			<image src='http://imgcdn.gongyi.qq.com/wx_gy/0/1199719137_1528687814047756/0' mode='widthFix'></image>
+		</view>
+		<view class='hd-inputs'>
+			<view>
+				<view class='inp-title'>队伍名称</view>
+				<view class='inp-wrap'>
+					<input type='text' maxlength='10' bindinput='getTeamName' placeholder='请输入队伍名称，10个字以内' placeholder-style='color: #dee4e8;'></input>
+				</view>
+			</view>
+			<view>
+				<view class='inp-title'>队伍口号</view>
+				<view class='inp-wrap area'>
+					<textarea auto-height bindinput='getTeamSlogan' placeholder='请输入队伍口号，20字以内' placeholder-style='color: #dee4e8;'></textarea>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class='td-ft'>
+		<view class='btn1' bindtap='createTeam' wx:if='{{isLogin}}'>创建队伍</view>
+		<button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='btn1'>创建队伍</button>
+	</view>
+</view>

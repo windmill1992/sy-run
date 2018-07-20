@@ -172,11 +172,13 @@
 .swiper-box .publisher .avatar {
   width: 100rpx;
   height: 100rpx;
+	flex-shrink: 0;
 }
 
 .swiper-box .publisher .avatar image {
   width: 100%;
   height: 100%;
+	border-radius: 100%;
 }
 
 .swiper-box .publisher .info {

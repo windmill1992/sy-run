@@ -1,0 +1,7 @@
+<!--pages/adv/adv.wxml-->
+<view class='pageContainer'>
+  <view class='adv'>
+    <image src='https://www.17xs.org/res/images/h5/mini/mini-adv.jpg' mode='widthFix'></image>
+    <view class='btn' bindtap='toIndex'>{{time}}s后跳转</view>
+  </view>
+</view>

@@ -36,7 +36,7 @@ Page({
 			method: 'GET',
 			data: {
 				nickName: user.nickName,
-				coverImgUrl: user.avatarUrl,
+				coverImageUrl: user.avatarUrl,
 				openId: that.data.openId,
 				unionId: that.data.unionId,
 			},
@@ -44,7 +44,7 @@ Page({
 				if (res.data.code == 1) {
 					const r = res.data.result;
 					let userId = r.userId;
-					that.setData({ userId: userId, state: r.state });
+					that.setData({ userId: userId });
 					wx.setStorage({
 						key: 'userId',
 						data: userId
@@ -58,25 +58,24 @@ Page({
 		});
 	},
 	getRandomCompanyInfo: function(userId){
-		const that = this;
-		userId = !userId ? -1 : userId;
+		userId = userId ? userId : 0;
 		wx.request({
 			url: api.getRandomCompanyInfo,
 			method: 'GET',
 			data: { 
 				userId: userId,
-				companyId: that.data.cid,
-				projectId: that.data.pid,
+				companyId: this.data.cid,
+				projectId: this.data.pid,
 			},
 			success: res1 => {
 				wx.hideLoading();
 				if (res1.data.code == 1) {
 					let r = res1.data.result;
-					that.setData({
+					this.setData({
 						projectId: r.project.projectId,
 						projectTitle: r.project.projectTitle,
 						projectLogo: r.project.projectImgUrl,
-						bgUrl: 'url(' + r.project.projectImgUrl + ')',
+						bgUrl: r.project.projectImgUrl,
 						donateState: false,
 						randomCompany: {
 							donateAmount: parseFloat(r.donateAmount / 10000).toFixed(2),
@@ -84,15 +83,20 @@ Page({
 							slogan: r.slogan,
 							companyId: r.companyId,
 							companyImgUrl: r.companyImgUrl
-						}
+						}, 
+						state: r.state
 					});
 				} else if (res1.data.code == 2) {
 					let r = res1.data.result;
-					that.setData({
+					let user = wx.getStorageSync('user');
+					if (user && user.nickName) {
+						r.nickName = user.nickName;
+					}
+					this.setData({
 						projectId: r.project.projectId,
 						projectTitle: r.project.projectTitle,
 						projectLogo: r.project.projectImgUrl,
-						bgUrl: 'url(' + r.project.projectImgUrl + ')',
+						bgUrl: r.project.projectImgUrl,
 						donateState: true,
 						lastDonated: {
 							userName: r.nickName,
@@ -128,7 +132,7 @@ Page({
 					let r = res.data.result.project;
 					that.setData({
 						projectLogo: r.projectImgUrl,
-						bgUrl: 'url(' + r.projectImgUrl + ')',
+						bgUrl: r.projectImgUrl,
 						projectTitle: r.projectTitle,
 						projectId: r.projectId
 					});
@@ -446,32 +450,38 @@ Page({
 		}
 	},
 	get3rdSession: function () {
-		const that = this;
 		wx.request({
 			url: api.getSessionKey,
-			data: { js_code: that.data.code },
+			data: { js_code: this.data.code },
 			method: 'GET',
 			success: res => {
 				let r = res.data.result;
 				let sessionId = r.session_key;
 				let unionId = r.unionId;
 				let openId = r.openId;
-				that.setData({ sessionId: sessionId, unionId: unionId, openId: openId });
+				this.setData({ sessionId: sessionId, unionId: unionId, openId: openId });
 				wx.setStorageSync('sessionId', sessionId);
-				wx.setStorage({ key: 'unionId', data: unionId });
-				wx.setStorage({ key: 'openId', data: openId });
-				that.getRandomCompany();
-				that.decodeUserInfo();
+				this.decodeUserInfo({ encryptedData: this.data.encryptedData, iv: this.data.iv });
+				if (!unionId || unionId == null || unionId == 'null') {
+					
+				} else {
+					wx.setStorage({ key: 'openId', data: openId });
+					wx.setStorage({ key: 'unionId', data: unionId });
+				}
+				if (this.data.userInfo.nickName) {
+					this.getRandomCompany();
+				}
+				this.getRandomCompanyInfo(0);
 			}
 		});
 	},
-	decodeUserInfo: function () {
+	decodeUserInfo: function (data) {
 		const that = this;
 		wx.request({
 			url: api.decodeInfo,
 			data: {
-				encryptedData: that.data.encryptedData,
-				iv: that.data.iv,
+				encryptedData: data.encryptedData,
+				iv: data.iv,
 				js_code: that.data.code
 			},
 			method: 'GET',
@@ -480,40 +490,48 @@ Page({
 					that.showError('请求错误!' + res.data.msg);
 					return;
 				} else {
-					setTimeout(() => {
-						let todayStep = res.data.result.stepInfoList[30];
-						that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
-						that.addUserRunData();
-					}, 1000);
+					const r = res.data.result;
+					if (r.unionId) {
+						that.setData({ unionId: r.unionId, openId: r.openId });
+						wx.setStorage({ key: 'openId', data: r.openId });
+						wx.setStorage({ key: 'unionId', data: r.unionId });
+					} else {
+						setTimeout(() => {
+							let todayStep = r.stepInfoList[30];
+							that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
+							if (that.data.userInfo.nickName) {
+								that.addUserRunData();
+							}
+						}, 1000);
+					}
 				}
 			}
 		});
 	},
 	addUserRunData: function () {
-		const that = this;
 		wx.request({
 			url: api.addUserWeRundata,
 			method: 'GET',
 			data: {
-				unionId: that.data.unionId,
-				openId: that.data.openId,
-				runData: that.data.step,
-				nickName: that.data.userInfo.nickName,
-				coverImageUrl: that.data.userInfo.avatarUrl
+				unionId: this.data.unionId,
+				openId: this.data.openId,
+				runData: this.data.step,
+				nickName: this.data.userInfo.nickName,
+				coverImageUrl: this.data.userInfo.avatarUrl
 			},
 			success: res => {
-				if (res.code == 0) {
-					that.showError('添加或更新用户运动步数失败!' + res.data.msg);
+				if (res.data.code == 0) {
+					this.showError('添加或更新用户运动步数失败!' + res.data.msg);
 					return;
-				} else if (res.code == -1) {
-					that.showError('服务器错误,请稍后再试!' + res.data.msg);
+				} else if (res.data.code == -1) {
+					this.showError('服务器错误,请稍后再试!' + res.data.msg);
 				} else { }
 			}
 		});
 	},
 	onLoad: function (options) {
 		const that = this;
-		if(options.cid){
+		if(options && options.cid){
 			this.setData({ cid: options.cid, pid: options.pid, options: options });
 		}
 		wx.showLoading({
@@ -570,7 +588,7 @@ Page({
 	},
 	openSetting: function(e){
 		if(e.detail.authSetting['scope.werun']){
-			this.onLoad();
+			this.onLoad(this.data.options);
 		}else{
 			this.showError('授权失败');
 		}
@@ -578,7 +596,8 @@ Page({
 	getUserInfo: function(e) {
 		if(e.detail.userInfo){
 			this.setData({ userInfo: e.detail.userInfo });
-			this.donateStep();
+			this.onLoad(this.data.options);
+			this.decodeUserInfo({ encryptedData: e.detail.encryptedData, iv: e.detail.iv });
 			wx.setStorageSync('user', e.detail.userInfo);
 		}
 	},

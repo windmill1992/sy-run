@@ -2,10 +2,11 @@
 <view class="pageContainer">
   <view class="ds-hd flex flexcol">
     <view class="hd-title">
-      <text class="p">{{projectTitle}}</text>
-      <button id="changeProj" bindtap='getRandomProjectInfo' wx:if='{{state == 1}}'>换一换</button>
+      <text class="p {{state == 1 ? 'hidden' : ''}}">{{projectTitle}}</text>
+      <button class='change' bindtap='getRandomProjectInfo' wx:if='{{state == 1}}'>换一换</button>
     </view>
-    <view class="hd-pic flex1" style='background-image:{{bgUrl}}' bindtap='toProjectDetail'>
+    <view class="hd-pic"  bindtap='toProjectDetail'>
+			<image src='{{bgUrl}}' mode='widthFix'></image>
       <text class="hd-pic-link red" wx:if="{{!donateState}}">我要捐款</text>
       <text class="hd-pic-link" wx:else>项目详情</text>
     </view>

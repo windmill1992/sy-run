@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -69,6 +69,30 @@
 					"pathName": "pages/record/record",
 					"query": "",
 					"scene": "1001"
+				},
+				{
+					"id": 6,
+					"name": "adv",
+					"pathName": "pages/adv/adv",
+					"query": "cid=21&pid=4619"
+				},
+				{
+					"id": -1,
+					"name": "teamDetail",
+					"pathName": "pages/teamDetail/teamDetail",
+					"query": "tid=1"
+				},
+				{
+					"id": -1,
+					"name": "team",
+					"pathName": "pages/teams/teams",
+					"query": "pid=1"
+				},
+				{
+					"id": 9,
+					"name": "teamCreate",
+					"pathName": "pages/teamCreate/teamCreate",
+					"query": ""
 				}
 			]
 		}

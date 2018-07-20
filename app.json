@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/adv/adv",
     "pages/projectDetail/projectDetail",
     "pages/donateSuccess/donateSuccess",
     "pages/projectIndex/projectIndex",
@@ -9,7 +10,10 @@
     "pages/logs/logs",
     "pages/agree/agree",
     "pages/authorize/authorize",
-    "pages/signIn/signIn"
+    "pages/signIn/signIn",
+    "pages/teamDetail/teamDetail",
+    "pages/teams/teams",
+    "pages/teamCreate/teamCreate"
   ],
   "window": {
     "backgroundTextStyle": "dark",

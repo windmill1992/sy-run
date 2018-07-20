@@ -2,8 +2,37 @@
 App({
 	onLaunch: function (options) {
 		//调用API从本地缓存中获取数据
+		if (!wx.getStorageSync('prod')) {
+			wx.clearStorageSync();
+			wx.setStorageSync('prod', '1');
+		} 
 		wx.setStorageSync('scene', options.scene);
 		wx.setStorageSync('query', options.query);
+		if (wx.getUpdateManager) {
+			const updateManager = wx.getUpdateManager();
+			updateManager.onCheckForUpdate((res) => {
+				if (res.hasUpdate) {
+					console.log('update');
+					updateManager.onUpdateReady(() => {
+						this.globalData.update = true;
+						wx.showModal({
+							title: '更新提示',
+							content: '新版本已经准备好，是否重启应用？',
+							success: res => {
+								if (res.confirm) {
+									// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+									updateManager.applyUpdate()
+								} else {
+									wx.redirectTo({
+										url: '/pages/index/index'
+									})
+								}
+							}
+						})
+					})
+				}
+			})
+		}
 	},
 	getUserInfo: function (cb) {
 		var that = this;

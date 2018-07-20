@@ -1,0 +1,99 @@
+/* pages/teams/teams.wxss */
+@import '../teamDetail/teamDetail.wxss';
+
+.hd-avatar{
+	margin: -56rpx auto 0;
+	width: 112rpx;
+	height: 112rpx;
+	box-shadow: 0 0 0 2px #fff, 0 0 40rpx 0 rgba(0, 0, 0, .1);
+	border-radius: 100%;
+	background-color: #eee;
+}
+.hd-avatar image{
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+}
+.hd-prog{
+	height: 40rpx;
+	overflow: hidden;
+	margin-top: 20rpx;
+}
+.hd-prog .prog-bar{
+	height: 12rpx;
+	background-color: #eee;
+	border-radius: 10rpx;
+	overflow: hidden;
+	transform: rotate(0deg);
+}
+.hd-prog .prog-bar .fill{
+	position: relative;
+	height: 100%;
+	border-radius: 10rpx;
+	background-color: #ff6811;
+	transition: transform .8s ease;
+	transform-origin: left center;
+	transform: translateX(-100%);
+	overflow: hidden;
+}
+.hd-prog .prog-bar .fill.show{
+	transform: translateX(0);
+}
+.hd-prog .per{
+	font-family: dinc;
+	padding-left: 20rpx;
+}
+.hd-rank{
+	width: 42rpx;
+	height: 42rpx;
+	position: relative;
+	margin-right: 30rpx;
+}
+
+.hd-rank .ranks{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%) scale(.45);
+	margin: 0 auto!important;
+}
+.bd-list .item .founder{
+	font-size: 26rpx;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+.bd-list .item .arrow-r{
+	width: 18rpx;
+	height: 18rpx;
+	border-top: 2px solid #222a3f;
+	border-right: 2px solid #222a3f;
+	transform: rotate(45deg);
+}
+.bd-more{
+	display: block;
+	font-size: 24rpx;
+	line-height: 80rpx;
+	text-align: center;
+	position: relative;
+	margin-bottom: -30rpx;
+}
+.bd-more::before{
+	content: " ";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	width: auto;
+	height: 1px;
+	border-top: 1px solid #dee4e8;
+	color: #dee4e8;
+	transform-origin: 0 0;
+	transform: scaleY(.5);
+}
+.td-ft .btn1.left{
+	background: #fff;
+	color: #222a3f;
+}

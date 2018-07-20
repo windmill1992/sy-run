@@ -97,7 +97,7 @@
       </swiper-item>
       <swiper-item>
         <view class="list {{status?'status':''}}" id='list3'>
-          <view class='fb-item' wx:for="{{hostList}}" wx:key="hos{{index}}">
+          <view class='fb-item' wx:for="{{hostList}}" wx:key="hos">
             <view class='avatar'>
               <image src="{{item.userImgUrl}}" lazy-load></image>
             </view>
@@ -116,6 +116,7 @@
               </view>
             </view>
           </view>
+					<view style='text-align: center;color:#999;font-size:28rpx;margin: 40rpx 0;' wx:if='{{!hostList || hostList.length == 0}}'>暂无反馈数据</view>
         </view>
       </swiper-item>
     </swiper>
