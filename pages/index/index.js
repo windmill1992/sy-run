@@ -470,8 +470,9 @@ Page({
 				}
 				if (this.data.userInfo.nickName) {
 					this.getRandomCompany();
+				} else {
+					this.getRandomCompanyInfo(0);
 				}
-				this.getRandomCompanyInfo(0);
 			}
 		});
 	},
