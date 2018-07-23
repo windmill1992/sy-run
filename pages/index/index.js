@@ -459,12 +459,13 @@ Page({
 				let sessionId = r.session_key;
 				let unionId = r.unionId;
 				let openId = r.openId;
-				this.setData({ sessionId: sessionId, unionId: unionId, openId: openId });
+				this.setData({ sessionId: sessionId, openId: openId });
 				wx.setStorageSync('sessionId', sessionId);
 				this.decodeUserInfo({ encryptedData: this.data.encryptedData, iv: this.data.iv });
 				if (!unionId || unionId == null || unionId == 'null') {
 					
 				} else {
+					this.setData({ unionId: unionId });
 					wx.setStorage({ key: 'openId', data: openId });
 					wx.setStorage({ key: 'unionId', data: unionId });
 				}
@@ -500,7 +501,7 @@ Page({
 						setTimeout(() => {
 							let todayStep = r.stepInfoList[30];
 							that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
-							if (that.data.userInfo.nickName) {
+							if (that.data.userInfo.nickName && that.data.unionId) {
 								that.addUserRunData();
 							}
 						}, 1000);

@@ -1,0 +1,39 @@
+<!--pages/teamThanks/teamThanks.wxml-->
+<view class='pageContainer'>
+	<view class='page fcol spb'>
+		<image src='http://imgcdn.gongyi.qq.com/wx_gy/0/1199719137_1528687814047756/0' mode='widthFix' class='cover'></image>
+		<view class='tt-item'>
+			<view class='avatar'>
+				<image src='http://thirdqq.qlogo.cn/g?b=sdk&k=OrqNLDJyFUbDJ3q2ibxVAxA&s=40&t=1483383959'></image>
+			</view>
+			<view class='user flex spc'>
+				<view class='nick'>◆♬尐飞魚★◇</view>
+				<view class='txt'>，感谢你用行动支持</view>
+			</view>
+			<view class='title'>[童步益行关爱少年]</view>
+			<view class='avatar2'>
+				<image src='http://wx.qlogo.cn/mmopen/Q3auHgzwzM4rumF4C5xRsPYPfk10icicdyVwmR69bfUkkwNtcxT8YxiboI1RRiadzCIDQDWpxcuFeQQ3130aIxbavSSHpzRo4poKHmpCmgNEggM/0'></image>
+			</view>
+			<view class='txt1'>鸿金鹏集团</view>
+			<view>已捐资为你的爱心助力</view>
+		</view>
+		<view class='tt-item'>
+			<view class='tt-data flex spc fcen'>
+				<view class='item txtL'>
+					<view class='hm'>已捐步</view>
+					<view class='num'>10411</view>
+				</view>
+				<view class='item txtR'>
+					<view class='hm'>配捐总额/元</view>
+					<view class='num'>0.1</view>
+				</view>
+			</view>
+			<view class='viewteam'>
+				<view class='btn1'>邀请好友参与</view>
+			</view>
+			<view class='sep-title flex fcen' bindtap='navtoTeams'>
+				<view class='sep-txt'>查看捐步活动</view>
+			</view>
+		</view>
+	</view>
+</view>

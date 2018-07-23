@@ -109,20 +109,16 @@
   <view class="dialog dialog-confirm enoughDialog {{enoughShow?'show':''}} {{enoughHide?'hide':''}}">
     <view class="mask"></view>
     <view class="dialog_inner">
-      <view class='h2'>您将为该项目捐出</view>
-      <view class="mySteps">
-        <span class="mySteps-num">{{stepFmt}}</span>步
-      </view>
-      <view class="match-enterprise">
-        <view>
-          <navigator url="/pages/investors/investors?companyId={{randomCompany.companyId}}">
-            <image class="match-enterprise-logo" src="{{randomCompany.companyImgUrl}}"></image>
-          </navigator>
-        </view>
-        <view class="match-enterprise-info">{{randomCompany.companyName}}将为您出资捐赠</view>
-      </view>
-      <view class="knowBtn" bindtap='toDonate'>马上捐出</view>
-      <view class="mt10 c999">您所捐出的公益步数不会影响微信运动数据</view>
+      <view class='title'>捐步确认信息</view>
+			<view class='donate-box'>
+				<view>本次捐出</view>
+				<view><text class='step-num'>{{step}}</text><text> 步</text></view>
+				<view class='support'>
+					<view class='name'>鸿金鹏集团</view>
+					<view class='txt'>将出资为您的爱心助力</view>
+				</view>
+			</view>
+      <view class="btn1" bindtap='toDonate'>确认捐出</view>
       <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="enough">
         <view class="close"></view>
       </view>

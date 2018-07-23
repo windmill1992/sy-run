@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 11,
 			"list": [
 				{
 					"id": 0,
@@ -99,6 +99,11 @@
 					"name": "trends",
 					"pathName": "pages/trendsInfo/trendsInfo",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "teamThanks",
+					"pathName": "pages/teamThanks/teamThanks"
 				}
 			]
 		}

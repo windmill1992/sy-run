@@ -1,0 +1,142 @@
+/* pages/teamThanks/teamThanks.wxss */
+.pageContainer{
+	height: 100%;
+}
+.page{
+	position: relative;
+	padding-top: 50%;
+	padding-bottom: 96rpx;
+	background: #fff;
+	box-sizing: border-box;
+	min-height: 100%;
+	overflow: hidden;
+	color: #687684;
+}
+.cover{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: #fff;
+	box-shadow: 0 4rpx 16rpx 0 rgba(34, 42, 63, .1);
+}
+.tt-item{
+	position: relative;
+	width: 100%;
+	padding: 0 32rpx;
+	box-sizing: border-box;
+	text-align: center;
+}
+.tt-item .avatar{
+	width: 112rpx;
+	height: 112rpx;
+	margin: -56rpx auto 0;
+	box-shadow: 0 0 0 2px #fff, 0 0 40rpx 0 rgba(0,0,0,.1);
+	border-radius: 100%;
+	background: #eee;
+}
+.tt-item .avatar image{
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+}
+.tt-item .user{
+	max-width: 100%;
+	margin: 20rpx 0 10rpx;
+	overflow: hidden;
+}
+.tt-item .user .nick{
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+}
+.tt-item .user .txt{
+	white-space: nowrap;
+}
+.tt-item .title{
+	font-size: 56rpx;
+	color: #222a3f;
+	font-weight: 500;
+}
+.tt-item .avatar2{
+	width: 80rpx;
+	height: 80rpx;
+	margin: 20rpx auto;
+	border-radius: 100%;
+	background: #eee;
+}
+.tt-item .avatar2 image{
+	width: 100%;
+	height: 100%;
+	border-radius: inherit;
+}
+.tt-item .txt1{
+	font-size: 32rpx;
+	color: #222a3f;
+	font-weight: 500;
+}
+.tt-data{
+	margin: 40rpx 0;
+	width: 100%;
+	overflow: hidden;
+}
+.tt-data .item{
+	width: 200rpx;
+	position: relative;
+}
+.tt-data .item:first-child::after{
+	content: " ";
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	height: auto;
+	border-right: 1px solid #dee4e8;
+	color: #dee4e8;
+	transform-origin: 100% 0;
+	transform: scaleX(.5);
+}
+.tt-data .item .hm{
+	font-size: 24rpx;
+}
+.tt-data .item .num{
+	font-family: dinc;
+	font-size: 32rpx;
+	color: #222a3f;
+	font-weight: 500;
+}
+.viewteam{
+	padding: 0 32rpx;
+	height: 96rpx;
+}
+.viewteam .btn1{
+	width: 100%;
+	line-height: 96rpx;
+	color: #fff;
+	background: #ff6810;
+	position: relative;
+	box-sizing: border-box;
+	font-weight: 500;
+	text-align: center;
+}
+.sep-title{
+	height: 1px;
+	margin-top: 20rpx;
+	padding: 32rpx 0;
+}
+.sep-title::before, .sep-title::after{
+	content: " ";
+	flex: 1;
+	display: block;
+	height: 1px;
+	background-color: #dee4e8;
+	transform: scaleY(.5);
+}
+.sep-title .sep-txt{
+	padding: 0 16rpx;
+	font-size: 24rpx;
+	display: inline;
+}

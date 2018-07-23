@@ -167,6 +167,10 @@ navigator {
   font-size: 34rpx;
 }
 
+.txtL {
+  text-align: left;
+}
+
 .txtC {
   text-align: center;
 }
@@ -187,7 +191,7 @@ navigator {
 	display: block!important;
 }
 
-.hide{
+.hide1{
 	display: none!important;
 }
 

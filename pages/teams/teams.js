@@ -3,7 +3,7 @@ Page({
   data: {
 		notEnoughShow: false,
 		endStep: 10000,
-		step: 9900
+		step: 10040
   },
   onLoad: function (options) {
   
@@ -48,21 +48,7 @@ Page({
 					that.runProgress(1000, 500, deg);
 				}, 100);
 			} else {
-				wx.request({
-					url: api.userUpdateRunData,
-					method: 'GET',
-					data: { userId: dt.userId },
-					success: res => {
-						if (res.data.code == 1) {
-							let r = res.data.result;
-							that.setData({ amount: r.amount, enoughShow: true });
-						} else {
-							that.setData({ amount: 0 });
-							that.showError('服务器错误，请稍后再试！');
-							return;
-						}
-					}
-				});
+				that.setData({ enoughShow: true });
 			}
 		}
 	},
