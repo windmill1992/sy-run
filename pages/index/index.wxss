@@ -90,7 +90,7 @@
 }
 
 .ds-hd .hd-content {
-  width: 560rpx;
+  width: 540rpx;
   height: 556rpx;
   padding-bottom: 80rpx;
   margin: 0 auto;

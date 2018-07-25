@@ -102,7 +102,7 @@
 	text-align: center;
 	position: relative;
 }
-.more::before{
+.more.arr::before{
 	content: '';
 	display: inline-block;
 	width: 14rpx;

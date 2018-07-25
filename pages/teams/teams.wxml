@@ -2,37 +2,37 @@
 <view class='pageContainer'>
 	<view class='td-hd'>
 		<view class='hd-pic'>
-			<image src='http://imgcdn.gongyi.qq.com/wx_gy/0/1199719137_1528687814047756/0' mode='widthFix'></image>
+			<image src='{{info.projectCoverImageUrl}}' mode='aspectFill'></image>
 		</view>
 		<view class='hd-main'>
 			<view class='hd-avatar'>
-				<image src='http://wx.qlogo.cn/mmopen/Q3auHgzwzM4rumF4C5xRsPYPfk10icicdyVwmR69bfUkkwNtcxT8YxiboI1RRiadzCIDQDWpxcuFeQQ3130aIxbavSSHpzRo4poKHmpCmgNEggM/0'></image>
+				<image src='{{info.companyCoverImageUrl}}'></image>
 			</view>
-			<view class='hd-title'>童步益行关爱少年</view>
-			<view class='hd-from'>
-				<text space>由 </text><text class='from-name'>鸿金鹏集团</text><text space> 发起</text>
-			</view>
+			<view class='hd-title'>{{info.companyName}}</view>
+			<!-- <view class='hd-from'>
+				<text space>由 </text><text class='from-name'>xxxxxxx</text><text space> 发起</text>
+			</view> -->
 			<view class='hd-slogan'>
-				<view class='slogan-txt'>“给52个贫困县5200名孩子一双运动鞋，让他们自由的奔跑！”</view>
+				<view class='slogan-txt'>“{{info.companyIntroduction}}”</view>
 			</view>
 			<view class='hd-prog flex fcen'>
 				<view class='prog-bar flex1'>
-					<view class='fill show' style='width: 30%;'></view>
+					<view class='fill show' style='width: {{info.percent ? info.percent : 0}}%;'></view>
 				</view>
-				<view class='per'>30%</view>
+				<view class='per'>{{info.percent ? info.percent : 0}}%</view>
 			</view>
 			<view class='hd-data flex spb fcen'>
 				<view class='item'>
 					<view class='f12'>已捐步</view>
-					<view class='num'>788660584</view>
+					<view class='num'>{{info.totalStep}}</view>
 				</view>
 				<view class='item txtC'>
 					<view class='f12'>已兑配捐/元</view>
-					<view class='num'>61134.94</view>
+					<view class='num'>{{info.totalMoney}}</view>
 				</view>
 				<view class='item txtR'>
 					<view class='f12'>配捐总额/元</view>
-					<view class='num'>200000</view>
+					<view class='num'>{{info.cryMoney}}</view>
 				</view>
 			</view>
 			<view class='hd-septitle flex fcen'>
@@ -40,37 +40,64 @@
 			</view>
 		</view>
 		<navigator url='/pages/projectDetail/projectDetail?projectId=' class='hd-pro flex' hover-class='none'>
-			<view class='pic'></view>
+			<view class='pic' style='background-image: url({{info.projectCoverImageUrl}})'></view>
 			<view class='con flex1'>
-				<view class='p-title'>给乡村娃一双运动鞋</view>
-				<view class='txts'>童步益行，送一双运动鞋，让乡村少年在阳光下快乐奔跑。</view>
+				<view class='p-title'>{{info.projectTitle}}</view>
+				<view class='txts'>{{info.projectSubTitle}}</view>
 			</view>
 		</navigator>
 	</view>
 	<view class='td-bd'>
 		<view class='bd-title flex fcen spb'>
-			<view class='txt'>286支队伍参与捐步</view>
+			<view class='txt'>{{info.teamNum}}支队伍参与捐步</view>
 		</view>
+		<block wx:if='{{info.myTeamId}}'>
+			<view class='bd-list my-team'>
+				<navigator url='/pages/teamDetail/teamDetail?cid={{cid}}&pid={{pid}}&tid={{info.myTeamId}}' class='item flex fcen'>
+					<view class='info flex1'>
+						<view class='nick'>{{info.myTeamName}}</view>
+						<view class='txt'>共{{info.myTeamPeople}}人捐出{{info.myTeamStep}}步</view>
+					</view>
+					<view class='arrow-r'></view>
+				</navigator>
+			</view>
+		</block>
 		<view class='bd-list'>
-			<navigator url='' class='item flex fcen'>
+			<navigator url='/pages/teamDetail/teamDetail?tid={{item.teamId}}&cid={{cid}}&pid={{pid}}&rank={{index}}' class='item flex fcen' wx:for='{{teamList}}' wx:key='team'>
 				<view class='hd-rank'>
-					<view class='ranks rank4'>
-						<text class='num'>1</text>
+					<view class='ranks rank{{index < 3 ? (index + 1) : 4}}'>
+						<text class='num'>{{index + 1}}</text>
 					</view>
 				</view>
 				<view class='info flex1'>
-					<view class='nick'>师大实小304中队</view>
-					<view class='founder'>创建人：靓点人生</view>
-					<view class='txt'>已加入558人，共捐出47490684步</view>
+					<view class='nick'>{{item.teamName}}</view>
+					<view class='founder'>创建人：{{item.nickName}}</view>
+					<view class='txt'>已加入{{item.teamPlayNum}}人，共捐出{{item.totalStep}}步</view>
+				</view>
+				<view class='arrow-r'></view>
+			</navigator>
+			<navigator url='/pages/teamDetail/teamDetail?tid={{defaultTeam.otherTeamId}}&cid={{cid}}&pid={{pid}}' class='item flex fcen' wx:if='{{defaultTeam.otherTeamId}}'>
+				<view class='hd-rank'></view>
+				<view class='info flex1'>
+					<view class='nick'>{{defaultTeam.otherTeamName}}</view>
+					<view class='founder'>创建人：{{defaultTeam.otherNickName}}</view>
+					<view class='txt'>已加入{{defaultTeam.otherTeamPlayNum}}人，共捐出{{defaultTeam.otherTotalStep}}步</view>
 				</view>
 				<view class='arrow-r'></view>
 			</navigator>
 		</view>
-		<navigator url='' class='bd-more'>查看全部队伍</navigator>
+		<navigator url='/pages/teamList/teamList?cid={{cid}}&pid={{pid}}' class='bd-more'>查看全部队伍</navigator>
 	</view>
 	<view class='td-ft flex'>
-		<navigator url='' class='btn1 left'>创建队伍</navigator>
-		<view class='btn1 right' bindtap='donateStep'>马上捐步</view>
+		<navigator url='/pages/teamCreate/teamCreate?cid={{cid}}&pid={{pid}}' class='btn1 left' wx:if='{{isLogin}}' hover-class='none'>创建队伍</navigator>
+		<button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='btn1 left' wx:else>创建队伍</button>
+		<block wx:if='{{userInfo.nickName}}'>
+			<view class='btn1 right' bindtap='donateStep' wx:if='{{!rejectAuth || !canIUse}}'>马上捐步</view>
+			<button class='btn1 right' open-type='openSetting' bindopensetting='openSetting' wx:else>马上捐步</button>
+		</block>
+		<block wx:else>
+			<button class='btn1 right' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>马上捐步</button>
+		</block>
 	</view>
 	<view class="dialog notEnoughDialog {{notEnoughShow?'show':''}} {{notEnoughHide?'hide':''}}">
     <view class="mask"></view>
@@ -106,7 +133,7 @@
       <view class='close-btn' bindtap='closeDialog' data-dialog="notEnough">知道了</view>
     </view>
   </view>
-  <view class="dialog dialog-confirm enoughDialog {{enoughShow?'show':''}} {{enoughHide?'hide':''}}">
+  <view class="dialog enoughDialog {{enoughShow?'show':''}} {{enoughHide?'hide':''}}">
     <view class="mask"></view>
     <view class="dialog_inner">
       <view class='title'>捐步确认信息</view>
@@ -114,7 +141,7 @@
 				<view>本次捐出</view>
 				<view><text class='step-num'>{{step}}</text><text> 步</text></view>
 				<view class='support'>
-					<view class='name'>鸿金鹏集团</view>
+					<view class='name'>{{info.companyName}}</view>
 					<view class='txt'>将出资为您的爱心助力</view>
 				</view>
 			</view>
@@ -124,4 +151,19 @@
       </view>
     </view>
   </view>
+	<view class='dialog enoughDialog donatedDialog {{donatedShow?"show":""}} {{donatedHide?"hide":""}}'>
+		<view class="mask"></view>
+    <view class="dialog_inner">
+      <view class='title'>捐步提示</view>
+			<view class='donate-box'>
+				<view>您今日已捐步，明日再来吧</view>
+				<view><text class='step-num'>{{donatedStep}}</text><text> 步</text></view>
+				<view class='nav-to flex fcen spc' bindtap='navtoThanks'>查看本次捐步</view>
+			</view>
+      <view class='close-btn' bindtap='closeDialog' data-dialog="donated">知道了</view>
+      <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="donated">
+        <view class="close"></view>
+      </view>
+    </view>
+	</view>
 </view>

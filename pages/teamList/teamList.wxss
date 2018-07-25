@@ -1,0 +1,9 @@
+/* pages/teamList/teamList.wxss */
+@import '../teams/teams.wxss';
+
+.pageContainer{
+	position: relative;
+	min-height: 100%;
+	padding-bottom: 104rpx;
+	box-sizing: border-box;
+}

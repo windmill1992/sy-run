@@ -30,7 +30,7 @@
     <view class="txt">点击右上角，邀请朋友一起来捐步。</view>
 
     <view class="moreProject">
-      <navigator open-type='redirect' url='/pages/index/index'>返回</navigator>
+      <navigator open-type='redirect' url='/pages/index/index{{query}}'>返回</navigator>
       <navigator url="/pages/projectIndex/projectIndex">查看更多公益项目</navigator>
     </view>
   </view>

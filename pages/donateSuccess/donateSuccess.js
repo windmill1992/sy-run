@@ -4,7 +4,9 @@ var dataUrl = {
 	getRandomCompanyInfo: app.base + 'donateStep/getRandomCompanyInfo.do'		//获取捐步信息
 };
 Page({
-	data: {},
+	data: {
+		query: '',
+	},
 	getDonateInfo: function () {
 		const that = this;
 		wx.getStorage({
@@ -61,7 +63,11 @@ Page({
 			}
 		};
 	},
-	onLoad: function () {
+	onLoad: function (options) {
+		if (options.cid) {
+			let query = '?cid='+ options.cid + '&pid='+ options.pid;
+			this.setData({ query: query });
+		}
 		this.getDonateInfo();
 	}
 })

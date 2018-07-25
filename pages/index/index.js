@@ -102,9 +102,11 @@ Page({
 							userName: r.nickName,
 							companyId: r.companyId,
 							cLogo: r.companyImgUrl,
-							cName: r.name,
+							cName1: r.name.substr(0, 10),
+							cName2: r.name.substr(10),
 							amount: r.userDonatAmount,
-							projTitle: r.project.projectTitle,
+							projTitle1: r.project.projectTitle.substr(0, 15),
+							projTitle2: r.project.projectTitle.substr(15),
 							projId: r.project.projectId,
 							steps: r.stepCount
 						}
@@ -220,7 +222,7 @@ Page({
 			wx.openSetting({
 				success: res2 => {
 					if (res2 && res2.authSetting['scope.werun'] === true) {
-						that.onLoad();
+						that.onLoad(this.data.options);
 					} else {
 						that.showError('授权失败');
 						wx.hideLoading();
@@ -294,9 +296,13 @@ Page({
 						icon: 'success',
 						duration: 1000
 					});
+					let query = '';
+					if (dd.cid) {
+						query = '?cid='+ dd.cid + '&pid='+ dd.pid;
+					}
 					setTimeout(() => {
 						wx.navigateTo({
-							url: '/pages/donateSuccess/donateSuccess'
+							url: '/pages/donateSuccess/donateSuccess'+ query
 						});
 					}, 1000);
 
@@ -463,7 +469,7 @@ Page({
 				wx.setStorageSync('sessionId', sessionId);
 				this.decodeUserInfo({ encryptedData: this.data.encryptedData, iv: this.data.iv });
 				if (!unionId || unionId == null || unionId == 'null') {
-					
+					console.log('unionId is null');
 				} else {
 					this.setData({ unionId: unionId });
 					wx.setStorage({ key: 'openId', data: openId });
@@ -484,7 +490,7 @@ Page({
 			data: {
 				encryptedData: data.encryptedData,
 				iv: data.iv,
-				js_code: that.data.code
+				js_code: that.data.code,
 			},
 			method: 'GET',
 			success: res => {
@@ -536,6 +542,9 @@ Page({
 		if(options && options.cid){
 			this.setData({ cid: options.cid, pid: options.pid, options: options });
 		}
+		if (wx.getStorageSync('user')) {
+			this.setData({ userInfo: wx.getStorageSync('user') });
+		}
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
@@ -550,7 +559,7 @@ Page({
 						},
 					});
 					that.getStatisticsData();
-					let dd = new Date();
+					let dd = new Date();					
 					that.setData({ code: res.code, year: dd.getFullYear(), month: dd.getMonth() + 1, day: dd.getDate() });
 					wx.getSetting({
 						success: res1 => {
@@ -578,14 +587,21 @@ Page({
 								}
 							}
 						}
-					});
+					})
 				} else {
 					that.showError('获取用户登录状态失败!' + res.errMsg);
 				}
 			}
 		});
-		if(wx.getStorageSync('user')){
-			this.setData({ userInfo: wx.getStorageSync('user') });
+	},
+	onShow: function() {
+		let userId = wx.getStorageSync('userId');
+		if (userId) {
+			this.getRandomCompanyInfo(userId);
+		}
+		let unionId = wx.getStorageSync('unionId');
+		if (unionId && unionId != null && unionId != 'null') {
+			this.setData({ unionId: unionId });
 		}
 	},
 	openSetting: function(e){
@@ -618,12 +634,14 @@ Page({
 	},
 	onPullDownRefresh: function () {
 		wx.stopPullDownRefresh();
-		wx.showToast({
-			title: '加载中...',
-			icon: 'loading',
-			duration: 2000
-		});
-		this.onLoad(this.data.options);
+		if (!this.data.donateState) {
+			wx.showToast({
+				title: '加载中...',
+				icon: 'loading',
+				duration: 2000
+			});
+			this.onLoad(this.data.options);
+		} else { }
 	},
 	stopmove: function () { },
 	showError: function (txt) {
@@ -636,9 +654,13 @@ Page({
 	onShareAppMessage: function (res) {
 		const that = this;
 		let dd = that.data;
+		let query = '';
+		if (dd.cid) {
+			query = '?cid='+ dd.cid +'&pid='+ dd.pid;
+		}
 		return {
 			title: dd.projectTitle,
-			path: '/pages/index/index',
+			path: '/pages/index/index'+query,
 			imageUrl: dd.projectLogo
 		};
 	}

@@ -15,7 +15,8 @@
     "pages/teams/teams",
     "pages/teamCreate/teamCreate",
     "pages/trendsInfo/trendsInfo",
-    "pages/teamThanks/teamThanks"
+    "pages/teamThanks/teamThanks",
+    "pages/teamList/teamList"
   ],
   "window": {
     "backgroundTextStyle": "dark",

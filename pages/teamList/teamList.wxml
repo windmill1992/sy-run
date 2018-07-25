@@ -1,0 +1,52 @@
+<!--pages/teamList/teamList.wxml-->
+<view class='pageContainer'>
+	<view class='td-hd'>
+		<view class='hd-pic'>
+			<image src='{{info.projectCoverImageUrl}}' mode='aspectFill'></image>
+		</view>
+		<view class='hd-main'>
+			<view class='hd-avatar'>
+				<image src='{{info.companyCoverImageUrl}}'></image>
+			</view>
+			<view class='hd-title'>{{info.companyName}}</view>
+			<view class='hd-from'>
+				<!-- <text space>由 </text><text class='from-name'>鸿金鹏集团</text><text space> 发起</text> -->
+			</view>
+			<view class='hd-slogan'>
+				<view class='slogan-txt'>“{{info.companyIntroduction}}”</view>
+			</view>
+		</view>
+	</view>
+	<view class='td-bd'>
+		<view class='bd-title flex fcen spb'>
+			<view class='txt'>共{{total}}支队伍参与捐步</view>
+		</view>
+		<view class='bd-list'>
+			<navigator url='/pages/teamDetail/teamDetail?cid={{cid}}&pid={{pid}}' wx:for='{{teamList}}' wx:key='team' class='item flex fcen'>
+				<view class='hd-rank'>
+					<view class='ranks rank{{index < 3 ? (index + 1) : 4}}'>
+						<text class='num'>{{index + 1}}</text>
+					</view>
+				</view>
+				<view class='info flex1'>
+					<view class='nick'>{{item.teamName}}</view>
+					<view class='founder'>创建人：{{item.nickName}}</view>
+					<view class='txt'>已加入{{item.teamPlayNum}}人，共捐出{{item.totalStep}}步</view>
+				</view>
+				<view class='arrow-r'></view>
+			</navigator>
+			<navigator url='/pages/teamDetail/teamDetail?tid={{defaultTeam.otherTeamId}}&cid={{cid}}&pid={{pid}}' class='item flex fcen' wx:if='{{defaultTeam.otherTeamId}}'>
+				<view class='hd-rank'></view>
+				<view class='info flex1'>
+					<view class='nick'>{{defaultTeam.otherTeamName}}</view>
+					<view class='founder'>创建人：{{defaultTeam.otherNickName}}</view>
+					<view class='txt'>已加入{{defaultTeam.otherTeamPlayNum}}人，共捐出{{defaultTeam.otherTotalStep}}步</view>
+				</view>
+				<view class='arrow-r'></view>
+			</navigator>
+		</view>
+		<view class='bd-more' bindtap='loadmore' wx:if='{{hasmore == 2}}'>展开更多</view>
+		<view class='bd-more' wx:elif='{{hasmore == 1}}'>没有更多数据了~</view>
+		<view class='bd-more' wx:elif='{{hasmore == 0}}'>暂无捐步队伍~</view>
+	</view>
+</view>

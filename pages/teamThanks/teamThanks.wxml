@@ -1,39 +1,56 @@
 <!--pages/teamThanks/teamThanks.wxml-->
 <view class='pageContainer'>
 	<view class='page fcol spb'>
-		<image src='http://imgcdn.gongyi.qq.com/wx_gy/0/1199719137_1528687814047756/0' mode='widthFix' class='cover'></image>
+		<image src='{{info.projectCoverImageUrl}}' class='cover' mode='aspectFill'></image>
 		<view class='tt-item'>
 			<view class='avatar'>
-				<image src='http://thirdqq.qlogo.cn/g?b=sdk&k=OrqNLDJyFUbDJ3q2ibxVAxA&s=40&t=1483383959'></image>
+				<image src='{{userInfo.avatarUrl}}'></image>
 			</view>
 			<view class='user flex spc'>
-				<view class='nick'>◆♬尐飞魚★◇</view>
+				<view class='nick'>{{userInfo.nickName}}</view>
 				<view class='txt'>，感谢你用行动支持</view>
 			</view>
-			<view class='title'>[童步益行关爱少年]</view>
+			<view class='title'>[{{info.projectTitle}}]</view>
 			<view class='avatar2'>
-				<image src='http://wx.qlogo.cn/mmopen/Q3auHgzwzM4rumF4C5xRsPYPfk10icicdyVwmR69bfUkkwNtcxT8YxiboI1RRiadzCIDQDWpxcuFeQQ3130aIxbavSSHpzRo4poKHmpCmgNEggM/0'></image>
+				<image src='{{info.companyCoverImageUrl}}'></image>
 			</view>
-			<view class='txt1'>鸿金鹏集团</view>
+			<view class='txt1'>{{info.companyName}}</view>
 			<view>已捐资为你的爱心助力</view>
 		</view>
 		<view class='tt-item'>
 			<view class='tt-data flex spc fcen'>
 				<view class='item txtL'>
 					<view class='hm'>已捐步</view>
-					<view class='num'>10411</view>
+					<view class='num'>{{donatedStep}}</view>
 				</view>
 				<view class='item txtR'>
 					<view class='hm'>配捐总额/元</view>
-					<view class='num'>0.1</view>
+					<view class='num'>{{donateMoney}}</view>
 				</view>
 			</view>
 			<view class='viewteam'>
-				<view class='btn1'>邀请好友参与</view>
+				<button class='btn1' open-type='share'>邀请好友参与</button>
 			</view>
 			<view class='sep-title flex fcen' bindtap='navtoTeams'>
 				<view class='sep-txt'>查看捐步活动</view>
 			</view>
 		</view>
 	</view>
+	<view class='share-wrap'>
+		<view class='mask'></view>
+		<view class='con'>
+			<view class='pic'>
+				<image src=''></image>
+			</view>
+			<view class='foot flex fcen spc'>
+				<view>
+					<view class='save'>长按图片，保存到手机</view>
+					<view class='share'>或点击右上角，分享到朋友圈</view>
+				</view>
+			</view>
+			<view class='close'></view>
+		</view>
+	</view>
+	<canvas id='tmpCv' width='750' height='2000' class='cv1'></canvas>
+	<canvas id='myCv' width='750' height='1230' class='cv1'></canvas>
 </view>

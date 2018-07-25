@@ -2,9 +2,9 @@
 App({
 	onLaunch: function (options) {
 		//调用API从本地缓存中获取数据
-		if (!wx.getStorageSync('prod1')) {
+		if (!wx.getStorageSync('prod114')) {
 			wx.clearStorageSync();
-			wx.setStorageSync('prod1', '1');
+			wx.setStorageSync('prod114', '1');
 		} 
 		wx.setStorageSync('scene', options.scene);
 		wx.setStorageSync('query', options.query);

@@ -72,9 +72,10 @@
               <text class="cff6">{{lastDonated.steps}}</text>
               <text class="cff9">步</text>
             </view>
-            <view class="">
-              <navigator url='/pages/projectDetail/projectDetail?projectId={{lastDonated.projId}}'>支持了
-                <text class="cff6">{{lastDonated.projTitle}}</text>
+            <view class="flex">支持了
+              <navigator class='fcol' url='/pages/projectDetail/projectDetail?projectId={{lastDonated.projId}}'>
+                <text class="cff6">{{lastDonated.projTitle1}}</text>
+                <text class="cff6" wx:if='{{lastDonated.projTitle2}}'>{{lastDonated.projTitle2}}</text>
               </navigator>
             </view>
           </view>
@@ -86,8 +87,8 @@
                 </navigator>
               </view>
               <view class="done-block-m">
-                <view class="cont-p c999">
-                  携手<text class="c333">{{lastDonated.cName}}</text> 捐出 {{lastDonated.amount}} 元
+                <view class="cont-p c999" style='width: 180px;'>
+                  携手<text class="c333">{{lastDonated.cName1}}</text><view></view><text class="c333">{{lastDonated.cName2}}</text> 捐出 {{lastDonated.amount}} 元
                 </view>
               </view>
             </view>

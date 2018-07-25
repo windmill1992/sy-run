@@ -83,10 +83,10 @@
 					"query": "tid=1"
 				},
 				{
-					"id": -1,
+					"id": 8,
 					"name": "team",
 					"pathName": "pages/teams/teams",
-					"query": "pid=1"
+					"query": "cid=36&pid=1971"
 				},
 				{
 					"id": 9,
@@ -95,15 +95,22 @@
 					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 10,
 					"name": "trends",
 					"pathName": "pages/trendsInfo/trendsInfo",
-					"query": ""
+					"query": "cid=25&pid=1836&tid=100"
+				},
+				{
+					"id": 11,
+					"name": "teamThanks",
+					"pathName": "pages/teamThanks/teamThanks",
+					"query": "cid=36&pid=1971"
 				},
 				{
 					"id": -1,
-					"name": "teamThanks",
-					"pathName": "pages/teamThanks/teamThanks"
+					"name": "teamList",
+					"pathName": "pages/teamList/teamList",
+					"query": ""
 				}
 			]
 		}

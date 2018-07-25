@@ -109,52 +109,7 @@
 
 .highlt {
   padding: 0 6rpx;
-  color: #ff9001;
-}
-
-.dialog .dialog_inner .rulesList {
-  margin: 32rpx auto 0;
-  padding-left: 40rpx;
-  line-height: 1.4em;
-  text-align: left;
-  font-size: 28rpx;
-}
-
-.dialog .dialog_inner .rulesList .li {
-  margin-bottom: 20rpx;
-  padding-left: 8rpx;
-}
-
-.dialog .dialog_inner .rulesList .li:last-child {
-  margin-bottom: 0;
-}
-
-.dialog-confirm .mySteps {
-  margin-top: 20px;
-  color: #999;
-  line-height: 1.1em;
-}
-
-.dialog-confirm .mySteps-num {
-  position: relative;
-  top: 4rpx;
-  font-size: 30px;
-  font-weight: 700;
   color: #ff6810;
-}
-
-.dialog-confirm .match-enterprise-logo {
-  margin: 10px 0;
-  height: 50px;
-  border-radius: 100%;
-  width: 50px;
-  padding: 10rpx;
-  box-shadow: 0 0 20rpx 0 rgba(0, 0, 0, 0.06);
-  border: 1px solid #eaeaea;
-}
-
-.dialog-confirm .match-enterprise-info {
-  font-size: 28rpx;
 }
 
 .runsteps_dialog .h2 {

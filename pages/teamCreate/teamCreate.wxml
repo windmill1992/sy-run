@@ -14,7 +14,7 @@
 			<view>
 				<view class='inp-title'>队伍口号</view>
 				<view class='inp-wrap area'>
-					<textarea auto-height bindinput='getTeamSlogan' placeholder='请输入队伍口号，20字以内' placeholder-style='color: #dee4e8;'></textarea>
+					<textarea auto-height bindinput='getTeamSlogan' maxlength='20' placeholder='请输入队伍口号，20字以内' placeholder-style='color: #dee4e8;'></textarea>
 				</view>
 			</view>
 		</view>
