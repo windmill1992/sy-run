@@ -31,7 +31,7 @@
 				<text class='sep-txt'>帮助公益项目</text>
 			</view>
 		</view>
-		<navigator url='/pages/projectDetail/projectDetail?projectId=' class='hd-pro flex' hover-class='none'>
+		<navigator url='/pages/projectDetail/projectDetail?projectId={{pid}}&cid={{cid}}' class='hd-pro flex' hover-class='none'>
 			<view class='pic' style='background-image: url({{info.projectCoverImageUrl}})'></view>
 			<view class='con flex1'>
 				<view class='p-title'>{{info.projectName}}</view>
@@ -169,5 +169,12 @@
         <view class="close"></view>
       </view>
     </view>
+	</view>
+	<view class='dialog share-dialog {{shareShow ? "show" : ""}}'>
+		<view class='mask' bindtap='closeDialog' data-dialog='share'></view>
+		<view class='con flex fcen'>
+			<view>队伍创建成功，快去分享给好友吧~</view>
+			<image src='https://www.17xs.org/res/images/h5/images/point.gif' mode='widthFix'></image>
+		</view>
 	</view>
 </view>

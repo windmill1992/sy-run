@@ -33,7 +33,7 @@
     </view>
     <view class="proj-title">善园慈善项目</view>
     <view class="proj-list" id="projList">
-      <navigator url="/pages/projectDetail/projectDetail?projectId={{item.projectId}}" class="proj-list-item" wx:for="{{projects}}" wx:key="proj{{index}}">
+      <navigator url="/pages/projectDetail/projectDetail?projectId={{item.projectId}}&cid={{cid}}" class="proj-list-item" wx:for="{{projects}}" wx:key="proj{{index}}">
         <view class="item-cover">
           <image src="{{item.projectImgUrl}}"></image>
         </view>

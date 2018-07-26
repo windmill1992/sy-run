@@ -7,9 +7,9 @@
     <view class="thanks">
       <view>感谢您帮助</view>
       <view class="projTitle">
-        <view class='sup'></view>
-        <navigator url="/pages/projectDetail/projectDetail?projectId={{projectId}}" class='link'>{{projectTitle}}</navigator>
-        <view class='sub'></view>
+        <!-- <view class='sup'></view> -->
+        <navigator url="/pages/projectDetail/projectDetail?projectId={{projectId}}" class='link'>{{projectTitle1}}<view></view>{{projectTitle2}}</navigator>
+        <!-- <view class='sub'></view> -->
       </view>
     </view>
   </view>

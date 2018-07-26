@@ -445,6 +445,11 @@
   background: #ff6811;
 }
 
+.donateBtn .btn.left{
+	background: #fff;
+	color: #222a3f;
+}
+
 .donateBtn .btn image {
   width: 40rpx;
   height: 40rpx;

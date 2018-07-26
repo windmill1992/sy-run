@@ -7,11 +7,11 @@ const api = {
 	getUserUpdateRunData: app.base + 'donateStep/getUserUpdateWeRundata.do', 	//判断用户10分钟内是否更新运动数据
 	getRandomCompanyInfo: app.base + 'donateStep/getRandomCompanyInfo.do',		//随机选取企业，从企业选取一个项目
 	getStatisticsData: app.base + 'donateStep/getStatisticsData.do',					//统计(总捐步人数，参与企业数，总金额)
-	donateStep: app.base + 'donateStep/donateStep.do',												//捐步
+	donateStep: app.base + 'donateStep/donateStepNew.do',											//捐步
 	getRandomProjectInfo: app.base + 'donateStep/getRandomProjectInfo.do',		//换项目
 	getSessionKey: app.base + 'wx/getSessionKey.do',													//获取session_key
 	decodeInfo: app.base + 'wx/decodeInfo.do',																//解码获取步数
-	addUserWeRundata: app.base + 'donateStep/addUserWeRundata.do'							//添加用户运动信息
+	addUserWeRundata: app.base + 'donateStep/addUserWeRundata.do',						//添加用户运动信息
 };
 const util = require('../../utils/util.js');
 var page = 1;
@@ -68,7 +68,6 @@ Page({
 				projectId: this.data.pid,
 			},
 			success: res1 => {
-				wx.hideLoading();
 				if (res1.data.code == 1) {
 					let r = res1.data.result;
 					this.setData({
@@ -82,6 +81,7 @@ Page({
 							companyName: r.name,
 							slogan: r.slogan,
 							companyId: r.companyId,
+							runCompanyId: r.runCompanyId,
 							companyImgUrl: r.companyImgUrl
 						}, 
 						state: r.state
@@ -98,6 +98,9 @@ Page({
 						projectLogo: r.project.projectImgUrl,
 						bgUrl: r.project.projectImgUrl,
 						donateState: true,
+						randomCompany: {
+							runCompanyId: r.runCompanyId,
+						},
 						lastDonated: {
 							userName: r.nickName,
 							companyId: r.companyId,
@@ -110,10 +113,10 @@ Page({
 							projId: r.project.projectId,
 							steps: r.stepCount
 						}
-					});
+					})
 				}
 			}
-		});
+		})
 	},
 	//随机项目
 	getRandomProjectInfo: function () {
@@ -262,15 +265,14 @@ Page({
 					success: res => {
 						if (res.data.code == 1) {
 							let r = res.data.result;
-							that.setData({ amount: r.amount });
-							that.setData({ enoughShow: true });
+							that.setData({ amount: r.amount, enoughShow: true });
 						} else {
 							that.setData({ amount: 0 });
 							that.showError('服务器错误，请稍后再试！');
 							return;
 						}
 					}
-				});
+				})
 			}
 		}
 	},
@@ -284,13 +286,14 @@ Page({
 				"content-type": "application/x-www-form-urlencoded"
 			},
 			data: {
-				extensionPeople: dd.randomCompany.companyId,
+				companyId: dd.randomCompany.runCompanyId,
 				userId: dd.userId,
 				projectId: dd.projectId,
-				amount: dd.amount
+				amount: dd.amount,
 			},
 			success: res => {
 				if (res.data.code == 1) {
+					this.setData({ enoughShow: false });
 					wx.showToast({
 						title: '捐步成功',
 						icon: 'success',
@@ -322,7 +325,7 @@ Page({
 	},
 	toProjectDetail: function () {
 		wx.navigateTo({
-			url: '/pages/projectDetail/projectDetail?projectId=' + this.data.projectId,
+			url: '/pages/teams/teams?pid=' + this.data.projectId + '&cid='+ this.data.randomCompany.runCompanyId,
 		});
 	},
 	openDialog: function (e) {
@@ -504,17 +507,20 @@ Page({
 						wx.setStorage({ key: 'openId', data: r.openId });
 						wx.setStorage({ key: 'unionId', data: r.unionId });
 					} else {
-						setTimeout(() => {
-							let todayStep = r.stepInfoList[30];
-							that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
-							if (that.data.userInfo.nickName && that.data.unionId) {
-								that.addUserRunData();
-							}
-						}, 1000);
+						let todayStep = r.stepInfoList[30];
+						that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
+						if (that.data.userInfo.nickName && that.data.unionId) {
+							setTimeout(() => {
+									that.addUserRunData();
+							}, 1000);
+						}
 					}
 				}
+			},
+			complete: () => {
+				wx.hideLoading()
 			}
-		});
+		})
 	},
 	addUserRunData: function () {
 		wx.request({

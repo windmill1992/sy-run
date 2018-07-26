@@ -3,6 +3,7 @@ const app = getApp().globalData;
 const api = {
 	login: app.base + 'wx/login.do',														//获取userId
 	createTeam: app.base + 'together/createTeam.do',						//创建队伍
+	actDetail: app.base + 'donateStep/companyRunIndex.do',			//活动信息
 }
 Page({
   data: {
@@ -43,7 +44,36 @@ Page({
 				}
 			})
 		}
+		this.getActDetail();
   },
+	getActDetail: function () {
+		wx.showLoading({
+			title: '加载中...',
+			mask: true,
+		});
+		const dd = this.data;
+		let uid = dd.userId ? dd.userId : 0;
+		wx.request({
+			url: api.actDetail,
+			method: 'GET',
+			data: {
+				companyId: dd.cid,
+				projectId: dd.pid,
+				userId: uid,
+			},
+			success: res => {
+				if (res.data.code == 1) {
+					let r = res.data.result;
+					this.setData({ info: r });
+				} else { 
+					this.showError('查询项目错误,'+ res.data.msg);
+				}
+			},
+			complete: () => {
+				wx.hideLoading()
+			}
+		})
+	},
 	getTeamName: function(e) {
 		this.setData({ teamName: e.detail.value })
 	},
@@ -83,10 +113,10 @@ Page({
 							title: '创建成功',
 							mask: true,
 						})
-						let query = '?cid=' + dd.cid + '&pid=' + dd.pid;
+						let query = '?cid=' + dd.cid + '&pid=' + dd.pid + '&tid='+ res.data.result.id + '&share=1';
 						setTimeout(() => {
 							wx.redirectTo({
-								url: '/pages/teams/teams'+ query,
+								url: '/pages/teamDetail/teamDetail'+ query,
 							})
 						}, 2000);
 					} else {

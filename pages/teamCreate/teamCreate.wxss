@@ -1,57 +1,73 @@
 /* pages/teamCreate/teamCreate.wxss */
 @import '../teamDetail/teamDetail.wxss';
-.pageContainer{
-	background: #fff;
-	padding-bottom: 120rpx;
-	box-sizing: border-box;
+
+.pageContainer {
+  background: #fff;
+  padding-bottom: 120rpx;
+  box-sizing: border-box;
 }
-.td-hd{
-	box-shadow: none;
+
+.td-hd {
+  box-shadow: none;
 }
-.hd-inputs{
-	padding: 32rpx;
+
+.hd-inputs {
+  padding: 32rpx;
 }
-.inp-title{
-	font-size: 40rpx;
-	color: #222a3f;
-	margin-top: 30rpx;
-	font-weight: 500;
+
+.inp-title {
+  font-size: 40rpx;
+  color: #222a3f;
+  margin-top: 30rpx;
+  font-weight: 500;
 }
-.inp-wrap{
-	position: relative;
+
+.inp-wrap {
+  position: relative;
 }
-.inp-wrap.area{
-	margin-top: 16rpx;
+
+.inp-wrap.area {
+  margin-top: 16rpx;
 }
-.inp-wrap input, .inp-wrap textarea{
-	width: 100%;
-	-webkit-appearance: none;
-	border: 0;
-	background-color: transparent;
-	resize: none;
-	font-family: PingFang SC,tahoma,arial,helvetica neue,hiragino sans gb,microsoft yahei,sans-serif;
-	font-size: 28rpx;
-	color: #687684;
-	outline: none;
-	min-height: 68rpx;
+
+.inp-wrap input, .inp-wrap textarea {
+  width: 100%;
+  -webkit-appearance: none;
+  border: 0;
+  background-color: transparent;
+  resize: none;
+  font-family: PingFang SC,
+                 tahoma,
+                 arial,
+                 helvetica neue,
+                 hiragino sans gb,
+                 microsoft yahei,
+                 sans-serif;
+  font-size: 28rpx;
+  color: #687684;
+  outline: none;
+  min-height: 68rpx;
 }
-.inp-wrap input{
-	height: 72rpx;
+
+.inp-wrap input {
+  height: 72rpx;
 }
-.inp-wrap::after{
-	content: " ";
-	position: absolute;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	width: auto;
-	height: 1px;
-	border-bottom: 1px solid #dee4e8;
-	color: #dee4e8;
-	transform-origin: 0 100%;
-	transform: scaleY(.5);
+
+.inp-wrap::after {
+  content: " ";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: 1px;
+  border-bottom: 1px solid #dee4e8;
+  color: #dee4e8;
+  transform-origin: 0 100%;
+  transform: scaleY(0.5);
 }
-.td-ft .btn1::after{
-	outline: none;
-	border: none;
+
+.td-ft .btn1::after {
+  outline: none;
+  border: none;
 }

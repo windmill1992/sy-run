@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
@@ -42,12 +42,6 @@
 					"id": -1,
 					"name": "index",
 					"pathName": "pages/projectIndex/projectIndex",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "auth",
-					"pathName": "pages/authorize/authorize",
 					"query": ""
 				},
 				{
@@ -77,16 +71,18 @@
 					"query": "cid=21&pid=4619"
 				},
 				{
-					"id": -1,
+					"id": 6,
 					"name": "teamDetail",
 					"pathName": "pages/teamDetail/teamDetail",
-					"query": "tid=1"
+					"query": "cid=38&pid=1971&tid=136&share=1",
+					"scene": "1047"
 				},
 				{
-					"id": 8,
+					"id": 7,
 					"name": "team",
 					"pathName": "pages/teams/teams",
-					"query": "cid=36&pid=1971"
+					"query": "cid=36&pid=1971",
+					"scene": "1047"
 				},
 				{
 					"id": 9,
@@ -110,6 +106,12 @@
 					"id": -1,
 					"name": "teamList",
 					"pathName": "pages/teamList/teamList",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "suc",
+					"pathName": "pages/donateSuccess/donateSuccess",
 					"query": ""
 				}
 			]

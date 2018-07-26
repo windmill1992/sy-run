@@ -140,6 +140,7 @@
 			<image src='http://mat1.gtimg.com/gongyi/m/wx/btn_icon1.png' lazy-load></image>
       <text>我要捐款</text>
 		</button>
+		<navigator url='/pages/teams/teams?cid={{cid}}&pid={{projectId}}' wx:if="{{cid}}" class='btn left'>我要捐步</navigator>
   </view>
   <view class="pay {{payShow?'show':''}} {{payHide?'hide':''}}" catchtouchmove='stopmove'>
     <view class='d-hd'>

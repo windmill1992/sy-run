@@ -22,7 +22,8 @@ Page({
 							that.setData({
 								userImgUrl: r.coverImageurl,
 								projectId: r.project.projectId,
-								projectTitle: r.project.projectTitle,
+								projectTitle1: r.project.projectTitle.substr(0, 15),
+								projectTitle2: r.project.projectTitle.substr(15),
 								donateSteps: r.stepCount,
 								companyImgUrl: r.companyImgUrl,
 								companyName: r.name,

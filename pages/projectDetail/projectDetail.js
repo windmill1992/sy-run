@@ -17,7 +17,7 @@ const api = {
 };
 const util = require('../../utils/util.js');
 const WxParse = require('../../wxParse/wxParse.js');
-var page = 1, itemHeight = [0, 0, 0, 0];
+var itemHeight = [0, 0, 0, 0];
 Page({
 	data: {
 		curTab: 0,
@@ -37,11 +37,15 @@ Page({
 	},
 	onLoad: function (options) {
 		const that = this;
+		this.page = 1;
 		wx.showLoading({
 			title: '加载中...',
 		});
 		let dd = that.data;
 		that.setData({ projectId: options.projectId, curMoney: dd.moneyList[dd.selected] });
+		if (options.cid) {
+			this.setData({ cid: options.cid });
+		}
 		let user = wx.getStorageSync('user');
 		let nickName = '', coverImageUrl = '';
 		if(user && user.nickName){
@@ -379,7 +383,7 @@ Page({
 		} else if (!this.data.loadState[cur] && cur == 1) {
 			this.getFaqiren();
 		} else if (!this.data.loadState[cur] && cur == 2) {
-			this.getDonationList(page, 10);
+			this.getDonationList(this.page, 10);
 		} else if (!this.data.loadState[cur] && cur == 3) {
 			this.hostList(1);
 		}
@@ -395,7 +399,7 @@ Page({
 			title: '加载中...',
 		});
 		setTimeout( () => {
-			that.getDonationList(++page, 10);
+			that.getDonationList(++this.page, 10);
 		}, 500);
 	},
 	preview: function (e) {

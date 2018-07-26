@@ -2,7 +2,7 @@
 <view class='pageContainer'>
 	<view class='tc-hd'>
 		<view class='hd-pic'>
-			<image src='http://imgcdn.gongyi.qq.com/wx_gy/0/1199719137_1528687814047756/0' mode='widthFix'></image>
+			<image src='{{info.projectCoverImageUrl}}' mode='aspectFill'></image>
 		</view>
 		<view class='hd-inputs'>
 			<view>

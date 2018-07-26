@@ -13,22 +13,22 @@
 				<text space>由 </text><text class='from-name'>xxxxxxx</text><text space> 发起</text>
 			</view> -->
 			<view class='hd-slogan'>
-				<view class='slogan-txt'>“{{info.companyIntroduction}}”</view>
+				<view class='slogan-txt'>“{{info.slogan}}”</view>
 			</view>
 			<view class='hd-prog flex fcen'>
 				<view class='prog-bar flex1'>
-					<view class='fill show' style='width: {{info.percent ? info.percent : 0}}%;'></view>
+					<view class='fill {{fillShow ? "show":""}}' style='width: {{info.percent ? info.percent : 0}}%;'></view>
 				</view>
 				<view class='per'>{{info.percent ? info.percent : 0}}%</view>
 			</view>
 			<view class='hd-data flex spb fcen'>
 				<view class='item'>
 					<view class='f12'>已捐步</view>
-					<view class='num'>{{info.totalStep}}</view>
+					<view class='num'>{{info.totalStep ? info.totalStep : 0}}</view>
 				</view>
 				<view class='item txtC'>
 					<view class='f12'>已兑配捐/元</view>
-					<view class='num'>{{info.totalMoney}}</view>
+					<view class='num'>{{info.totalMoney ? info.totalMoney : 0}}</view>
 				</view>
 				<view class='item txtR'>
 					<view class='f12'>配捐总额/元</view>
@@ -39,11 +39,11 @@
 				<view class='sep-txt'>帮助公益项目</view>
 			</view>
 		</view>
-		<navigator url='/pages/projectDetail/projectDetail?projectId=' class='hd-pro flex' hover-class='none'>
+		<navigator url='/pages/projectDetail/projectDetail?projectId={{pid}}&cid={{cid}}' class='hd-pro flex' hover-class='none'>
 			<view class='pic' style='background-image: url({{info.projectCoverImageUrl}})'></view>
 			<view class='con flex1'>
 				<view class='p-title'>{{info.projectTitle}}</view>
-				<view class='txts'>{{info.projectSubTitle}}</view>
+				<view class='txts'>{{info.projectSubTitle ? info.projectSubTitle : '暂无简介'}}</view>
 			</view>
 		</navigator>
 	</view>
@@ -51,9 +51,9 @@
 		<view class='bd-title flex fcen spb'>
 			<view class='txt'>{{info.teamNum}}支队伍参与捐步</view>
 		</view>
-		<block wx:if='{{info.myTeamId}}'>
+		<block wx:if='{{info.myTeamId && info.myTeamId != defaultTeam.otherTeamId}}'>
 			<view class='bd-list my-team'>
-				<navigator url='/pages/teamDetail/teamDetail?cid={{cid}}&pid={{pid}}&tid={{info.myTeamId}}' class='item flex fcen'>
+				<navigator url='/pages/teamDetail/teamDetail?cid={{info.myTeamCompanyId}}&pid={{info.myTeamProjectId}}&tid={{info.myTeamId}}' class='item flex fcen' style='padding: 32rpx 0;'>
 					<view class='info flex1'>
 						<view class='nick'>{{info.myTeamName}}</view>
 						<view class='txt'>共{{info.myTeamPeople}}人捐出{{info.myTeamStep}}步</view>
@@ -96,7 +96,7 @@
 			<button class='btn1 right' open-type='openSetting' bindopensetting='openSetting' wx:else>马上捐步</button>
 		</block>
 		<block wx:else>
-			<button class='btn1 right' open-type='getUserInfo' bindgetuserinfo='getUserInfo'>马上捐步</button>
+			<button class='btn1 right' open-type='getUserInfo' bindgetuserinfo='getUserInfo' data-donate='1'>马上捐步</button>
 		</block>
 	</view>
 	<view class="dialog notEnoughDialog {{notEnoughShow?'show':''}} {{notEnoughHide?'hide':''}}">

@@ -29,6 +29,7 @@ Page({
 							companyName: r.name,
 							projectCount: r.projectCount,
 							donateAmount: r.donateAmount,
+							cid: r.runCompanyId,
 							projects: r.project
 						});
 						let obj = {}, str = '';

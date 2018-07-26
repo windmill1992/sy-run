@@ -3,7 +3,7 @@ const app = getApp().globalData;
 const api = {
 	login: app.base + 'wx/login.do',																					//获取userId
 	getUserUpdateRunData: app.base + 'donateStep/getUserUpdateWeRundata.do', 	//判断用户10分钟内是否更新运动数据
-	donateStep: app.base + 'donateStep/donateStep.do',												//捐步
+	donateStep: app.base + 'donateStep/donateStepNew.do',											//捐步
 	getSessionKey: app.base + 'wx/getSessionKey.do',													//获取session_key
 	decodeInfo: app.base + 'wx/decodeInfo.do',																//解码获取步数
 	addUserWeRundata: app.base + 'donateStep/addUserWeRundata.do',						//添加用户运动信息
@@ -103,7 +103,7 @@ Page({
 					wx.hideLoading();
 					let arr = wx.getSystemInfoSync().SDKVersion.split('.');
 					if ((arr[0] >= 2 && arr[1] >= 1) || (arr[0] >= 2 && arr[1] == 0 && arr[2] >= 7)) {
-						that.setData({ rejectAuth: true, canIUse: true });
+						this.setData({ rejectAuth: true, canIUse: true });
 					} else {
 						this.setData({ rejectAuth: true });
 					}
@@ -124,9 +124,20 @@ Page({
 			},
 			success: res => {
 				if (res.data.code == 1) {
+					if (!wx.getStorageSync('userId')) {
+						this.getActDetail();
+						this.getTeamRank();
+					}
 					const r = res.data.result;
 					this.setData({ userId: r.userId, isLogin: true });
-					wx.setStorageSync('userId', r.userId)
+					wx.setStorageSync('userId', r.userId);
+					if (this.user && this.data.rejectAuth) {
+						if (this.create) {
+							wx.navigateTo({
+								url: '/pages/teamCreate/teamCreate?cid=' + this.data.cid + '&pid=' + this.data.pid,
+							})
+						}
+					} 
 				} else {
 					this.showError('获取用户信息失败！');
 					return;
@@ -184,6 +195,12 @@ Page({
 						that.setData({ unionId: r.unionId, openId: r.openId });
 						wx.setStorage({ key: 'openId', data: r.openId });
 						wx.setStorage({ key: 'unionId', data: r.unionId });
+						this.login();
+						if (this.user && this.data.rejectAuth) {
+							if (this.donate) {
+								this.showError('未授权运动，请再次点击完成授权！');
+							}
+						} 
 					} else {
 						let todayStep = r.stepInfoList[30];
 						that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
@@ -218,7 +235,7 @@ Page({
 				} else if (res.data.code == -1) {
 					this.showError('服务器错误,请稍后再试!' + res.data.msg);
 				} else { 
-					if (this.user) {
+					if (this.user && !this.create) {
 						this.donateStep();
 					}
 				}
@@ -234,10 +251,15 @@ Page({
 	},
 	getUserInfo: function (e) {
 		if (e.detail.userInfo) {
+			this.user = true;
+			if (e.currentTarget.dataset.donate == 1) {
+				this.donate = true;
+			} else {
+				this.create = true;
+			}
 			this.setData({ userInfo: e.detail.userInfo });
 			this.decodeUserInfo({ encryptedData: e.detail.encryptedData, iv: e.detail.iv });
 			this.wxlogin();
-			this.user = true;
 			wx.setStorageSync('user', e.detail.userInfo);
 		}
 	},
@@ -253,6 +275,14 @@ Page({
 				success: res2 => {
 					if (res2 && res2.authSetting['scope.werun'] === true) {
 						that.setData({ rejectAuth: false });
+						wx.login({
+							success: res => {
+								if (res.code) {
+									this.setData({ code: res.code });
+									this.wxlogin();
+								}
+							}
+						})
 					} else {
 						that.showError('授权失败');
 						wx.hideLoading();
@@ -343,7 +373,7 @@ Page({
 	getActDetail: function() {
 		wx.showLoading({
 			title: '加载中...',
-			mask: true
+			mask: true,
 		});
 		const dd = this.data;
 		let uid = dd.userId ? dd.userId : 0;
@@ -364,8 +394,11 @@ Page({
 						this.setData({ donatedStep: r.donateStep });
 					}
 					wx.setStorageSync('pTitle', r.projectTitle);
-				} else {
-					
+					setTimeout(() => {
+						this.setData({ fillShow: true });
+					}, 1000)
+				} else if (res.statusCode != 200) {
+					this.showError('服务器错误，请稍后再试！');
 				}
 			},
 			complete: () => {
@@ -389,7 +422,7 @@ Page({
 			success: res => {
 				if (res.data.code == 1) {
 					const r = res.data.result;
-					this.setData({ defaultTeam: r.defaultTeam, teamList: r.data.teamList });
+					this.setData({ defaultTeam: r.defaultTeam, teamList: r.data.teamList ? r.data.teamList : [] });
 				} else {
 					this.showError('查询队伍错误，'+ res.data.msg);
 				}
@@ -518,4 +551,12 @@ Page({
 			showCancel: false,
 		});
 	},
+	onShareAppMessage: function() {
+		const dd = this.data;
+		return {
+			title: '一起捐步做公益吧',
+			path: '/pages/teams/teams?cid='+ dd.cid + '&pid='+ dd.pid,
+			imageUrl: dd.info.projectCoverImageUrl,
+		}
+	}
 })

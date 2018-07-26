@@ -76,6 +76,9 @@ Page({
 					} else {
 						a = 1;
 					}
+					if (!r.data.teamList) {
+						r.data.teamList = [];
+					}
 					let arr = [...dd.teamList, ...r.data.teamList];
 					this.setData({ defaultTeam: r.defaultTeam, teamList: arr, hasmore: a, total: r.data.count });
 				} else {

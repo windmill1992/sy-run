@@ -84,7 +84,7 @@ Page({
 		const dd = this.data;
 		let query = '?cid='+ dd.cid + '&pid='+ dd.pid;
 		return {
-			title: dd.info.projectTitle,
+			title: '一起捐步做公益吧',
 			path: '/pages/teams/teams' + query,
 			imageUrl: dd.info.projectCoverImageUrl,
 		}

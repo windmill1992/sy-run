@@ -4,7 +4,7 @@ const api = {
 	userUpdateRunData: app.base + '/donateStep/getUserUpdateWeRundata.do', 		//判断用户10分钟内是否更新运动数据
 	teamDetail: app.base + 'donateStep/teamDetail.do',												//队伍信息
 	login: app.base + 'wx/login.do',																					//获取userId
-	donateStep: app.base + 'donateStep/donateStep.do',												//捐步
+	donateStep: app.base + 'donateStep/donateStepNew.do',											//捐步
 	getSessionKey: app.base + 'wx/getSessionKey.do',													//获取session_key
 	decodeInfo: app.base + 'wx/decodeInfo.do',																//解码获取步数
 	addUserWeRundata: app.base + 'donateStep/addUserWeRundata.do',						//添加用户运动信息
@@ -22,7 +22,9 @@ Page({
 		if (options.tid) {
 			let rank = options.rank ? Number(options.rank) + 1 : 0;
 			this.setData({ tid: options.tid, cid: options.cid, pid: options.pid, rank: rank, rejectAuth: false });
-			
+			if (options.share == 1) {
+				this.setData({ shareShow: true });
+			}
 			wx.login({
 				success: res => {
 					if (res.code) {
@@ -121,7 +123,7 @@ Page({
 					wx.hideLoading();
 					let arr = wx.getSystemInfoSync().SDKVersion.split('.');
 					if ((arr[0] >= 2 && arr[1] >= 1) || (arr[0] >= 2 && arr[1] == 0 && arr[2] >= 7)) {
-						that.setData({ rejectAuth: true, canIUse: true });
+						this.setData({ rejectAuth: true, canIUse: true });
 					} else {
 						this.setData({ rejectAuth: true });
 					}
@@ -142,9 +144,12 @@ Page({
 			},
 			success: res => {
 				if (res.data.code == 1) {
+					if (!wx.getStorageSync('userId')) {
+						this.getTeamDetail();
+					}
 					const r = res.data.result;
 					this.setData({ userId: r.userId, isLogin: true });
-					wx.setStorageSync('userId', r.userId)
+					wx.setStorageSync('userId', r.userId);
 				} else {
 					this.showError('获取用户信息失败！');
 					return;
@@ -210,6 +215,9 @@ Page({
 						that.setData({ unionId: r.unionId, openId: r.openId });
 						wx.setStorage({ key: 'openId', data: r.openId });
 						wx.setStorage({ key: 'unionId', data: r.unionId });
+						if (this.user && this.data.rejectAuth) {
+							this.showError('未授权运动，请再次点击完成授权！');
+						} 
 					} else {
 						let todayStep = r.stepInfoList[30];
 						that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
@@ -488,4 +496,12 @@ Page({
 			showCancel: false,
 		});
 	},
+	onShareAppMessage: function () {
+		const dd = this.data;
+		return {
+			title: '和'+ dd.info.companyName+ '一起捐步为爱做公益吧~',
+			path: '/pages/teamDetail/teamDetail?cid=' + dd.cid + '&pid=' + dd.pid + '&tid='+ dd.tid,
+			imageUrl: dd.info.projectCoverImageUrl,
+		}
+	}
 })
