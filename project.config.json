@@ -29,7 +29,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -74,7 +74,7 @@
 					"id": 6,
 					"name": "teamDetail",
 					"pathName": "pages/teamDetail/teamDetail",
-					"query": "cid=38&pid=1971&tid=136&share=1",
+					"query": "scene=cid%3D36%26pid%3D1971%26tid%3D127",
 					"scene": "1047"
 				},
 				{

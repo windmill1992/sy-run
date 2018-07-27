@@ -1,6 +1,6 @@
 <!--pages/trendsInfo/trendsInfo.wxml-->
 <scroll-view class='pageContainer' scroll-y bindscroll='handleScroll'>
-	<view class='ti-hd'>
+	<view class='ti-hd' id='header'>
 		<view class='hd-title'>{{pTitle}}</view>
 		<!-- <view class='hd-from'>由 鸿金鹏集团 发起</view> -->
 	</view>

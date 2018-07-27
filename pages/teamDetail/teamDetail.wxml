@@ -3,6 +3,7 @@
 	<view class='td-hd'>
 		<view class='hd-pic'>
 			<image src='{{info.projectCoverImageUrl}}' mode='aspectFill'></image>
+			<image src='https://www.17xs.org/res/images/mini/ewm.png' class='menu' bindtap='showQRCode'></image>
 		</view>
 		<view class='hd-main'>
 			<view class='hd-rank' wx:if='{{rank}}'>

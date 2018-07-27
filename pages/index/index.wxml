@@ -152,12 +152,12 @@
         </navigator>
       </view>
       <view class="loadmore" bindtap='loadmore'>
-        <block wx:if="{{hasMore==2}}">
+        <block wx:if="{{hasMore == 2}}">
           <view class="arr-bot"></view>
           <text>更多排行</text>
         </block>
-        <view wx:elif="{{hasMore==1}}">暂无数据</view>
-        <view wx:else>没有更多数据了</view>
+        <view wx:elif="{{hasMore == 1}}">暂无数据</view>
+        <view wx:else style='color: #999;'>没有更多数据了</view>
       </view>
     </view>
     <view class="bd-recordLink mt10 mb10 txtC">
@@ -244,7 +244,7 @@
       <view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="stepIntro">
         <view class="close"></view>
       </view>
-      <navigator url="" class="knowBtn">查看更多公益项目</navigator>
+      <navigator url="/pages/pageIndex/pageIndex" class="knowBtn" hover-class='none'>查看更多公益项目</navigator>
     </view>
   </view>
 

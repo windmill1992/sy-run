@@ -2,9 +2,9 @@
 App({
 	onLaunch: function (options) {
 		//调用API从本地缓存中获取数据
-		if (!wx.getStorageSync('prod121')) {
+		if (!wx.getStorageSync('prod122')) {
 			wx.clearStorageSync();
-			wx.setStorageSync('prod121', '1');
+			wx.setStorageSync('prod122', '1');
 		} 
 		wx.setStorageSync('scene', options.scene);
 		wx.setStorageSync('query', options.query);
@@ -20,7 +20,7 @@ App({
 							content: '新版本已经准备好，是否重启应用？',
 							success: res => {
 								if (res.confirm) {
-									// 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+									// 新的版本已经下载好，调this.sssss用 applyUpdate 应用新版本并重启
 									updateManager.applyUpdate()
 								} else {
 									wx.redirectTo({

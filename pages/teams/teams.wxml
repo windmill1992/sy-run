@@ -3,6 +3,7 @@
 	<view class='td-hd'>
 		<view class='hd-pic'>
 			<image src='{{info.projectCoverImageUrl}}' mode='aspectFill'></image>
+			<image src='https://www.17xs.org/res/images/mini/ewm.png' class='menu' bindtap='showQRCode'></image>
 		</view>
 		<view class='hd-main'>
 			<view class='hd-avatar'>
@@ -165,5 +166,14 @@
         <view class="close"></view>
       </view>
     </view>
+	</view>
+	<view class='dialog qrcodeDialog {{qrcodeShow?"show":""}} {{qrcodeHide?"hide":""}}'>
+		<view class='mask'></view>
+		<view class='dialog_inner'>
+			<image src='' class='qrcode'></image>
+			<view class="closeLink closeDialog" bindtap='closeDialog' data-dialog="qrcode">
+        <view class="close"></view>
+      </view>
+		</view>
 	</view>
 </view>

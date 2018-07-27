@@ -14,7 +14,6 @@ const api = {
 	addUserWeRundata: app.base + 'donateStep/addUserWeRundata.do',						//添加用户运动信息
 };
 const util = require('../../utils/util.js');
-var page = 1;
 Page({
 	data: {
 		userInfo: {},
@@ -197,6 +196,9 @@ Page({
 			success: res => {
 				let r = res.data.result;
 				if (r.length > 0) {
+					if (pageNum == 1) {
+						this.setData({ effectLists: [] });
+					}
 					that.setData({ hasData: true });
 					let arr = [];
 					for (let i = 0; i < r.length; i++) {
@@ -208,13 +210,15 @@ Page({
 							companyId: r[i].companyId						          	//企业id
 						});
 					}
-					that.setData({ effectLists: arr });
+					that.setData({ effectLists: [...that.data.effectLists, ...arr] });
 				} else {
 					that.setData({ hasData: false, hasMore: 1 });
 				}
 				if (!res.data.state) {
 					that.setData({ hasMore: 0 });
-				} else { }
+				} else {
+					that.setData({ hasMore: 2 });
+				}
 			}
 		});
 	},
@@ -318,7 +322,7 @@ Page({
 	},
 	loadmore: function () {
 		if (this.data.hasMore == 2) {
-			this.effectList(++page, 10);
+			this.effectList(++this.page, 10);
 		} else {
 			return;
 		}
@@ -551,6 +555,7 @@ Page({
 		if (wx.getStorageSync('user')) {
 			this.setData({ userInfo: wx.getStorageSync('user') });
 		}
+		this.page = 1;
 		wx.showLoading({
 			title: '加载中...',
 			mask: true
@@ -635,7 +640,7 @@ Page({
 		} else { }
 		if (e.scrollTop >= 195 && !that.data.flag[2]) {
 			that.showBillboard(2);
-			that.effectList(page, 10);
+			that.effectList(this.page, 10);
 		} else { }
 	},
 	onPullDownRefresh: function () {
@@ -647,7 +652,11 @@ Page({
 				duration: 2000
 			});
 			this.onLoad(this.data.options);
-		} else { }
+		} else { 
+			this.page = 1;
+			this.effectList();
+			this.getStatisticsData();
+		}
 	},
 	stopmove: function () { },
 	showError: function (txt) {
@@ -657,7 +666,7 @@ Page({
 			showCancel: false
 		});
 	},
-	onShareAppMessage: function (res) {
+	onShareAppMessage: function () {
 		const that = this;
 		let dd = that.data;
 		let query = '';

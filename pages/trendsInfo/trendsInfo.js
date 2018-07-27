@@ -14,6 +14,7 @@ Page({
 		if (options.tid) {
 			this.page1 = 1;
 			this.page2 = 1;
+			this.h = 0;
 			this.setData({ cid: options.cid, pid: options.pid, tid: options.tid });
 			this.getTop();
 		}
@@ -21,6 +22,9 @@ Page({
 		this.r = wx.getSystemInfoSync().windowWidth / 375;
 		let pTitle = wx.getStorageSync('pTitle');
 		this.setData({ pTitle: pTitle });
+		wx.createSelectorQuery().select('#header').boundingClientRect(rect => {
+			this.h = rect.height + 30 * this.r;
+		}).exec();
   },
 	getTop: function() {
 		wx.showLoading({
@@ -97,10 +101,10 @@ Page({
 		})
 	},
 	handleScroll: function(e) {
-		if (e.detail.scrollTop >= 62 * this.r && this.flag) {
+		if (e.detail.scrollTop >= this.h && this.flag) {
 			this.setData({ fixed: true });
 			this.flag = false;
-		} else if (e.detail.scrollTop < 62 * this.r && !this.flag) {
+		} else if (e.detail.scrollTop < this.h && !this.flag) {
 			this.setData({ fixed: false });
 			this.flag = true;
 		}

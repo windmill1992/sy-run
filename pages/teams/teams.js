@@ -26,6 +26,19 @@ Page({
   onLoad: function (options) {
 		if (options.cid) {
 			this.setData({ cid: options.cid, pid: options.pid, options: options });
+		} else if (decodeURIComponent(options.scene)) {
+			const arr = decodeURIComponent(options.scene).split('&');
+			let cid = 0;
+			let pid = 0;
+			for (let v of arr) {
+				if (v.includes('cid')) {
+					cid = v.split('=')[1];
+				}
+				if (v.includes('pid')) {
+					pid = v.split('=')[1];
+				}
+			}
+			this.setData({ cid: cid, pid: pid });
 		} else {
 			wx.showModal({
 				title: '错误',
@@ -62,6 +75,8 @@ Page({
 			}
 		})
 		{
+			this.donate = false;
+			this.create = false;
 			let unionId = wx.getStorageSync('unionId');
 			if (unionId) {
 				this.setData({ unionId: unionId });
@@ -131,12 +146,10 @@ Page({
 					const r = res.data.result;
 					this.setData({ userId: r.userId, isLogin: true });
 					wx.setStorageSync('userId', r.userId);
-					if (this.user && this.data.rejectAuth) {
-						if (this.create) {
-							wx.navigateTo({
-								url: '/pages/teamCreate/teamCreate?cid=' + this.data.cid + '&pid=' + this.data.pid,
-							})
-						}
+					if (this.user && this.create) {
+						wx.navigateTo({
+							url: '/pages/teamCreate/teamCreate?cid=' + this.data.cid + '&pid=' + this.data.pid,
+						})
 					} 
 				} else {
 					this.showError('获取用户信息失败！');
@@ -543,6 +556,12 @@ Page({
 				that.runProgress(0, 0, 0);
 			} else { }
 		}, 400);
+	},
+	showQRCode: function() {
+		wx.previewImage({
+			urls: [this.data.info.imageUrl],
+		})
+		// this.setData({ qrcodeShow: true });
 	},
 	showError: function (txt) {
 		wx.showModal({

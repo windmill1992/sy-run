@@ -28,6 +28,14 @@
   width: 100%;
 }
 
+.hd-pic .menu{
+	width: 50rpx;
+	height: 50rpx;
+	top: 30rpx;
+	right: 30rpx;
+	left: auto;
+}
+
 .hd-main {
   position: relative;
   padding: 0 32rpx 32rpx;
@@ -519,4 +527,9 @@
   color: #dee4e8;
   transform-origin: 0 0;
   transform: scaleY(0.5);
+}
+
+.qrcodeDialog .qrcode{
+	width: 500rpx;
+	height: 500rpx;
 }

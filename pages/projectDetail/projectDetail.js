@@ -208,14 +208,14 @@ Page({
 	},
 	getDonationList: function (pageSize, pageNum) {
 		const that = this;
-		if (page == 1) {
+		if (this.page == 1) {
 			wx.showLoading({
 				title: '加载中...',
 			});
 		}
 		let dd = that.data;
 		let flag = false;
-		if (page == 1) { flag = true; } else { }
+		if (this.page == 1) { flag = true; } else { }
 		wx.request({
 			url: api.donationlist,
 			method: 'GET',

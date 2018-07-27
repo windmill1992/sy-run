@@ -65,7 +65,6 @@ Page({
 				pageSize: 10,
 			},
 			success: res => {
-				console.log(res.data);
 				if (res.data.code == 1) {
 					const r = res.data.result;
 					let a = -1;

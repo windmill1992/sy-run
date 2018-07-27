@@ -25,15 +25,52 @@ Page({
 			if (options.share == 1) {
 				this.setData({ shareShow: true });
 			}
-			wx.login({
+		} else if (decodeURIComponent(options.scene)) {
+			const arr = decodeURIComponent(options.scene).split('&');
+			let cid = 0;
+			let pid = 0;
+			let tid = 0;
+			for (let v of arr) {
+				if (v.includes('cid')) {
+					cid = v.split('=')[1];
+				}
+				if (v.includes('pid')) {
+					pid = v.split('=')[1];
+				}
+				if (v.includes('tid')) {
+					tid = v.split('=')[1];
+				}
+			}
+			this.setData({ cid: cid, pid: pid, tid: tid, rejectAuth: false });
+		} else {
+			let url = '';
+			if (options.cid) {
+				url = '/pages/teams/teams?cid='+ options.cid + '&pid='+ options.pid;
+			} else {
+				url = '/pages/index/index';
+			}
+			wx.showModal({
+				title: '提示',
+				content: '队伍不存在，点击返回',
+				showCancel: false,
 				success: res => {
-					if (res.code) {
-						this.setData({ code: res.code });
-						this.wxlogin();
+					if (res.confirm) {
+						wx.reLaunch({
+							url: url,
+						})
 					}
 				}
 			})
+			return;
 		}
+		wx.login({
+			success: res => {
+				if (res.code) {
+					this.setData({ code: res.code });
+					this.wxlogin();
+				}
+			}
+		})
   },
 	onShow: function () {
 		wx.getSetting({
@@ -88,6 +125,7 @@ Page({
 						totalMoney: r.totalMoney,
 						totalStep: r.totalStep,
 						companyName: r.companyName,
+						imageUrl: r.imageUrl,
 					}
 					this.setData({ info: obj, stepList: r.data, total: r.count, donateState: r.isDonate });
 					if (r.isDonate) {
@@ -488,6 +526,12 @@ Page({
 				that.runProgress(0, 0, 0);
 			} else { }
 		}, 400);
+	},
+	showQRCode: function () {
+		wx.previewImage({
+			urls: [this.data.info.imageUrl],
+		})
+		// this.setData({ qrcodeShow: true });
 	},
 	showError: function (txt) {
 		wx.showModal({
