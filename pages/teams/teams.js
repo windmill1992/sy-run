@@ -64,7 +64,7 @@ Page({
 			}
 		})
   },
-	onShow: function() {
+	onShow: function () {
 		wx.getSetting({
 			success: res1 => {
 				if (res1 && res1.authSetting['scope.werun'] !== false) {
@@ -95,11 +95,11 @@ Page({
 			this.getTeamRank();
 		}
 	},
-	wxlogin: function() {
+	wxlogin: function () {
 		wx.showLoading({
 			title: '加载中...',
 			mask: true,
-		})
+		});
 		wx.getSetting({
 			success: res1 => {
 				if (res1 && res1.authSetting['scope.werun'] !== false) {
@@ -126,7 +126,7 @@ Page({
 			}
 		});
 	},
-	login: function() {
+	login: function () {
 		const user = this.data.userInfo;
 		wx.request({
 			url: api.login,
@@ -140,12 +140,19 @@ Page({
 			success: res => {
 				if (res.data.code == 1) {
 					if (!wx.getStorageSync('userId')) {
-						this.getActDetail();
 						this.getTeamRank();
 					}
 					const r = res.data.result;
-					this.setData({ userId: r.userId, isLogin: true });
-					wx.setStorageSync('userId', r.userId);
+					if (r.userId && r.userId != null && r.userId != 'null') {
+						this.setData({ userId: r.userId, isLogin: true });
+						wx.setStorageSync('userId', r.userId);
+						if (this.data.step) {
+							this.addUserRunData();
+						}
+					} else {
+						this.setData({ isLogin: false })
+					}
+					this.getActDetail();
 					if (this.user && this.create) {
 						wx.navigateTo({
 							url: '/pages/teamCreate/teamCreate?cid=' + this.data.cid + '&pid=' + this.data.pid,
@@ -156,7 +163,7 @@ Page({
 					return;
 				}
 			}
-		});
+		})
 	},
 	get3rdSession: function () {
 		wx.request({
@@ -171,15 +178,12 @@ Page({
 					let openId = r.openId;
 					this.setData({ sessionId: sessionId, openId: openId });
 					wx.setStorageSync('sessionId', sessionId);
+					wx.setStorage({ key: 'openId', data: openId });
 					this.decodeUserInfo({ encryptedData: this.data.encryptedData, iv: this.data.iv });
 					if (!unionId || unionId == null || unionId == 'null') {
-						
+						console.log('unionId is null.');
 					} else {
 						this.setData({ unionId: unionId });
-						if (this.data.userInfo.nickName) {
-							this.login();
-						}
-						wx.setStorage({ key: 'openId', data: openId });
 						wx.setStorage({ key: 'unionId', data: unionId });
 					}
 				} else {
@@ -195,12 +199,19 @@ Page({
 			data: {
 				encryptedData: data.encryptedData,
 				iv: data.iv,
-				js_code: that.data.code
+				js_code: that.data.code,
 			},
 			method: 'GET',
 			success: res => {
 				if (res.data.code == -1) {
-					that.showError('请求错误!' + res.data.msg);
+					wx.login({
+						success: res => {
+							if (res.code) {
+								this.setData({ code: res.code });
+								this.wxlogin();
+							}
+						}
+					})
 					return;
 				} else {
 					const r = res.data.result;
@@ -209,18 +220,11 @@ Page({
 						wx.setStorage({ key: 'openId', data: r.openId });
 						wx.setStorage({ key: 'unionId', data: r.unionId });
 						this.login();
-						if (this.user && this.data.rejectAuth) {
-							if (this.donate) {
-								this.showError('未授权运动，请再次点击完成授权！');
-							}
-						} 
 					} else {
 						let todayStep = r.stepInfoList[30];
 						that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
-						if (that.data.userInfo.nickName && that.data.unionId) {
-							setTimeout(() => {
-									that.addUserRunData();
-							}, 1000);
+						if (this.data.userInfo.nickName) {
+							this.login();
 						}
 					}
 				}
@@ -239,27 +243,34 @@ Page({
 				openId: this.data.openId,
 				runData: this.data.step,
 				nickName: this.data.userInfo.nickName,
-				coverImageUrl: this.data.userInfo.avatarUrl
+				coverImageUrl: this.data.userInfo.avatarUrl,
 			},
 			success: res => {
 				if (res.data.code == 0) {
-					this.showError('添加或更新用户运动步数失败!' + res.data.msg);
+					this.showError('添加或更新步数失败，' + res.data.msg);
 					return;
 				} else if (res.data.code == -1) {
-					this.showError('服务器错误,请稍后再试!' + res.data.msg);
+					this.showError('服务器错误,请稍后再试，' + res.data.msg);
 				} else { 
 					if (this.user && !this.create) {
 						this.donateStep();
 					}
 				}
 			}
-		});
+		})
 	},
 	openSetting: function (e) {
 		if (e.detail.authSetting['scope.werun']) {
-			this.onLoad(this.data.options);
+			wx.login({
+				success: res => {
+					if (res.code) {
+						this.setData({ code: res.code });
+						this.wxlogin();
+					}
+				}
+			})
 		} else {
-			this.showError('授权失败');
+			wx.hideLoading()
 		}
 	},
 	getUserInfo: function (e) {
@@ -272,7 +283,6 @@ Page({
 			}
 			this.setData({ userInfo: e.detail.userInfo });
 			this.decodeUserInfo({ encryptedData: e.detail.encryptedData, iv: e.detail.iv });
-			this.wxlogin();
 			wx.setStorageSync('user', e.detail.userInfo);
 		}
 	},
@@ -297,7 +307,6 @@ Page({
 							}
 						})
 					} else {
-						that.showError('授权失败');
 						wx.hideLoading();
 					}
 				}
@@ -368,7 +377,7 @@ Page({
 					wx.showToast({
 						title: '捐步成功',
 						icon: 'success',
-						duration: 1000
+						duration: 1000,
 					});
 					setTimeout(() => {
 						wx.navigateTo({
@@ -405,8 +414,16 @@ Page({
 					this.setData({ info: r, donateState: r.isDonate });
 					if (r.isDonate) {
 						this.setData({ donatedStep: r.donateStep });
+						if (this.user && this.donate) {
+							this.setData({ donatedShow: true });
+						}
+					} else {
+						if (this.user && this.data.rejectAuth) {
+							if (this.donate) {
+								this.showError('未授权运动，请再次点击完成授权！');
+							}
+						} 
 					}
-					wx.setStorageSync('pTitle', r.projectTitle);
 					setTimeout(() => {
 						this.setData({ fillShow: true });
 					}, 1000)

@@ -2,7 +2,7 @@
 <view class="pageContainer">
   <view class="ds-hd flex flexcol">
     <view class="hd-title">
-      <text class="p {{state == 1 ? 'hidden' : ''}}">{{projectTitle}}</text>
+      <text class="p {{state == 1 && !donateState ? 'hidden' : ''}}">{{projectTitle}}</text>
       <button class='change' bindtap='getRandomProjectInfo' wx:if='{{state == 1 && !donateState}}'>换一换</button>
     </view>
     <view class="hd-pic"  bindtap='toProjectDetail'>
@@ -30,7 +30,7 @@
               </view>
             </view>
           </view>
-          <view wx:if='{{userInfo.nickName}}'>
+          <view wx:if='{{isLogin}}'>
             <button wx:if='{{!rejectAuth || !canIUse}}' class="btn donate-btn" id="donateBtn" bindtap='donateStep'>拼手气捐步</button>
 						<button wx:else open-type='openSetting' bindopensetting="openSetting" class='btn'>拼手气捐步</button>
           </view>

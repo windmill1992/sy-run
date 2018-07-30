@@ -61,7 +61,7 @@
 		</view>
 	</view>
 	<view class='td-ft'>
-		<block wx:if='{{userInfo.nickName}}'>
+		<block wx:if='{{isLogin}}'>
 			<view class='btn1' bindtap='donateStep' wx:if='{{!rejectAuth || !canIUse}}'>马上捐步</view>
 			<button open-type='openSetting' bindopensetting='openSetting' class='btn1' wx:else>马上捐步</button>
 		</block>

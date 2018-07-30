@@ -130,10 +130,15 @@ Page({
 					this.setData({ info: obj, stepList: r.data, total: r.count, donateState: r.isDonate });
 					if (r.isDonate) {
 						this.setData({ donatedStep: r.donateStep });
+						if (this.user) {
+							this.setData({ donatedShow: true });
+						}
+					} else {
+						if (this.user && this.data.rejectAuth) {
+							this.showError('未授权运动，请再次点击完成授权！');
+						} 
 					}
-					if (!wx.getStorageSync('pTitle')) {
-						wx.setStorageSync('pTitle', r.projectName);
-					}
+					wx.setStorageSync('pTitle', r.projectName);
 				}
 			}
 		})
@@ -142,7 +147,7 @@ Page({
 		wx.showLoading({
 			title: '加载中...',
 			mask: true,
-		})
+		});
 		wx.getSetting({
 			success: res1 => {
 				if (res1 && res1.authSetting['scope.werun'] !== false) {
@@ -167,7 +172,7 @@ Page({
 					}
 				}
 			}
-		});
+		})
 	},
 	login: function () {
 		const user = this.data.userInfo;
@@ -182,18 +187,23 @@ Page({
 			},
 			success: res => {
 				if (res.data.code == 1) {
-					if (!wx.getStorageSync('userId')) {
-						this.getTeamDetail();
-					}
 					const r = res.data.result;
-					this.setData({ userId: r.userId, isLogin: true });
-					wx.setStorageSync('userId', r.userId);
+					if (r.userId && r.userId != null && r.userId != 'null') {
+						this.setData({ userId: r.userId, isLogin: true });
+						wx.setStorageSync('userId', r.userId);
+						if (this.data.step) {
+							this.addUserRunData();
+						}
+					} else {
+						this.setData({ isLogin: false })
+					}
+					this.getTeamDetail();
 				} else {
 					this.showError('获取用户信息失败！');
 					return;
 				}
 			}
-		});
+		})
 	},
 	get3rdSession: function () {
 		wx.request({
@@ -208,22 +218,19 @@ Page({
 					let openId = r.openId;
 					this.setData({ sessionId: sessionId, openId: openId });
 					wx.setStorageSync('sessionId', sessionId);
+					wx.setStorage({ key: 'openId', data: openId });
 					this.decodeUserInfo({ encryptedData: this.data.encryptedData, iv: this.data.iv });
 					if (!unionId || unionId == null || unionId == 'null') {
-
+						console.log('unionId is null.');
 					} else {
 						this.setData({ unionId: unionId });
-						if (this.data.userInfo.nickName) {
-							this.login();
-						}
-						wx.setStorage({ key: 'openId', data: openId });
 						wx.setStorage({ key: 'unionId', data: unionId });
 					}
 				} else {
 					this.showError('服务器错误，请稍后再试！');
 				}
 			}
-		});
+		})
 	},
 	decodeUserInfo: function (data) {
 		const that = this;
@@ -232,12 +239,11 @@ Page({
 			data: {
 				encryptedData: data.encryptedData,
 				iv: data.iv,
-				js_code: that.data.code
+				js_code: that.data.code,
 			},
 			method: 'GET',
 			success: res => {
 				if (res.data.code == -1) {
-					that.showError('请求错误!' + res.data.msg);
 					wx.login({
 						success: res => {
 							if (res.code) {
@@ -253,16 +259,12 @@ Page({
 						that.setData({ unionId: r.unionId, openId: r.openId });
 						wx.setStorage({ key: 'openId', data: r.openId });
 						wx.setStorage({ key: 'unionId', data: r.unionId });
-						if (this.user && this.data.rejectAuth) {
-							this.showError('未授权运动，请再次点击完成授权！');
-						} 
+						this.login();
 					} else {
 						let todayStep = r.stepInfoList[30];
 						that.setData({ step: todayStep.step, stepFmt: util.numFmt(todayStep.step) });
-						if (that.data.userInfo.nickName && that.data.unionId) {
-							setTimeout(() => {
-								that.addUserRunData();
-							}, 1000);
+						if (this.data.userInfo.nickName) {
+							this.login();
 						}
 					}
 				}
@@ -285,10 +287,10 @@ Page({
 			},
 			success: res => {
 				if (res.data.code == 0) {
-					this.showError('添加或更新用户运动步数失败!' + res.data.msg);
+					this.showError('添加或更新步数失败，' + res.data.msg);
 					return;
 				} else if (res.data.code == -1) {
-					this.showError('服务器错误,请稍后再试!' + res.data.msg);
+					this.showError('服务器错误,请稍后再试，' + res.data.msg);
 				} else { 
 					if (this.user) {
 						this.user = false;
@@ -309,14 +311,13 @@ Page({
 				}
 			})
 		} else {
-			this.showError('授权失败');
+			wx.hideLoading()
 		}
 	},
 	getUserInfo: function (e) {
 		if (e.detail.userInfo) {
 			this.setData({ userInfo: e.detail.userInfo });
 			this.decodeUserInfo({ encryptedData: e.detail.encryptedData, iv: e.detail.iv });
-			this.wxlogin();
 			this.user = true;
 			wx.setStorageSync('user', e.detail.userInfo);
 		}
@@ -341,7 +342,6 @@ Page({
 							}
 						})
 					} else {
-						that.showError('授权失败');
 						wx.hideLoading();
 					}
 				}
@@ -411,15 +411,15 @@ Page({
 					wx.showToast({
 						title: '捐步成功',
 						icon: 'success',
-						duration: 1000
+						duration: 1000,
 					});
-					setTimeout(() => {
+					setTimeout( () => {
 						wx.navigateTo({
-							url: '/pages/teamThanks/teamThanks?cid='+ dd.cid + '&pid='+ dd.pid
+							url: '/pages/teamThanks/teamThanks?cid='+ dd.cid + '&pid='+ dd.pid,
 						});
 					}, 1000);
 				} else {
-					this.showError('捐步失败' + res.data.msg);
+					this.showError('捐步失败，' + res.data.msg);
 					return;
 				}
 			}
@@ -432,13 +432,13 @@ Page({
 			duration: dur,
 			timingFunction: 'ease',
 			delay: del,
-			transformOrigin: "400% 50%"
+			transformOrigin: "400% 50%",
 		});
 		ani2 = wx.createAnimation({
 			duration: dur,
 			timingFunction: 'ease',
 			delay: del,
-			transformOrigin: '50% 100%'
+			transformOrigin: '50% 100%',
 		});
 		ani1.rotate(deg).step();
 		ani2.rotate(180 + deg).step();
@@ -454,8 +454,8 @@ Page({
 		} else {
 			speed = 1;
 		}
-		if (speed > 20) { speed = 20; } else { }
-		let timer = setInterval(() => {
+		speed = speed > 20 ? speed : 20;
+		let timer = setInterval( () => {
 			let num = Number(dd.stepFmt.toString().replace(',', ''));
 			let st = '', count = 0;
 			if (num > 999) {

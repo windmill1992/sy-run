@@ -92,7 +92,7 @@
 	<view class='td-ft flex'>
 		<navigator url='/pages/teamCreate/teamCreate?cid={{cid}}&pid={{pid}}' class='btn1 left' wx:if='{{isLogin}}' hover-class='none'>创建队伍</navigator>
 		<button open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='btn1 left' wx:else>创建队伍</button>
-		<block wx:if='{{userInfo.nickName}}'>
+		<block wx:if='{{isLogin}}'>
 			<view class='btn1 right' bindtap='donateStep' wx:if='{{!rejectAuth || !canIUse}}'>马上捐步</view>
 			<button class='btn1 right' open-type='openSetting' bindopensetting='openSetting' wx:else>马上捐步</button>
 		</block>

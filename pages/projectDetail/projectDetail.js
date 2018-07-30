@@ -252,7 +252,7 @@ Page({
 						}
 						if (!dd.flag_state) {
 							that.setData({ flag_state: true });
-						} else if (page > 1) {
+						} else if (that.page > 1) {
 							that.setData({ flag_state: false });
 						}
 						let arr2 = [];

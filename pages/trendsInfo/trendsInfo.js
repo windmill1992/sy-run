@@ -26,10 +26,10 @@ Page({
 			this.h = rect.height + 30 * this.r;
 		}).exec();
   },
-	getTop: function() {
+	getTop: function () {
 		wx.showLoading({
 			title: '加载中...',
-		})
+		});
 		const dd = this.data;
 		wx.request({
 			url: api.stepRank,
@@ -65,10 +65,10 @@ Page({
 			}
 		})
 	},
-	getState: function() {
+	getState: function () {
 		wx.showLoading({
 			title: '加载中...',
-		})
+		});
 		const dd = this.data;
 		wx.request({
 			url: api.stepDynamic,
@@ -100,25 +100,25 @@ Page({
 			}
 		})
 	},
-	handleScroll: function(e) {
+	handleScroll: function (e) {
 		if (e.detail.scrollTop >= this.h && this.flag) {
 			this.setData({ fixed: true });
 			this.flag = false;
 		} else if (e.detail.scrollTop < this.h && !this.flag) {
 			this.setData({ fixed: false });
 			this.flag = true;
-		}
+		} else {}
 	},
-	changeNav: function(e) {
+	changeNav: function (e) {
 		let n = e.currentTarget.dataset.nav;
 		this.setData({ nav: n });
 		if (this.data.stateList.length == 0 && n == 1) {
 			this.getState();
 		} else if (this.data.topList.length == 0 && n == 0) {
 			this.getTop();
-		}
+		} else {}
 	},
-	loadmore: function() {
+	loadmore: function () {
 		if (this.data.nav == 0) {
 			this.setData({ hasmore1: -1 });
 			this.page1++;
@@ -129,7 +129,7 @@ Page({
 			this.getState();
 		}
 	},
-	showError: function(txt) {
+	showError: function (txt) {
 		wx.showModal({
 			title: '',
 			content: txt,
