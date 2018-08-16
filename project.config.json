@@ -29,13 +29,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
-					"name": "4574",
+					"name": "4612",
 					"pathName": "pages/projectDetail/projectDetail",
-					"query": "projectId=4574",
+					"query": "projectId=4612",
 					"scene": "1001"
 				},
 				{

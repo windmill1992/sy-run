@@ -22,7 +22,7 @@
 			<view class='txt'>共{{total}}支队伍参与捐步</view>
 		</view>
 		<view class='bd-list'>
-			<navigator url='/pages/teamDetail/teamDetail?cid={{cid}}&pid={{pid}}' wx:for='{{teamList}}' wx:key='team' class='item flex fcen'>
+			<navigator url='/pages/teamDetail/teamDetail?cid={{cid}}&pid={{pid}}&tid={{item.teamId}}' wx:for='{{teamList}}' wx:key='team' class='item flex fcen'>
 				<view class='hd-rank'>
 					<view class='ranks rank{{index < 3 ? (index + 1) : 4}}'>
 						<text class='num'>{{index + 1}}</text>

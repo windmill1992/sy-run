@@ -32,22 +32,22 @@ Page({
 							cid: r.runCompanyId,
 							projects: r.project
 						});
-						let obj = {}, str = '';
-						for (let i = 0; i < r.project.length; i++) {
-							if (r.project[i].totalStep > 9999999) {
-								str = 'projects[' + i + '].totalStep';
-								obj[str] = r.project[i].totalStep.toString().substring(0, -4);
-								str = 'projects[' + i + '].unit';
-								obj[str] = '万';
-								that.setData(obj);
-								obj = {};
-							} else {
-								str = 'projects[' + i + '].unit';
-								obj[str] = '';
-								that.setData(obj);
-								obj = {};
-							}
-						}
+						// let obj = {}, str = '';
+						// for (let i = 0; i < r.project.length; i++) {
+						// 	if (r.project[i].totalStep > 9999999) {
+						// 		str = 'projects[' + i + '].totalStep';
+						// 		obj[str] = r.project[i].totalStep.toString().substring(0, -4);
+						// 		str = 'projects[' + i + '].unit';
+						// 		obj[str] = '万';
+						// 		that.setData(obj);
+						// 		obj = {};
+						// 	} else {
+						// 		str = 'projects[' + i + '].unit';
+						// 		obj[str] = '';
+						// 		that.setData(obj);
+						// 		obj = {};
+						// 	}
+						// }
 						let txt = r.introduction;
 						if(!txt || txt == ''){
 							txt = '无';

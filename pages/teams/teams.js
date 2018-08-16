@@ -372,25 +372,29 @@ Page({
 				teamId: 0,
 			},
 			success: res => {
-				if (res.data.code == 1) {
-					this.setData({ enoughShow: false });
-					wx.showToast({
-						title: '捐步成功',
-						icon: 'success',
-						duration: 1000,
-					});
-					setTimeout(() => {
-						wx.navigateTo({
-							url: '/pages/teamThanks/teamThanks?cid='+ dd.cid + '&pid='+ dd.pid
+				if (res.statusCode == 200) {
+					if (res.data.code == 1) {
+						this.setData({ enoughShow: false });
+						wx.showToast({
+							title: '捐步成功',
+							icon: 'success',
+							duration: 1000,
 						});
-					}, 1000);
+						setTimeout(() => {
+							wx.navigateTo({
+								url: '/pages/teamThanks/teamThanks?cid='+ dd.cid + '&pid='+ dd.pid
+							});
+						}, 1000);
 
+					} else {
+						this.showError('捐步失败,' + res.data.msg);
+						return;
+					}
 				} else {
-					this.showError('捐步失败' + res.data.msg);
-					return;
+					this.showError('未知异常！');
 				}
 			}
-		});
+		})
 	},
 	getActDetail: function() {
 		wx.showLoading({

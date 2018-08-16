@@ -42,8 +42,9 @@
           <view class="item-p">携手
             <text class="num">{{item.totalUser}}</text> 位慈善家</view>
           <view class="item-p">捐出
-            <text class="num">{{item.totalStep}}</text>
-            <text> {{item.unit}}</text>步</view>
+            <text class="num">{{item.totalStep}}</text>步
+            <!-- <text> {{item.unit}}</text> -->
+					</view>
           <view class="item-p">兑换捐出
             <text class="num">{{item.totalAmount}}</text> 元</view>
         </view>
